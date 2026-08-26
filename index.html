@@ -1,1139 +1,570 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="light">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>گذر صدرا | منوی بوفه‌ها</title>
-<meta name="description" content="منوی همه بوفه‌های گذر صدرا در یک‌جا">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-<style>
-  /* ============ TOKENS ============ */
-  :root{
-    --font-fa:'Vazirmatn',sans-serif;
-    --font-en:'Manrope',sans-serif;
-
-    --radius-sm:10px;
-    --radius-md:14px;
-    --radius-lg:20px;
-    --radius-pill:999px;
-
-    --space-1:4px;
-    --space-2:8px;
-    --space-3:12px;
-    --space-4:16px;
-    --space-5:20px;
-    --space-6:24px;
-    --space-8:32px;
-    --space-10:40px;
-    --space-12:48px;
-    --space-16:64px;
-
-    --ease:cubic-bezier(.4,0,.2,1);
-    --dur-fast:140ms;
-    --dur-med:220ms;
-
-    /* ============================================================
-       شخصی‌سازی رنگ بوفه‌ها (BUFFET ACCENT COLORS — easy to customize)
-       هر بوفه یک رنگ اصلی (bN) و نسخه‌ی کم‌رنگ آن (bN-soft) دارد.
-       برای تغییر رنگ یک بوفه، فقط کد هگز همون متغیر را عوض کنید.
-       ============================================================ */
-    --b1:#A6453F; /* gheimeh ghormeh accent */
-    --b1-soft:#A6453F1a;
-    --b2:#2E7D74; /* dahe 60 accent */
-    --b2-soft:#2E7D741a;
-    --b3:#5A7A34; /* bastani accent */
-    --b3-soft:#5A7A341a;
-    --b4:#A35418; /* world food accent */
-    --b4-soft:#A354181a;
-    --b5:#B8481F; /* pizza accent */
-    --b5-soft:#B8481F1a;
-    --b6:#3E6C8E; /* burger & pasta accent (combo buffet — was brown, now a slate blue) */
-    --b6-soft:#3E6C8E1a;
-    --b8:#4C7A3D; /* fries & salad accent */
-    --b8-soft:#4C7A3D1a;
-    --b9:#7A4A6E; /* tea house accent */
-    --b9-soft:#7A4A6E1a;
-  }
-
-  html[data-theme="light"]{
-    --bg:#EEEBE2;
-    --bg-subtle:#E6E2D6;
-    --card:#FFFFFF;
-    --card-hover:#FFFFFF;
-    --text:#211D18;
-    --text-muted:#6E6558;
-    --text-faint:#9C9384;
-    --border:#DEDACD;
-    --border-strong:#CFC9B9;
-    --accent:#B6862F;
-    --accent-strong:#8F6A21;
-    --accent-ink:#3A2C0E;
-    --shadow-1:0 1px 2px rgba(33,29,24,.06), 0 1px 1px rgba(33,29,24,.04);
-    --shadow-2:0 12px 28px -12px rgba(33,29,24,.20);
-    --overlay:#21181008;
-  }
-  /* ============================================================
-     تم شب (DARK / NIGHT THEME) — برای تغییر رنگ تم تاریک فقط
-     مقادیر همین بلاک را عوض کنید؛ روی بقیه‌ی سایت اثر نمی‌گذارد.
-     ============================================================ */
-  html[data-theme="dark"]{
-    --bg:#0F1826;
-    --bg-subtle:#152133;
-    --card:#1A2740;
-    --card-hover:#20304D;
-    --text:#EDF1F7;
-    --text-muted:#A6B4CB;
-    --text-faint:#71809B;
-    --border:#28374F;
-    --border-strong:#334764;
-    --accent:#DFAF56;
-    --accent-strong:#EFC578;
-    --accent-ink:#2A2013;
-    --shadow-1:0 1px 2px rgba(0,0,0,.35);
-    --shadow-2:0 16px 32px -14px rgba(0,0,0,.6);
-    --overlay:#00000022;
-
-    /* burger & pasta accent, retuned a bit lighter for contrast on the dark background */
-    --b6:#5C93BA;
-    --b6-soft:#5C93BA1a;
-  }
-
-  *,*::before,*::after{box-sizing:border-box;}
-  html{-webkit-tap-highlight-color:transparent;}
-  html,body{height:100%;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:var(--font-fa);
-    line-height:1.6;
-    transition:background var(--dur-med) var(--ease), color var(--dur-med) var(--ease);
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-  }
-  html[lang="en"] body{font-family:var(--font-en);}
-  html[lang="en"] .fa-only{display:none !important;}
-  html[lang="fa"] .en-only{display:none !important;}
-
-  h1,h2,h3,p,ul{margin:0;}
-  button{font:inherit;color:inherit;}
-  ul{list-style:none;padding:0;}
-
-  .num{font-variant-numeric:tabular-nums;}
-
-  @media (prefers-reduced-motion: reduce){
-    *,*::before,*::after{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
-  }
-
-  :focus-visible{
-    outline:2px solid var(--accent);
-    outline-offset:3px;
-    border-radius:6px;
-  }
-
-  .container{
-    width:100%;
-    max-width:1180px;
-    margin-inline:auto;
-    padding-inline:var(--space-5);
-  }
-  @media (min-width:768px){ .container{padding-inline:var(--space-8);} }
-
-  /* ============ HEADER ============ */
-  .site-header{
-    position:sticky; top:0; z-index:40;
-    background:color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter:blur(10px) saturate(140%);
-    -webkit-backdrop-filter:blur(10px) saturate(140%);
-    border-bottom:1px solid var(--border);
-    transition:background var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
-  }
-  .header-inner{
-    display:flex; align-items:center; justify-content:space-between;
-    gap:var(--space-4);
-    padding-block:var(--space-4);
-  }
-  .brand{
-    display:flex; align-items:center; gap:var(--space-3);
-    min-width:0;
-  }
-  .brand-mark{
-    width:40px;height:40px;border-radius:12px;
-    background:linear-gradient(155deg, var(--accent), var(--accent-strong));
-    display:flex;align-items:center;justify-content:center;
-    color:var(--accent-ink);
-    flex:none;
-    box-shadow:var(--shadow-1);
-  }
-  .brand-mark svg{width:20px;height:20px;}
-  .brand-text{display:flex;flex-direction:column;line-height:1.2;min-width:0;}
-  .brand-text strong{
-    font-size:16px; font-weight:800; letter-spacing:.2px;
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  }
-  .brand-text span{
-    font-size:11px; color:var(--text-faint); font-weight:600;
-    letter-spacing:.14em; text-transform:uppercase;
-  }
-  html[lang="fa"] .brand-text span{letter-spacing:0; text-transform:none; font-size:12px;}
-
-  .header-controls{display:flex; align-items:center; gap:var(--space-2);}
-
-  .icon-btn{
-    width:42px;height:42px;
-    display:inline-flex;align-items:center;justify-content:center;
-    border-radius:var(--radius-pill);
-    background:var(--card);
-    border:1px solid var(--border);
-    cursor:pointer;
-    transition:transform var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
-    flex:none;
-  }
-  .icon-btn:hover{background:var(--bg-subtle); border-color:var(--border-strong);}
-  .icon-btn:active{transform:scale(.92);}
-  .icon-btn svg{width:19px;height:19px; stroke:var(--text);}
-
-  .lang-switch{
-    display:flex; align-items:center;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius-pill);
-    padding:3px;
-    gap:2px;
-    height:42px;
-  }
-  .lang-switch button{
-    height:100%;
-    padding-inline:14px;
-    border:none;background:transparent;
-    border-radius:var(--radius-pill);
-    font-weight:800; font-size:12.5px; letter-spacing:.03em;
-    color:var(--text-muted);
-    cursor:pointer;
-    transition:background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
-  }
-  .lang-switch button.active{
-    background:var(--accent);
-    color:var(--accent-ink);
-  }
-  .lang-switch button:not(.active):hover{color:var(--text);}
-
-  /* ============ HERO ============ */
-  .hero{
-    padding-block:var(--space-10) var(--space-8);
-    position:relative;
-    overflow:hidden;
-  }
-  .hero-eyebrow{
-    display:inline-flex; align-items:center; gap:var(--space-2);
-    font-size:12.5px; font-weight:700; color:var(--accent-strong);
-    letter-spacing:.06em;
-    background:color-mix(in srgb, var(--accent) 14%, transparent);
-    padding:6px 14px; border-radius:var(--radius-pill);
-    margin-bottom:var(--space-4);
-  }
-  html[lang="en"] .hero-eyebrow{letter-spacing:.12em; text-transform:uppercase;}
-  .hero h1{
-    font-size:clamp(30px, 5vw, 46px);
-    font-weight:900;
-    letter-spacing:-.01em;
-    margin-bottom:var(--space-3);
-  }
-  .hero p{
-    font-size:clamp(15px,2vw,18px);
-    color:var(--text-muted);
-    max-width:46ch;
-    font-weight:500;
-  }
-  .arches{
-    display:block;
-    width:100%;
-    height:auto;
-    margin-top:var(--space-8);
-    opacity:.55;
-    color:var(--accent);
-  }
-  html[data-theme="dark"] .arches{opacity:.35;}
-
-  /* ============ BUFFET GRID ============ */
-  .section-pad{padding-block:var(--space-6) var(--space-16);}
-  .buffet-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:var(--space-5);
-  }
-  @media (min-width:640px){ .buffet-grid{grid-template-columns:repeat(2,1fr);} }
-  @media (min-width:1020px){ .buffet-grid{grid-template-columns:repeat(3,1fr);} }
-
-  .buffet-card{
-    text-align:start;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius-lg);
-    padding:var(--space-6);
-    cursor:pointer;
-    display:flex; flex-direction:column; gap:var(--space-4);
-    box-shadow:var(--shadow-1);
-    transition:transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
-    position:relative;
-    overflow:hidden;
-  }
-  .buffet-card::before{
-    content:"";
-    position:absolute; inset-inline-start:0; top:0; bottom:0;
-    width:4px;
-    background:var(--card-accent, var(--accent));
-    opacity:0;
-    transition:opacity var(--dur-med) var(--ease);
-  }
-  .buffet-card:hover{
-    transform:translateY(-4px);
-    box-shadow:var(--shadow-2);
-    border-color:var(--border-strong);
-  }
-  .buffet-card:hover::before{opacity:1;}
-  .buffet-card:active{transform:translateY(-1px);}
-
-  .buffet-icon{
-    width:56px;height:56px;
-    border-radius:16px;
-    display:flex;align-items:center;justify-content:center;
-    background:var(--card-accent-soft, var(--accent));
-    color:var(--card-accent, var(--accent));
-    flex:none;
-  }
-  .buffet-icon svg{width:26px;height:26px;}
-
-  .buffet-card h3{font-size:19px; font-weight:800; margin-bottom:4px;}
-  .buffet-card .desc{font-size:13.5px; color:var(--text-muted); font-weight:500;}
-
-  .buffet-card-foot{
-    margin-top:auto;
-    display:flex; align-items:center; justify-content:space-between;
-    padding-top:var(--space-3);
-    border-top:1px solid var(--border);
-  }
-  .item-count{
-    font-size:12.5px; font-weight:700; color:var(--text-faint);
-  }
-  .go-arrow{
-    width:32px;height:32px;border-radius:var(--radius-pill);
-    display:flex;align-items:center;justify-content:center;
-    background:var(--bg-subtle);
-    color:var(--text);
-    transition:background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
-  }
-  .buffet-card:hover .go-arrow{background:var(--card-accent, var(--accent)); color:#fff;}
-  html[dir="rtl"] .buffet-card:hover .go-arrow svg{transform:translateX(-2px);}
-  html[dir="ltr"] .buffet-card:hover .go-arrow svg{transform:translateX(2px);}
-  .go-arrow svg{width:15px;height:15px; transition:transform var(--dur-fast) var(--ease);}
-
-  /* ============ BUFFET DETAIL ============ */
-  .detail-header{
-    padding-block:var(--space-5);
-    border-bottom:1px solid var(--border);
-    background:var(--bg-subtle);
-  }
-  .back-btn{
-    display:inline-flex; align-items:center; gap:var(--space-2);
-    background:var(--card);
-    border:1px solid var(--border);
-    padding-block:9px;
-    padding-inline-start:14px;
-    padding-inline-end:16px;
-    border-radius:var(--radius-pill);
-    font-weight:700; font-size:13.5px;
-    cursor:pointer;
-    margin-bottom:var(--space-5);
-    transition:background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
-  }
-  .back-btn:hover{background:var(--bg); border-color:var(--border-strong);}
-  .back-btn:active{transform:scale(.97);}
-  .back-btn svg{width:16px;height:16px;}
-
-  .detail-title-row{display:flex; align-items:center; gap:var(--space-4);}
-  .detail-icon{
-    width:52px;height:52px;border-radius:15px;
-    display:flex;align-items:center;justify-content:center;
-    background:var(--dt-accent-soft, var(--accent));
-    color:var(--dt-accent, var(--accent));
-    flex:none;
-  }
-  .detail-icon svg{width:24px;height:24px;}
-  .detail-title-row h2{font-size:clamp(22px,3.4vw,30px); font-weight:900;}
-  .detail-title-row .desc{color:var(--text-muted); font-size:14px; font-weight:500; margin-top:2px;}
-
-  /* Category tabs */
-  .tab-row{
-    display:flex; gap:var(--space-2);
-    overflow-x:auto;
-    padding-block:var(--space-5) var(--space-1);
-    scrollbar-width:none;
-  }
-  .tab-row::-webkit-scrollbar{display:none;}
-  .tab-pill{
-    flex:none;
-    padding:10px 18px;
-    border-radius:var(--radius-pill);
-    background:var(--card);
-    border:1px solid var(--border);
-    font-weight:700; font-size:13.5px;
-    color:var(--text-muted);
-    cursor:pointer;
-    white-space:nowrap;
-    transition:all var(--dur-fast) var(--ease);
-  }
-  .tab-pill:hover{color:var(--text); border-color:var(--border-strong);}
-  .tab-pill.active{
-    background:var(--tab-accent, var(--accent));
-    border-color:transparent;
-    color:#fff;
-  }
-
-  .menu-list{
-    padding-block:var(--space-6) var(--space-16);
-    display:flex; flex-direction:column; gap:var(--space-3);
-  }
-  .food-row{
-    display:flex; align-items:center; justify-content:space-between; gap:var(--space-4);
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius-md);
-    padding:var(--space-4) var(--space-5);
-    border-inline-start:3px solid var(--row-accent, var(--accent));
-    transition:border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
-  }
-  .food-row:hover{background:var(--card-hover); border-color:var(--border-strong); border-inline-start-color:var(--row-accent, var(--accent));}
-  .food-main{min-width:0;}
-  .food-main h4{font-size:15.5px; font-weight:700; margin-bottom:2px;}
-  .food-main p{font-size:12.5px; color:var(--text-muted); font-weight:500;}
-  .food-price{
-    flex:none;
-    font-weight:800; font-size:15px;
-    color:var(--text);
-    white-space:nowrap;
-  }
-  .food-price.unknown{
-    color:var(--text-faint);
-    font-weight:600; font-size:13px;
-  }
-  .food-price .unit{font-size:11.5px; color:var(--text-faint); font-weight:600; margin-inline-start:3px;}
-
-  .group-heading{
-    display:flex; align-items:center; gap:var(--space-3);
-    margin-top:var(--space-4);
-    margin-bottom:var(--space-1);
-  }
-  .group-heading h5{
-    font-size:12px; font-weight:800; letter-spacing:.05em;
-    color:var(--text-faint); text-transform:uppercase;
-  }
-  html[lang="fa"] .group-heading h5{letter-spacing:0; text-transform:none; font-size:13px;}
-  .group-heading::after{
-    content:""; flex:1; height:1px; background:var(--border);
-  }
-
-  /* Empty state */
-  .empty-state{
-    display:flex; flex-direction:column; align-items:center; text-align:center;
-    padding-block:var(--space-16);
-    color:var(--text-muted);
-  }
-  .empty-state .ic{
-    width:60px;height:60px;border-radius:18px;
-    background:var(--bg-subtle);
-    display:flex;align-items:center;justify-content:center;
-    margin-bottom:var(--space-4);
-    color:var(--text-faint);
-  }
-  .empty-state .ic svg{width:26px;height:26px;}
-  .empty-state h3{font-size:16px; font-weight:800; color:var(--text); margin-bottom:6px;}
-  .empty-state p{font-size:13.5px; max-width:34ch;}
-
-  /* view transition */
-  .view{animation:viewIn var(--dur-med) var(--ease);}
-  @keyframes viewIn{
-    from{opacity:0; transform:translateY(6px);}
-    to{opacity:1; transform:translateY(0);}
-  }
-
-  footer{
-    border-top:1px solid var(--border);
-    padding-block:var(--space-6);
-  }
-  .footer-inner{
-    display:flex; flex-direction:column; gap:4px;
-    align-items:center; text-align:center;
-    color:var(--text-faint); font-size:12.5px; font-weight:600;
-  }
-  @media (min-width:640px){
-    .footer-inner{flex-direction:row; justify-content:space-between; text-align:start;}
-  }
-  /* آدرس در پایین فوتر — برای تغییر متن، سراغ data-i18n="footerAddress" در HTML/JS بروید */
-  .footer-address{
-    margin-top:var(--space-3);
-    padding-top:var(--space-3);
-    border-top:1px solid var(--border);
-    text-align:center;
-    color:var(--text-faint);
-    font-size:12.5px;
-    font-weight:600;
-  }
-</style>
-</head>
-<body>
-
-<header class="site-header">
-  <div class="container header-inner">
-    <div class="brand">
-      <div class="brand-mark"><svg id="icon-brand"></svg></div>
-      <div class="brand-text">
-        <strong><span class="fa-only">گذر صدرا</span><span class="en-only">GOZAR SADRA</span></strong>
-        <span data-i18n="brandTag"></span>
-      </div>
-    </div>
-    <div class="header-controls">
-      <div class="lang-switch" role="group" aria-label="Language / زبان">
-        <button type="button" data-lang="fa">FA</button>
-        <button type="button" data-lang="en">EN</button>
-      </div>
-      <button type="button" class="icon-btn" id="theme-toggle" aria-label="تغییر حالت روز و شب">
-        <svg id="icon-theme"></svg>
-      </button>
-    </div>
-  </div>
-</header>
-
-<main id="app"></main>
-
-<footer>
-  <div class="container footer-inner">
-    <span><span class="fa-only">گذر صدرا</span><span class="en-only">GOZAR SADRA</span> — <span data-i18n="footerTag"></span></span>
-    <span data-i18n="footerNote"></span>
-  </div>
-  <div class="container">
-    <p class="footer-address" data-i18n="footerAddress"></p>
-  </div>
-</footer>
-
-<script>
+<!DOCTYPE html><html lang="fa" dir="rtl" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>گذر صدرا | منوی بوفه‌ها</title><meta name="description" content="منوی همه بوفه‌های گذر صدرا در یک‌جا"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script><style>
+:root{--font-fa:'Vazirmatn',sans-serif;--font-en:'Manrope',sans-serif;--radius-sm:10px;--radius-md:14px;--radius-lg:20px;--radius-pill:999px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--ease:cubic-bezier(.4,0,.2,1);--dur-fast:140ms;--dur-med:220ms;--b1:#A6453F;--b1-soft:#A6453F1a;--b2:#2E7D74;--b2-soft:#2E7D741a;--b3:#5A7A34;--b3-soft:#5A7A341a;--b4:#A35418;--b4-soft:#A354181a;--b5:#B8481F;--b5-soft:#B8481F1a;--b6:#3E6C8E;--b6-soft:#3E6C8E1a;--b8:#4C7A3D;--b8-soft:#4C7A3D1a;--b9:#7A4A6E;--b9-soft:#7A4A6E1a}html[data-theme="light"]{--bg:#EEEBE2;--bg-subtle:#E6E2D6;--card:#FFFFFF;--card-hover:#FFFFFF;--text:#211D18;--text-muted:#6E6558;--text-faint:#9C9384;--border:#DEDACD;--border-strong:#CFC9B9;--accent:#B6862F;--accent-strong:#8F6A21;--accent-ink:#3A2C0E;--shadow-1:0 1px 2px rgba(33,29,24,.06),0 1px 1px rgba(33,29,24,.04);--shadow-2:0 12px 28px -12px rgba(33,29,24,.20);--overlay:#21181008}html[data-theme="dark"]{--bg:#0F1826;--bg-subtle:#152133;--card:#1A2740;--card-hover:#20304D;--text:#EDF1F7;--text-muted:#A6B4CB;--text-faint:#71809B;--border:#28374F;--border-strong:#334764;--accent:#DFAF56;--accent-strong:#EFC578;--accent-ink:#2A2013;--shadow-1:0 1px 2px rgba(0,0,0,.35);--shadow-2:0 16px 32px -14px rgba(0,0,0,.6);--overlay:#00000022;--b6:#5C93BA;--b6-soft:#5C93BA1a}*,*::before,*::after{box-sizing:border-box}html{-webkit-tap-highlight-color:transparent}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-fa);line-height:1.6;transition:background var(--dur-med) var(--ease),color var(--dur-med) var(--ease);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}html[lang="en"] body{font-family:var(--font-en)}html[lang="en"] .fa-only{display:none !important}html[lang="fa"] .en-only{display:none !important}h1,h2,h3,p,ul{margin:0}button{font:inherit;color:inherit}ul{list-style:none;padding:0}.num{font-variant-numeric:tabular-nums}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.001ms !important;transition-duration:0.001ms !important}}:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}.container{width:100%;max-width:1180px;margin-inline:auto;padding-inline:var(--space-5)}@media (min-width:768px){.container{padding-inline:var(--space-8)}}.site-header{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);border-bottom:1px solid var(--border);transition:background var(--dur-med) var(--ease),border-color var(--dur-med) var(--ease)}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding-block:var(--space-4)}.brand{display:flex;align-items:center;gap:var(--space-3);min-width:0}.brand-mark{width:40px;height:40px;border-radius:12px;background:linear-gradient(155deg,var(--accent),var(--accent-strong));display:flex;align-items:center;justify-content:center;color:var(--accent-ink);flex:none;box-shadow:var(--shadow-1)}.brand-mark svg{width:20px;height:20px}.brand-text{display:flex;flex-direction:column;line-height:1.2;min-width:0}.brand-text strong{font-size:16px;font-weight:800;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.brand-text span{font-size:11px;color:var(--text-faint);font-weight:600;letter-spacing:.14em;text-transform:uppercase}html[lang="fa"] .brand-text span{letter-spacing:0;text-transform:none;font-size:12px}.header-controls{display:flex;align-items:center;gap:var(--space-2)}.icon-btn{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);cursor:pointer;transition:transform var(--dur-fast) var(--ease),background var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease);flex:none}.icon-btn:hover{background:var(--bg-subtle);border-color:var(--border-strong)}.icon-btn:active{transform:scale(.92)}.icon-btn svg{width:19px;height:19px;stroke:var(--text)}.lang-switch{display:flex;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px;gap:2px;height:42px}.lang-switch button{height:100%;padding-inline:14px;border:none;background:transparent;border-radius:var(--radius-pill);font-weight:800;font-size:12.5px;letter-spacing:.03em;color:var(--text-muted);cursor:pointer;transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease)}.lang-switch button.active{background:var(--accent);color:var(--accent-ink)}.lang-switch button:not(.active):hover{color:var(--text)}.hero{padding-block:var(--space-10) var(--space-8);position:relative;overflow:hidden}.hero-eyebrow{display:inline-flex;align-items:center;gap:var(--space-2);font-size:12.5px;font-weight:700;color:var(--accent-strong);letter-spacing:.06em;background:color-mix(in srgb,var(--accent) 14%,transparent);padding:6px 14px;border-radius:var(--radius-pill);margin-bottom:var(--space-4)}html[lang="en"] .hero-eyebrow{letter-spacing:.12em;text-transform:uppercase}.hero h1{font-size:clamp(30px,5vw,46px);font-weight:900;letter-spacing:-.01em;margin-bottom:var(--space-3)}.hero p{font-size:clamp(15px,2vw,18px);color:var(--text-muted);max-width:46ch;font-weight:500}.arches{display:block;width:100%;height:auto;margin-top:var(--space-8);opacity:.55;color:var(--accent)}html[data-theme="dark"] .arches{opacity:.35}.section-pad{padding-block:var(--space-6) var(--space-16)}.buffet-grid{display:grid;grid-template-columns:1fr;gap:var(--space-5)}@media (min-width:640px){.buffet-grid{grid-template-columns:repeat(2,1fr)}}@media (min-width:1020px){.buffet-grid{grid-template-columns:repeat(3,1fr)}}.buffet-card{text-align:start;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-6);cursor:pointer;display:flex;flex-direction:column;gap:var(--space-4);box-shadow:var(--shadow-1);transition:transform var(--dur-med) var(--ease),box-shadow var(--dur-med) var(--ease),border-color var(--dur-med) var(--ease);position:relative;overflow:hidden}.buffet-card::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--card-accent,var(--accent));opacity:0;transition:opacity var(--dur-med) var(--ease)}.buffet-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-2);border-color:var(--border-strong)}.buffet-card:hover::before{opacity:1}.buffet-card:active{transform:translateY(-1px)}.buffet-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:var(--card-accent-soft,var(--accent));color:var(--card-accent,var(--accent));flex:none}.buffet-icon svg{width:26px;height:26px}.buffet-card h3{font-size:19px;font-weight:800;margin-bottom:4px}.buffet-card .desc{font-size:13.5px;color:var(--text-muted);font-weight:500}.buffet-card-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:var(--space-3);border-top:1px solid var(--border)}.item-count{font-size:12.5px;font-weight:700;color:var(--text-faint)}.go-arrow{width:32px;height:32px;border-radius:var(--radius-pill);display:flex;align-items:center;justify-content:center;background:var(--bg-subtle);color:var(--text);transition:background var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease)}.buffet-card:hover .go-arrow{background:var(--card-accent,var(--accent));color:#fff}html[dir="rtl"] .buffet-card:hover .go-arrow svg{transform:translateX(-2px)}html[dir="ltr"] .buffet-card:hover .go-arrow svg{transform:translateX(2px)}.go-arrow svg{width:15px;height:15px;transition:transform var(--dur-fast) var(--ease)}.detail-header{padding-block:var(--space-5);border-bottom:1px solid var(--border);background:var(--bg-subtle)}.back-btn{display:inline-flex;align-items:center;gap:var(--space-2);background:var(--card);border:1px solid var(--border);padding-block:9px;padding-inline-start:14px;padding-inline-end:16px;border-radius:var(--radius-pill);font-weight:700;font-size:13.5px;cursor:pointer;margin-bottom:var(--space-5);transition:background var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease)}.back-btn:hover{background:var(--bg);border-color:var(--border-strong)}.back-btn:active{transform:scale(.97)}.back-btn svg{width:16px;height:16px}.detail-title-row{display:flex;align-items:center;gap:var(--space-4)}.detail-icon{width:52px;height:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;background:var(--dt-accent-soft,var(--accent));color:var(--dt-accent,var(--accent));flex:none}.detail-icon svg{width:24px;height:24px}.detail-title-row h2{font-size:clamp(22px,3.4vw,30px);font-weight:900}.detail-title-row .desc{color:var(--text-muted);font-size:14px;font-weight:500;margin-top:2px}.tab-row{display:flex;gap:var(--space-2);overflow-x:auto;padding-block:var(--space-5) var(--space-1);scrollbar-width:none}.tab-row::-webkit-scrollbar{display:none}.tab-pill{flex:none;padding:10px 18px;border-radius:var(--radius-pill);background:var(--card);border:1px solid var(--border);font-weight:700;font-size:13.5px;color:var(--text-muted);cursor:pointer;white-space:nowrap;transition:all var(--dur-fast) var(--ease)}.tab-pill:hover{color:var(--text);border-color:var(--border-strong)}.tab-pill.active{background:var(--tab-accent,var(--accent));border-color:transparent;color:#fff}.menu-list{padding-block:var(--space-6) var(--space-16);display:flex;flex-direction:column;gap:var(--space-3)}.food-row{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);border-inline-start:3px solid var(--row-accent,var(--accent));transition:border-color var(--dur-fast) var(--ease),background var(--dur-fast) var(--ease)}.food-row:hover{background:var(--card-hover);border-color:var(--border-strong);border-inline-start-color:var(--row-accent,var(--accent))}.food-main{min-width:0}.food-main h4{font-size:15.5px;font-weight:700;margin-bottom:2px}.food-main p{font-size:12.5px;color:var(--text-muted);font-weight:500}.food-price{flex:none;font-weight:800;font-size:15px;color:var(--text);white-space:nowrap}.food-price.unknown{color:var(--text-faint);font-weight:600;font-size:13px}.food-price .unit{font-size:11.5px;color:var(--text-faint);font-weight:600;margin-inline-start:3px}.group-heading{display:flex;align-items:center;gap:var(--space-3);margin-top:var(--space-4);margin-bottom:var(--space-1)}.group-heading h5{font-size:12px;font-weight:800;letter-spacing:.05em;color:var(--text-faint);text-transform:uppercase}html[lang="fa"] .group-heading h5{letter-spacing:0;text-transform:none;font-size:13px}.group-heading::after{content:"";flex:1;height:1px;background:var(--border)}.empty-state{display:flex;flex-direction:column;align-items:center;text-align:center;padding-block:var(--space-16);color:var(--text-muted)}.empty-state .ic{width:60px;height:60px;border-radius:18px;background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-4);color:var(--text-faint)}.empty-state .ic svg{width:26px;height:26px}.empty-state h3{font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px}.empty-state p{font-size:13.5px;max-width:34ch}.view{animation:viewIn var(--dur-med) var(--ease)}@keyframes viewIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}footer{border-top:1px solid var(--border);padding-block:var(--space-6)}.footer-inner{display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center;color:var(--text-faint);font-size:12.5px;font-weight:600}@media (min-width:640px){.footer-inner{flex-direction:row;justify-content:space-between;text-align:start}}.footer-address{margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--border);text-align:center;color:var(--text-faint);font-size:12.5px;font-weight:600}
+</style></head><body><header class="site-header"><div class="container header-inner"><div class="brand"><div class="brand-mark"><svg id="icon-brand"></svg></div><div class="brand-text"><strong><span class="fa-only">گذر صدرا</span><span class="en-only">GOZAR SADRA</span></strong><span data-i18n="brandTag"></span></div></div><div class="header-controls"><div class="lang-switch" role="group" aria-label="Language / زبان"><button type="button" data-lang="fa">FA</button><button type="button" data-lang="en">EN</button></div><button type="button" class="icon-btn" id="theme-toggle" aria-label="تغییر حالت روز و شب"><svg id="icon-theme"></svg></button></div></div></header><main id="app"></main><footer><div class="container footer-inner"><span><span class="fa-only">گذر صدرا</span><span class="en-only">GOZAR SADRA</span> — <span data-i18n="footerTag"></span></span><span data-i18n="footerNote"></span></div><div class="container"><p class="footer-address" data-i18n="footerAddress"></p></div></footer><script>
 "use strict";
-
-/* ======================= i18n dictionary ======================= */
-const I18N = {
-  fa:{
-    brandTag:"مجموعه بوفه‌های گذر صدرا",
-    heroEyebrow:"راهنمای سریع بوفه‌ها",
-    heroTitle:"منوی بوفه‌ها",
-    heroSubtitle:"منوی همه بوفه‌ها، در یک‌جا؛ بوفه‌ی موردنظرت رو انتخاب کن و در چند ثانیه به غذات برس.",
-    itemsCount:(n)=>`${toFaDigits(n)} مورد`,
-    viewMenu:"مشاهده منو",
-    back:"بازگشت به بوفه‌ها",
-    priceUnknown:"قیمت نامشخص",
-    currency:"تومان",
-    emptyBuffetTitle:"این بوفه هنوز غذایی ندارد",
-    emptyBuffetDesc:"به‌زودی منوی این بوفه تکمیل می‌شود. لطفاً بعداً دوباره سر بزن.",
-    footerTag:"منوی بوفه‌های گذر صدرا",
-    footerNote:"صرفاً برای مشاهده‌ی منو — بدون ثبت سفارش",
-    footerAddress:"آدرس: پارک گذرصدرا، بین خیابان ملاصدرا و خیابان کارمند",
-    themeToLight:"رفتن به حالت روز",
-    themeToDark:"رفتن به حالت شب",
-  },
-  en:{
-    brandTag:"GOZAR SADRA Buffet Collection",
-    heroEyebrow:"Quick buffet guide",
-    heroTitle:"Buffet Menus",
-    heroSubtitle:"All buffet menus, in one place. Pick a buffet and find your food in seconds.",
-    itemsCount:(n)=>`${n} item${n===1?"":"s"}`,
-    viewMenu:"View menu",
-    back:"Back to Buffets",
-    priceUnknown:"Price unavailable",
-    currency:"Toman",
-    emptyBuffetTitle:"No items yet",
-    emptyBuffetDesc:"This buffet's menu isn't published yet. Please check back soon.",
-    footerTag:"GOZAR SADRA buffet menus",
-    footerNote:"For browsing only — no ordering",
-    footerAddress:"Address: Gozar Sadra Park, between Mollasadra St. and Karmand St.",
-    themeToLight:"Switch to light mode",
-    themeToDark:"Switch to dark mode",
-  }
+const _i18 = {
+fa:{
+brandTag:"مجموعه بوفه‌های گذر صدرا",
+heroEyebrow:"راهنمای سریع بوفه‌ها",
+heroTitle:"منوی بوفه‌ها",
+heroSubtitle:"منوی همه بوفه‌ها، در یک‌جا؛ بوفه‌ی موردنظرت رو انتخاب کن و در چند ثانیه به غذات برس.",
+itemsCount:(n)=>`${_fd(n)} مورد`,
+viewMenu:"مشاهده منو",
+back:"بازگشت به بوفه‌ها",
+priceUnknown:"قیمت نامشخص",
+currency:"تومان",
+emptyBuffetTitle:"این بوفه هنوز غذایی ندارد",
+emptyBuffetDesc:"به‌زودی منوی این بوفه تکمیل می‌شود. لطفاً بعداً دوباره سر بزن.",
+footerTag:"منوی بوفه‌های گذر صدرا",
+footerNote:"صرفاً برای مشاهده‌ی منو — بدون ثبت سفارش",
+footerAddress:"آدرس: پارک گذرصدرا، بین خیابان ملاصدرا و خیابان کارمند",
+themeToLight:"رفتن به حالت روز",
+themeToDark:"رفتن به حالت شب",
+},
+en:{
+brandTag:"GOZAR SADRA Buffet Collection",
+heroEyebrow:"Quick buffet guide",
+heroTitle:"Buffet Menus",
+heroSubtitle:"All buffet menus, in one place. Pick a buffet and find your food in seconds.",
+itemsCount:(n)=>`${n} item${n===1?"":"s"}`,
+viewMenu:"View menu",
+back:"Back to Buffets",
+priceUnknown:"Price unavailable",
+currency:"Toman",
+emptyBuffetTitle:"No items yet",
+emptyBuffetDesc:"This buffet's menu isn't published yet. Please check back soon.",
+footerTag:"GOZAR SADRA buffet menus",
+footerNote:"For browsing only — no ordering",
+footerAddress:"Address: Gozar Sadra Park, between Mollasadra St. and Karmand St.",
+themeToLight:"Switch to light mode",
+themeToDark:"Switch to dark mode",
+}
 };
-
-/* ======================= digit / price helpers ======================= */
-function toFaDigits(input){
-  const map = {'0':'۰','1':'۱','2':'۲','3':'۳','4':'۴','5':'۵','6':'۶','7':'۷','8':'۸','9':'۹'};
-  return String(input).replace(/[0-9]/g, d => map[d]);
+function _fd(input){
+const map = {'0':'۰','1':'۱','2':'۲','3':'۳','4':'۴','5':'۵','6':'۶','7':'۷','8':'۸','9':'۹'};
+return String(input).replace(/[0-9]/g, d => map[d]);
 }
-function formatPrice(price, lang){
-  if(price === null || price === undefined){
-    return I18N[lang].priceUnknown;
-  }
-  const grouped = Number(price).toLocaleString('en-US');
-  return lang === 'fa' ? toFaDigits(grouped) : grouped;
+function _fp(price, lang){
+if(price === null || price === undefined){
+return _i18[lang].priceUnknown;
 }
-
-/* ======================= DATA ======================= */
-const DATA = {
-  brand:{ fa:"گذر صدرا", en:"GOZAR SADRA" },
-  buffets:[
-    {
-      id:"gheimeh-ghormeh",
-      icon:"soup",
-      accent:"var(--b1)",
-      accentSoft:"var(--b1-soft)",
-      name:{ fa:"قیمه قرمه", en:"Gheimeh &amp; Ghormeh" },
-      description:{ fa:"خورش‌های خانگی با برنج ایرانی و ته‌دیگ", en:"Home-style Persian stews with rice and tahdig" },
-      categories:[
-        { id:"main", name:{fa:"غذای اصلی", en:"Main Dishes"}, items:[
-          {name:{fa:"قیمه سیب‌زمینی با برنج ایرانی", en:"Gheimeh with Potato &amp; Persian Rice"}, price:375},
-          {name:{fa:"قیمه بادمجان با برنج ایرانی", en:"Gheimeh with Eggplant &amp; Persian Rice"}, price:385},
-          {name:{fa:"قرمه سبزی مامان‌پز با برنج ایرانی", en:"Homestyle Ghormeh Sabzi &amp; Persian Rice"}, price:375},
-          {name:{fa:"فسنجون دزفولی با برنج ایرانی", en:"Dezfuli Fesenjan &amp; Persian Rice"}, price:445},
-          {name:{fa:"قیمه با ته‌دیگ", en:"Gheimeh with Tahdig"}, price:295},
-          {name:{fa:"قیمه بادمجان با ته‌دیگ", en:"Gheimeh with Eggplant &amp; Tahdig"}, price:315},
-          {name:{fa:"قرمه سبزی با ته‌دیگ", en:"Ghormeh Sabzi with Tahdig"}, price:295},
-          {name:{fa:"فسنجون با ته‌دیگ", en:"Fesenjan with Tahdig"}, price:390},
-        ]}
-      ]
-    },
-    {
-      id:"dahe60",
-      icon:"sandwich",
-      accent:"var(--b2)",
-      accentSoft:"var(--b2-soft)",
-      name:{ fa:"دهه ۶۰", en:"Dahe 60" },
-      description:{ fa:"ساندویچ و اسنک با طعم نوستالژی", en:"Nostalgic sandwiches and snacks" },
-      categories:[
-        { id:"sandwich", name:{fa:"ساندویچ", en:"Sandwiches"}, items:[
-          {name:{fa:"سوسیس آلمانی", en:"German Sausage"}, price:225},
-          {name:{fa:"سوسیس بندری", en:"Bandari Sausage"}, price:265},
-          {name:{fa:"سوسیس هندی", en:"Hendi Sausage"}, price:255},
-          {name:{fa:"بندری مخصوص", en:"Special Bandari"}, price:335},
-          {name:{fa:"هندی مخصوص", en:"Special Hendi"}, price:335},
-          {name:{fa:"هات‌داگ", en:"Hot Dog"}, price:245},
-          {name:{fa:"بلغاری", en:"Bulgarian Sausage"}, price:315},
-          {name:{fa:"مارتادلا", en:"Mortadella"}, price:225},
-          {name:{fa:"کتلت", en:"Cutlet"}, price:215},
-          {name:{fa:"کتلت بندری", en:"Bandari Cutlet"}, price:365},
-          {name:{fa:"مرغ و قارچ", en:"Chicken &amp; Mushroom"}, price:335},
-          {name:{fa:"مرغ بندری", en:"Bandari Chicken"}, price:395},
-          {name:{fa:"مرغ هندی", en:"Hendi Chicken"}, price:395},
-          {name:{fa:"ساندویچ مغز و زبان", en:"Brain &amp; Tongue Sandwich"}, price:655},
-          {name:{fa:"همبرگر معمولی", en:"Classic Burger"}, price:265},
-          {name:{fa:"همبرگر مخصوص", en:"Special Burger"}, price:325},
-          {name:{fa:"هات‌داگ پنیری", en:"Cheesy Hot Dog"}, price:285},
-        ]},
-        { id:"snack", name:{fa:"اسنک", en:"Snacks"}, items:[
-          {name:{fa:"اسنک مخصوص", en:"Special Snack"}, price:265},
-          {name:{fa:"اسنک مرغ و قارچ", en:"Chicken &amp; Mushroom Snack"}, price:285},
-          {name:{fa:"اسنک پپرونی", en:"Pepperoni Snack"}, price:255},
-          {name:{fa:"اسنک گوشت و قارچ", en:"Beef &amp; Mushroom Snack"}, price:325},
-          {name:{fa:"اسنک ویژه", en:"Deluxe Snack"}, price:365},
-        ]},
-        { id:"other", name:{fa:"سایر", en:"Others"}, items:[
-          {name:{fa:"کوکتل", en:"Cocktail Sausage"}, price:225},
-          {name:{fa:"سالاد پاستا", en:"Pasta Salad"}, price:null},
-        ]},
-      ]
-    },
-    {
-      id:"bastani",
-      icon:"ice-cream-cone",
-      accent:"var(--b3)",
-      accentSoft:"var(--b3-soft)",
-      name:{ fa:"بستنی", en:"Bastani" },
-      description:{ fa:"آبمیوه، بستنی، شیک و معجون خنک", en:"Juices, ice cream, shakes and smoothies" },
-      categories:[
-        { id:"juice", name:{fa:"آبمیوه", en:"Fresh Juice"}, items:[
-          {name:{fa:"طالبی", en:"Cantaloupe Juice"}, price:150},
-          {name:{fa:"طالبی بستنی", en:"Cantaloupe Juice with Ice Cream"}, price:180},
-          {name:{fa:"توت‌فرنگی", en:"Strawberry Juice"}, price:270},
-          {name:{fa:"سیب", en:"Apple Juice"}, price:170},
-          {name:{fa:"هندوانه", en:"Watermelon Juice"}, price:120},
-          {name:{fa:"هندوانه توت‌فرنگی", en:"Watermelon Strawberry Juice"}, price:200},
-          {name:{fa:"هویج", en:"Carrot Juice"}, price:120},
-          {name:{fa:"هویج بستنی", en:"Carrot Juice with Ice Cream"}, price:160},
-        ]},
-        { id:"mixjuice", name:{fa:"آبمیوه ترکیبی", en:"Mixed Juice"}, items:[
-          {name:{fa:"سیب انبه", en:"Apple Mango"}, price:330},
-          {name:{fa:"انبه موز", en:"Mango Banana"}, price:370},
-          {name:{fa:"انبه توت‌فرنگی", en:"Mango Strawberry"}, price:370},
-          {name:{fa:"سیب موز", en:"Apple Banana"}, price:220},
-          {name:{fa:"موز توت‌فرنگی", en:"Banana Strawberry"}, price:300},
-        ]},
-        { id:"shake", name:{fa:"شیک و آیس‌پک", en:"Shakes &amp; Ice Pack"}, items:[
-          {name:{fa:"شیک بادام‌زمینی", en:"Peanut Shake"}, price:380},
-          {name:{fa:"شیک نوتلا", en:"Nutella Shake"}, price:450},
-          {name:{fa:"شیک لوتوس", en:"Lotus Shake"}, price:450},
-          {name:{fa:"شیک لوتوس/نوتلا", en:"Lotus / Nutella Shake"}, price:450},
-          {name:{fa:"شیک شکلات", en:"Chocolate Shake"}, price:280},
-          {name:{fa:"شیک موز", en:"Banana Shake"}, price:280},
-          {name:{fa:"شیک توت‌فرنگی", en:"Strawberry Shake"}, price:280},
-          {name:{fa:"آیس‌پک", en:"Ice Pack"}, price:280},
-          {name:{fa:"شوکوبری", en:"Chocoberry"}, price:400},
-        ]},
-        { id:"milk", name:{fa:"شیرموز و معجون", en:"Banana Milk &amp; Smoothies"}, items:[
-          {name:{fa:"معجون مخصوص", en:"Special Smoothie"}, price:480},
-          {name:{fa:"معجون توت‌فرنگی", en:"Strawberry Smoothie"}, price:520},
-          {name:{fa:"کیک بستنی", en:"Ice Cream Cake"}, price:380},
-          {name:{fa:"شیرموز توت‌فرنگی", en:"Strawberry Banana Milk"}, price:300},
-          {name:{fa:"شیرموز پسته", en:"Pistachio Banana Milk"}, price:350},
-          {name:{fa:"شیرموز خرما", en:"Date Banana Milk"}, price:280},
-          {name:{fa:"شیرموز نارگیل", en:"Coconut Banana Milk"}, price:240},
-          {name:{fa:"شیرموز ۴ مغز", en:"Mixed Nuts Banana Milk"}, price:370},
-          {name:{fa:"شیرموز انبه", en:"Mango Banana Milk"}, price:350},
-          {name:{fa:"شیرموز", en:"Banana Milk"}, price:200},
-          {name:{fa:"شیر پسته", en:"Pistachio Milk"}, price:360},
-        ]},
-        { id:"icecream", name:{fa:"بستنی", en:"Ice Cream"}, items:[
-          {name:{fa:"بستنی کاسه‌ای", en:"Ice Cream Bowl"}, price:70},
-          {name:{fa:"بستنی قیفی", en:"Ice Cream Cone"}, price:70},
-          {name:{fa:"بستنی موز و توت‌فرنگی", en:"Banana &amp; Strawberry Ice Cream"}, price:180},
-        ]},
-      ]
-    },
-    {
-      id:"world-food",
-      icon:"globe",
-      accent:"var(--b4)",
-      accentSoft:"var(--b4-soft)",
-      name:{ fa:"غذای ملل", en:"World Food" },
-      description:{ fa:"طعم‌های بین‌المللی، از تاکو تا فلافل", en:"International bites, from tacos to falafel" },
-      categories:[
-        { id:"world", name:{fa:"غذای ملل", en:"World Food"}, items:[
-          {name:{fa:"تاکو مرغ", en:"Chicken Taco"}, price:320},
-          {name:{fa:"تاکو گوشت", en:"Beef Taco"}, price:355},
-          {name:{fa:"ناچوز کلاسیک", en:"Classic Nachos"}, price:220},
-          {name:{fa:"شاورما گوشت", en:"Beef Shawarma"}, price:395},
-          {name:{fa:"شاورما میکس", en:"Mix Shawarma"}, price:380},
-          {name:{fa:"شاورما مرغ", en:"Chicken Shawarma"}, price:375},
-        ]},
-        { id:"falafel", name:{fa:"فلافل و سمبوسه", en:"Falafel &amp; Samosa"}, items:[
-          {name:{fa:"فلافل مخصوص", en:"Special Falafel"}, price:175},
-          {name:{fa:"فلافل لبنانی", en:"Lebanese Falafel"}, price:145},
-          {name:{fa:"فلافل", en:"Falafel"}, price:100},
-          {name:{fa:"فلافل پرسی", en:"Falafel Plate"}, price:215},
-          {name:{fa:"سمبوسه", en:"Samosa"}, price:75},
-          {name:{fa:"سمبوسه مخصوص", en:"Special Samosa"}, price:95},
-        ]},
-      ]
-    },
-    {
-      id:"pizza",
-      icon:"pizza",
-      accent:"var(--b5)",
-      accentSoft:"var(--b5-soft)",
-      name:{ fa:"پیتزا", en:"Pizza" },
-      description:{ fa:"پیتزاهای تک‌نفره و دونفره با خمیر مخصوص", en:"Single and double pizzas, oven-fresh" },
-      categories:[
-        { id:"single", name:{fa:"پیتزا تک نفره", en:"Single Portion"}, items:[
-          {name:{fa:"نوستالژی", en:"Nostalgia"}, price:465, description:{fa:"کالباس، سوسیس، قارچ، میکس پنیر پیتزا، فلفل دلمه", en:"Cold cuts, sausage, mushroom, pizza cheese mix, bell pepper"}},
-          {name:{fa:"پپرونی", en:"Pepperoni"}, price:525, description:{fa:"ژامبون، پپرونی، قارچ، میکس پنیر پیتزا، زیتون، هالوپینو", en:"Ham, pepperoni, mushroom, pizza cheese mix, olives, jalapeño"}},
-          {name:{fa:"رست بیف", en:"Roast Beef"}, price:755, description:{fa:"گوشت رست شده، سس ماشروم، میکس پنیر پیتزا، زیتون", en:"Roasted beef, mushroom sauce, pizza cheese mix, olives"}},
-          {name:{fa:"چیکن سیسیلی", en:"Chicken Sicilian"}, price:535, description:{fa:"فیله مرغ مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Marinated chicken fillet, pizza cheese mix, mushroom, bell pepper"}},
-          {name:{fa:"یونانی", en:"Greek"}, price:965, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، ژامبون، میکس پنیر پیتزا، قارچ، فلفل دلمه، زیتون، روکِن خمیر مخصوص", en:"Seasoned ground beef, ham, pizza cheese mix, mushroom, bell pepper, olives, special rolled crust"}},
-          {name:{fa:"تاکو", en:"Taco"}, price:625, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, pizza cheese mix, mushroom, bell pepper"}},
-          {name:{fa:"سرآشپز", en:"Chef's Special"}, price:695, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، فیله مرغ مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, marinated chicken fillet, pizza cheese mix, mushroom, bell pepper"}},
-          {name:{fa:"مخصوص", en:"Special"}, price:615, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، ژامبون، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, ham, pizza cheese mix, mushroom, bell pepper"}},
-          {name:{fa:"چهار فصل", en:"Four Seasons"}, price:675, description:{fa:"فیله مرغ مزه‌دار شده، ژامبون، پیاز، گوشت چرخ‌کرده، میکس پنیر پیتزا، گارنیش مخصوص", en:"Marinated chicken fillet, ham, onion, ground beef, pizza cheese mix, special garnish"}},
-          {name:{fa:"سیب تنوری", en:"Oven-Baked Potato"}, price:395, description:{fa:"سیب‌زمینی سرخ شده، قارچ، ژامبون، پنیر پیتزا", en:"Fried potato, mushroom, ham, pizza cheese"}},
-          {name:{fa:"نان سیر", en:"Garlic Bread"}, price:285, description:{fa:"نان سیر، پنیر، سس مخصوص", en:"Garlic bread, cheese, special sauce"}},
-        ]},
-        { id:"double", name:{fa:"پیتزا دونفره", en:"Double Portion"}, items:[
-          {name:{fa:"نوستالژی", en:"Nostalgia"}, price:685, description:{fa:"کالباس، سوسیس، قارچ، میکس پنیر پیتزا، فلفل دلمه", en:"Cold cuts, sausage, mushroom, pizza cheese mix, bell pepper"}},
-          {name:{fa:"پپرونی", en:"Pepperoni"}, price:725, description:{fa:"ژامبون، پپرونی، قارچ، میکس پنیر پیتزا، زیتون، هالوپینو", en:"Ham, pepperoni, mushroom, pizza cheese mix, olives, jalapeño"}},
-          {name:{fa:"رست بیف", en:"Roast Beef"}, price:895, description:{fa:"گوشت رست شده، سس ماشروم، میکس پنیر پیتزا، زیتون", en:"Roasted beef, mushroom sauce, pizza cheese mix, olives"}},
-          {name:{fa:"چیکن سیسیلی", en:"Chicken Sicilian"}, price:755, description:{fa:"فیله مرغ مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Marinated chicken fillet, pizza cheese mix, mushroom, bell pepper"}},
-          {name:{fa:"یونانی", en:"Greek"}, price:825, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، ژامبون، میکس پنیر پیتزا، قارچ، فلفل دلمه، زیتون، روکِن خمیر مخصوص", en:"Seasoned ground beef, ham, pizza cheese mix, mushroom, bell pepper, olives, special rolled crust"}},
-          {name:{fa:"تاکو", en:"Taco"}, price:795, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, pizza cheese mix, mushroom, bell pepper"}},
-          {name:{fa:"سرآشپز", en:"Chef's Special"}, price:845, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، فیله مرغ مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, marinated chicken fillet, pizza cheese mix, mushroom, bell pepper"}},
-          {name:{fa:"مخصوص", en:"Special"}, price:785, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، ژامبون، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, ham, pizza cheese mix, mushroom, bell pepper"}},
-          {name:{fa:"چهار فصل", en:"Four Seasons"}, price:825, description:{fa:"فیله مرغ مزه‌دار شده، ژامبون، پیاز، گوشت چرخ‌کرده، میکس پنیر پیتزا، گارنیش مخصوص", en:"Marinated chicken fillet, ham, onion, ground beef, pizza cheese mix, special garnish"}},
-          {name:{fa:"سوپر ویژه گذرصدرا", en:"Gozar Sadra Super Special"}, price:1450, description:{fa:"ژامبون، گوشت چرخ‌کرده، پیاز، فیله مرغ، میکس پنیر پیتزا، قارچ", en:"Ham, ground beef, onion, chicken fillet, pizza cheese mix, mushroom"}},
-          {name:{fa:"نیم متری مخصوص", en:"Special Half-Meter"}, price:2350, description:{fa:"ژامبون، گوشت چرخ‌کرده، فیله مرغ مزه‌دار شده، میکس پنیر پیتزا، قارچ", en:"Ham, ground beef, marinated chicken fillet, pizza cheese mix, mushroom"}},
-          {name:{fa:"کینگ برگر", en:"King Burger"}, price:925, description:{fa:"برگر ۲ عدد، ژامبون ۴ عدد، میکس پنیر پیتزا، سس ماشروم", en:"2 burger patties, 4 pieces of ham, pizza cheese mix, mushroom sauce"}},
-        ]},
-      ]
-    },
-    {
-      /* پاستا و برگر در یک بوفه سرو می‌شوند، پس یک مجموعه‌اند.
-         برای جدا کردن دوباره، کافیست این آبجکت را به دو آبجکت جدا
-         (مثل قبل) تقسیم کنید و هرکدام id و accent خودشان را بگیرند. */
-      id:"burger-pasta",
-      icon:"beef",
-      accent:"var(--b6)",
-      accentSoft:"var(--b6-soft)",
-      name:{ fa:"برگر، پاستا و سیب‌وسالاد", en:"Burger, Pasta & Fries" },
-      description:{ fa:"برگرهای دست‌ساز، پاستاهای کرمی و سیب‌وسالاد تازه، از یک بوفه", en:"Handcrafted burgers, creamy pastas, and fresh fries & salad, from one buffet" },
-      categories:[
-        { id:"burgers", name:{fa:"برگر", en:"Burgers"}, items:[
-          {name:{fa:"کلاسیک برگر", en:"Classic Burger"}, price:425},
-          {name:{fa:"چیز برگر", en:"Cheese Burger"}, price:445},
-          {name:{fa:"بیکن برگر", en:"Bacon Burger"}, price:460},
-          {name:{fa:"ماشروم برگر", en:"Mushroom Burger"}, price:485},
-          {name:{fa:"جوسی برگر", en:"Juicy Burger"}, price:495, description:{fa:"۱ عدد برگر + پیاز کاراملی", en:"1 burger patty + caramelized onion"}},
-          {name:{fa:"کینگ برگر", en:"King Burger"}, price:715, description:{fa:"۲ عدد برگر + ۲ عدد ژامبون + میکس پنیر پیتزا", en:"2 burger patties + 2 pieces of ham + pizza cheese mix"}},
-          {name:{fa:"چیکن برگر", en:"Chicken Burger"}, price:385, description:{fa:"۱ عدد برگر + ۱ عدد فیله سوخاری", en:"1 burger patty + 1 fried chicken fillet"}},
-          {name:{fa:"بیگ مک", en:"Big Mac"}, price:475, description:{fa:"۱ عدد برگر + ژامبون + قارچ و پنیر", en:"1 burger patty + ham + mushroom and cheese"}},
-        ]},
-        { id:"pastas", name:{fa:"پاستا", en:"Pasta"}, items:[
-          {name:{fa:"چیکن آلفردو", en:"Chicken Alfredo"}, price:445},
-          {name:{fa:"بیف آلفردو", en:"Beef Alfredo"}, price:455},
-        ]},
-        { id:"fries-salad-items", name:{fa:"سیب و سالاد", en:"Fries &amp; Salad"}, items:[
-          {name:{fa:"سیب مخصوص", en:"Special Fries"}, price:395},
-          {name:{fa:"سیب با سس خارجی", en:"Fries with Imported Sauce"}, price:375},
-          {name:{fa:"سیب با دیپ چدار", en:"Fries with Cheddar Dip"}, price:390},
-          {name:{fa:"سالاد سزار سوخاری", en:"Crispy Chicken Caesar Salad"}, price:385},
-          {name:{fa:"سالاد سزار گریل", en:"Grilled Chicken Caesar Salad"}, price:375},
-        ]},
-      ]
-    },
-    {
-      id:"tea-house",
-      icon:"coffee",
-      accent:"var(--b9)",
-      accentSoft:"var(--b9-soft)",
-      name:{ fa:"چای خانه", en:"Tea House" },
-      description:{ fa:"چای، دمنوش و قلیان در فضایی آرام", en:"Tea, herbal infusions and hookah in a relaxed setting" },
-      categories:[
-        { id:"chapkhaneh", name:{fa:"چاپخانه", en:"Chapkhaneh"}, items:[
-          {name:{fa:"چای کلاسیک", en:"Classic Tea"}, price:65},
-          {name:{fa:"چای کلاسیک دونفره", en:"Classic Tea (For Two)"}, price:129},
-          {name:{fa:"چای کلاسیک خانواده", en:"Classic Tea (Family)"}, price:155},
-          {name:{fa:"چای سبز", en:"Green Tea"}, price:87},
-          {name:{fa:"چای میوه‌ای دو نفره", en:"Fruit Tea (For Two)"}, price:245},
-          {name:{fa:"چای میوه‌ای چهار نفره", en:"Fruit Tea (For Four)"}, price:299},
-          {name:{fa:"چای زعفرانی دو نفره", en:"Saffron Tea (For Two)"}, price:245},
-          {name:{fa:"چای زعفرانی چهار نفره", en:"Saffron Tea (For Four)"}, price:285},
-          {name:{fa:"تیرامیسو", en:"Tiramisu"}, price:220},
-          {name:{fa:"کیک شکلاتی", en:"Chocolate Cake"}, price:150},
-          {name:{fa:"کوک", en:"Coke"}, price:60},
-        ]},
-        { id:"herbal", name:{fa:"دمنوش", en:"Herbal Tea"}, items:[
-          {name:{fa:"گل گاوزبان", en:"Borage"}, price:210},
-          {name:{fa:"سلامت", en:"Salamat"}, price:240},
-          {name:{fa:"میوه اپی", en:"Api Fruit"}, price:210},
-          {name:{fa:"به لیمو", en:"Lemon Verbena"}, price:110},
-          {name:{fa:"لیمو عسل", en:"Honey Lemon"}, price:245},
-          {name:{fa:"فصلی", en:"Seasonal"}, price:180},
-          {name:{fa:"سیب و دارچین", en:"Apple Cinnamon"}, price:220},
-          {name:{fa:"مصری", en:"Egyptian"}, price:235},
-        ]},
-        { id:"hookah", name:{fa:"قلیان", en:"Hookah"}, items:[
-          {name:{fa:"دوسیب", en:"Two Apples"}, price:null},
-          {name:{fa:"دوسیب نعنا", en:"Two Apples Mint"}, price:null},
-          {name:{fa:"دوسیب هلو", en:"Two Apples Peach"}, price:null},
-          {name:{fa:"دوسیب آلبالو", en:"Two Apples Sour Cherry"}, price:null},
-          {name:{fa:"دوسیب شلیل", en:"Two Apples Nectarine"}, price:null},
-          {name:{fa:"پرتقال نعنا", en:"Orange Mint"}, price:null},
-          {name:{fa:"پرتقال خامه", en:"Orange Cream"}, price:null},
-          {name:{fa:"بلوبری", en:"Blueberry"}, price:null},
-          {name:{fa:"بلومیس", en:"Blue Mist"}, price:null},
-          {name:{fa:"هلو", en:"Peach"}, price:null},
-          {name:{fa:"آلبالو", en:"Sour Cherry"}, price:null},
-          {name:{fa:"شیرطالبی", en:"Melon Cream"}, price:null},
-          {name:{fa:"انبه", en:"Mango"}, price:null},
-          {name:{fa:"انگور", en:"Grape"}, price:null},
-          {name:{fa:"هندوانه", en:"Watermelon"}, price:null},
-          {name:{fa:"هندوانه نعنا", en:"Watermelon Mint"}, price:null},
-          {name:{fa:"هندوانه یخ", en:"Watermelon Ice"}, price:null},
-          {name:{fa:"لیمو نعنا", en:"Lemon Mint"}, price:null},
-          {name:{fa:"شیرموز یخ", en:"Banana Milk Ice"}, price:null},
-          {name:{fa:"آدامس", en:"Gum"}, price:null},
-          {name:{fa:"آدامس دارچینی", en:"Cinnamon Gum"}, price:null},
-          {name:{fa:"آدامس نعنا", en:"Mint Gum"}, price:null},
-          {name:{fa:"آدامس طالبی", en:"Melon Gum"}, price:null},
-          {name:{fa:"لاو", en:"Love"}, price:null},
-          {name:{fa:"شبهای مسکو", en:"Moscow Nights"}, price:null},
-          {name:{fa:"شبهای شیراز", en:"Shiraz Nights"}, price:null},
-          {name:{fa:"بیسکویت", en:"Biscuit"}, price:null},
-          {name:{fa:"شیخ مانی", en:"Sheikh Mani"}, price:null},
-          {name:{fa:"مومنتو", en:"Momento"}, price:null},
-          {name:{fa:"ذائو", en:"Zao"}, price:null},
-          {name:{fa:"لیدی اودری", en:"Lady Audrey"}, price:null},
-          {name:{fa:"برومنتیوس", en:"Bromentios"}, price:null},
-          {name:{fa:"فضا", en:"Space"}, price:null},
-          {name:{fa:"میکس ویژه صدرا", en:"Sadra Special Mix"}, price:null},
-        ]},
-      ]
-    }
-  ]
+const grouped = Number(price).toLocaleString('en-US');
+return lang === 'fa' ? _fd(grouped) : grouped;
+}
+const _dt = {
+brand:{ fa:"گذر صدرا", en:"GOZAR SADRA" },
+buffets:[
+{
+id:"gheimeh-ghormeh",
+icon:"soup",
+accent:"var(--b1)",
+accentSoft:"var(--b1-soft)",
+name:{ fa:"قیمه قرمه", en:"Gheimeh &amp; Ghormeh" },
+description:{ fa:"خورش‌های خانگی با برنج ایرانی و ته‌دیگ", en:"Home-style Persian stews with rice and tahdig" },
+categories:[
+{ id:"main", name:{fa:"غذای اصلی", en:"Main Dishes"}, items:[
+{name:{fa:"قیمه سیب‌زمینی با برنج ایرانی", en:"Gheimeh with Potato &amp; Persian Rice"}, price:375},
+{name:{fa:"قیمه بادمجان با برنج ایرانی", en:"Gheimeh with Eggplant &amp; Persian Rice"}, price:385},
+{name:{fa:"قرمه سبزی مامان‌پز با برنج ایرانی", en:"Homestyle Ghormeh Sabzi &amp; Persian Rice"}, price:375},
+{name:{fa:"فسنجون دزفولی با برنج ایرانی", en:"Dezfuli Fesenjan &amp; Persian Rice"}, price:445},
+{name:{fa:"قیمه با ته‌دیگ", en:"Gheimeh with Tahdig"}, price:295},
+{name:{fa:"قیمه بادمجان با ته‌دیگ", en:"Gheimeh with Eggplant &amp; Tahdig"}, price:315},
+{name:{fa:"قرمه سبزی با ته‌دیگ", en:"Ghormeh Sabzi with Tahdig"}, price:295},
+{name:{fa:"فسنجون با ته‌دیگ", en:"Fesenjan with Tahdig"}, price:390},
+]}
+]
+},
+{
+id:"dahe60",
+icon:"sandwich",
+accent:"var(--b2)",
+accentSoft:"var(--b2-soft)",
+name:{ fa:"دهه ۶۰", en:"Dahe 60" },
+description:{ fa:"ساندویچ و اسنک با طعم نوستالژی", en:"Nostalgic sandwiches and snacks" },
+categories:[
+{ id:"sandwich", name:{fa:"ساندویچ", en:"Sandwiches"}, items:[
+{name:{fa:"سوسیس آلمانی", en:"German Sausage"}, price:225},
+{name:{fa:"سوسیس بندری", en:"Bandari Sausage"}, price:265},
+{name:{fa:"سوسیس هندی", en:"Hendi Sausage"}, price:255},
+{name:{fa:"بندری مخصوص", en:"Special Bandari"}, price:335},
+{name:{fa:"هندی مخصوص", en:"Special Hendi"}, price:335},
+{name:{fa:"هات‌داگ", en:"Hot Dog"}, price:245},
+{name:{fa:"بلغاری", en:"Bulgarian Sausage"}, price:315},
+{name:{fa:"مارتادلا", en:"Mortadella"}, price:225},
+{name:{fa:"کتلت", en:"Cutlet"}, price:215},
+{name:{fa:"کتلت بندری", en:"Bandari Cutlet"}, price:365},
+{name:{fa:"مرغ و قارچ", en:"Chicken &amp; Mushroom"}, price:335},
+{name:{fa:"مرغ بندری", en:"Bandari Chicken"}, price:395},
+{name:{fa:"مرغ هندی", en:"Hendi Chicken"}, price:395},
+{name:{fa:"ساندویچ مغز و زبان", en:"Brain &amp; Tongue Sandwich"}, price:655},
+{name:{fa:"همبرگر معمولی", en:"Classic Burger"}, price:265},
+{name:{fa:"همبرگر مخصوص", en:"Special Burger"}, price:325},
+{name:{fa:"هات‌داگ پنیری", en:"Cheesy Hot Dog"}, price:285},
+]},
+{ id:"snack", name:{fa:"اسنک", en:"Snacks"}, items:[
+{name:{fa:"اسنک مخصوص", en:"Special Snack"}, price:265},
+{name:{fa:"اسنک مرغ و قارچ", en:"Chicken &amp; Mushroom Snack"}, price:285},
+{name:{fa:"اسنک پپرونی", en:"Pepperoni Snack"}, price:255},
+{name:{fa:"اسنک گوشت و قارچ", en:"Beef &amp; Mushroom Snack"}, price:325},
+{name:{fa:"اسنک ویژه", en:"Deluxe Snack"}, price:365},
+]},
+{ id:"other", name:{fa:"سایر", en:"Others"}, items:[
+{name:{fa:"کوکتل", en:"Cocktail Sausage"}, price:225},
+{name:{fa:"سالاد پاستا", en:"Pasta Salad"}, price:null},
+]},
+]
+},
+{
+id:"bastani",
+icon:"ice-cream-cone",
+accent:"var(--b3)",
+accentSoft:"var(--b3-soft)",
+name:{ fa:"بستنی", en:"Bastani" },
+description:{ fa:"آبمیوه، بستنی، شیک و معجون خنک", en:"Juices, ice cream, shakes and smoothies" },
+categories:[
+{ id:"juice", name:{fa:"آبمیوه", en:"Fresh Juice"}, items:[
+{name:{fa:"طالبی", en:"Cantaloupe Juice"}, price:150},
+{name:{fa:"طالبی بستنی", en:"Cantaloupe Juice with Ice Cream"}, price:180},
+{name:{fa:"توت‌فرنگی", en:"Strawberry Juice"}, price:270},
+{name:{fa:"سیب", en:"Apple Juice"}, price:170},
+{name:{fa:"هندوانه", en:"Watermelon Juice"}, price:120},
+{name:{fa:"هندوانه توت‌فرنگی", en:"Watermelon Strawberry Juice"}, price:200},
+{name:{fa:"هویج", en:"Carrot Juice"}, price:120},
+{name:{fa:"هویج بستنی", en:"Carrot Juice with Ice Cream"}, price:160},
+]},
+{ id:"mixjuice", name:{fa:"آبمیوه ترکیبی", en:"Mixed Juice"}, items:[
+{name:{fa:"سیب انبه", en:"Apple Mango"}, price:330},
+{name:{fa:"انبه موز", en:"Mango Banana"}, price:370},
+{name:{fa:"انبه توت‌فرنگی", en:"Mango Strawberry"}, price:370},
+{name:{fa:"سیب موز", en:"Apple Banana"}, price:220},
+{name:{fa:"موز توت‌فرنگی", en:"Banana Strawberry"}, price:300},
+]},
+{ id:"shake", name:{fa:"شیک و آیس‌پک", en:"Shakes &amp; Ice Pack"}, items:[
+{name:{fa:"شیک بادام‌زمینی", en:"Peanut Shake"}, price:380},
+{name:{fa:"شیک نوتلا", en:"Nutella Shake"}, price:450},
+{name:{fa:"شیک لوتوس", en:"Lotus Shake"}, price:450},
+{name:{fa:"شیک لوتوس/نوتلا", en:"Lotus / Nutella Shake"}, price:450},
+{name:{fa:"شیک شکلات", en:"Chocolate Shake"}, price:280},
+{name:{fa:"شیک موز", en:"Banana Shake"}, price:280},
+{name:{fa:"شیک توت‌فرنگی", en:"Strawberry Shake"}, price:280},
+{name:{fa:"آیس‌پک", en:"Ice Pack"}, price:280},
+{name:{fa:"شوکوبری", en:"Chocoberry"}, price:400},
+]},
+{ id:"milk", name:{fa:"شیرموز و معجون", en:"Banana Milk &amp; Smoothies"}, items:[
+{name:{fa:"معجون مخصوص", en:"Special Smoothie"}, price:480},
+{name:{fa:"معجون توت‌فرنگی", en:"Strawberry Smoothie"}, price:520},
+{name:{fa:"کیک بستنی", en:"Ice Cream Cake"}, price:380},
+{name:{fa:"شیرموز توت‌فرنگی", en:"Strawberry Banana Milk"}, price:300},
+{name:{fa:"شیرموز پسته", en:"Pistachio Banana Milk"}, price:350},
+{name:{fa:"شیرموز خرما", en:"Date Banana Milk"}, price:280},
+{name:{fa:"شیرموز نارگیل", en:"Coconut Banana Milk"}, price:240},
+{name:{fa:"شیرموز ۴ مغز", en:"Mixed Nuts Banana Milk"}, price:370},
+{name:{fa:"شیرموز انبه", en:"Mango Banana Milk"}, price:350},
+{name:{fa:"شیرموز", en:"Banana Milk"}, price:200},
+{name:{fa:"شیر پسته", en:"Pistachio Milk"}, price:360},
+]},
+{ id:"icecream", name:{fa:"بستنی", en:"Ice Cream"}, items:[
+{name:{fa:"بستنی کاسه‌ای", en:"Ice Cream Bowl"}, price:70},
+{name:{fa:"بستنی قیفی", en:"Ice Cream Cone"}, price:70},
+{name:{fa:"بستنی موز و توت‌فرنگی", en:"Banana &amp; Strawberry Ice Cream"}, price:180},
+]},
+]
+},
+{
+id:"world-food",
+icon:"globe",
+accent:"var(--b4)",
+accentSoft:"var(--b4-soft)",
+name:{ fa:"غذای ملل", en:"World Food" },
+description:{ fa:"طعم‌های بین‌المللی، از تاکو تا فلافل", en:"International bites, from tacos to falafel" },
+categories:[
+{ id:"world", name:{fa:"غذای ملل", en:"World Food"}, items:[
+{name:{fa:"تاکو مرغ", en:"Chicken Taco"}, price:320},
+{name:{fa:"تاکو گوشت", en:"Beef Taco"}, price:355},
+{name:{fa:"ناچوز کلاسیک", en:"Classic Nachos"}, price:220},
+{name:{fa:"شاورما گوشت", en:"Beef Shawarma"}, price:395},
+{name:{fa:"شاورما میکس", en:"Mix Shawarma"}, price:380},
+{name:{fa:"شاورما مرغ", en:"Chicken Shawarma"}, price:375},
+]},
+{ id:"falafel", name:{fa:"فلافل و سمبوسه", en:"Falafel &amp; Samosa"}, items:[
+{name:{fa:"فلافل مخصوص", en:"Special Falafel"}, price:175},
+{name:{fa:"فلافل لبنانی", en:"Lebanese Falafel"}, price:145},
+{name:{fa:"فلافل", en:"Falafel"}, price:100},
+{name:{fa:"فلافل پرسی", en:"Falafel Plate"}, price:215},
+{name:{fa:"سمبوسه", en:"Samosa"}, price:75},
+{name:{fa:"سمبوسه مخصوص", en:"Special Samosa"}, price:95},
+]},
+]
+},
+{
+id:"pizza",
+icon:"pizza",
+accent:"var(--b5)",
+accentSoft:"var(--b5-soft)",
+name:{ fa:"پیتزا", en:"Pizza" },
+description:{ fa:"پیتزاهای تک‌نفره و دونفره با خمیر مخصوص", en:"Single and double pizzas, oven-fresh" },
+categories:[
+{ id:"single", name:{fa:"پیتزا تک نفره", en:"Single Portion"}, items:[
+{name:{fa:"نوستالژی", en:"Nostalgia"}, price:465, description:{fa:"کالباس، سوسیس، قارچ، میکس پنیر پیتزا، فلفل دلمه", en:"Cold cuts, sausage, mushroom, pizza cheese mix, bell pepper"}},
+{name:{fa:"پپرونی", en:"Pepperoni"}, price:525, description:{fa:"ژامبون، پپرونی، قارچ، میکس پنیر پیتزا، زیتون، هالوپینو", en:"Ham, pepperoni, mushroom, pizza cheese mix, olives, jalapeño"}},
+{name:{fa:"رست بیف", en:"Roast Beef"}, price:755, description:{fa:"گوشت رست شده، سس ماشروم، میکس پنیر پیتزا، زیتون", en:"Roasted beef, mushroom sauce, pizza cheese mix, olives"}},
+{name:{fa:"چیکن سیسیلی", en:"Chicken Sicilian"}, price:535, description:{fa:"فیله مرغ مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Marinated chicken fillet, pizza cheese mix, mushroom, bell pepper"}},
+{name:{fa:"یونانی", en:"Greek"}, price:965, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، ژامبون، میکس پنیر پیتزا، قارچ، فلفل دلمه، زیتون، روکِن خمیر مخصوص", en:"Seasoned ground beef, ham, pizza cheese mix, mushroom, bell pepper, olives, special rolled crust"}},
+{name:{fa:"تاکو", en:"Taco"}, price:625, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, pizza cheese mix, mushroom, bell pepper"}},
+{name:{fa:"سرآشپز", en:"Chef's Special"}, price:695, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، فیله مرغ مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, marinated chicken fillet, pizza cheese mix, mushroom, bell pepper"}},
+{name:{fa:"مخصوص", en:"Special"}, price:615, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، ژامبون، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, ham, pizza cheese mix, mushroom, bell pepper"}},
+{name:{fa:"چهار فصل", en:"Four Seasons"}, price:675, description:{fa:"فیله مرغ مزه‌دار شده، ژامبون، پیاز، گوشت چرخ‌کرده، میکس پنیر پیتزا، گارنیش مخصوص", en:"Marinated chicken fillet, ham, onion, ground beef, pizza cheese mix, special garnish"}},
+{name:{fa:"سیب تنوری", en:"Oven-Baked Potato"}, price:395, description:{fa:"سیب‌زمینی سرخ شده، قارچ، ژامبون، پنیر پیتزا", en:"Fried potato, mushroom, ham, pizza cheese"}},
+{name:{fa:"نان سیر", en:"Garlic Bread"}, price:285, description:{fa:"نان سیر، پنیر، سس مخصوص", en:"Garlic bread, cheese, special sauce"}},
+]},
+{ id:"double", name:{fa:"پیتزا دونفره", en:"Double Portion"}, items:[
+{name:{fa:"نوستالژی", en:"Nostalgia"}, price:685, description:{fa:"کالباس، سوسیس، قارچ، میکس پنیر پیتزا، فلفل دلمه", en:"Cold cuts, sausage, mushroom, pizza cheese mix, bell pepper"}},
+{name:{fa:"پپرونی", en:"Pepperoni"}, price:725, description:{fa:"ژامبون، پپرونی، قارچ، میکس پنیر پیتزا، زیتون، هالوپینو", en:"Ham, pepperoni, mushroom, pizza cheese mix, olives, jalapeño"}},
+{name:{fa:"رست بیف", en:"Roast Beef"}, price:895, description:{fa:"گوشت رست شده، سس ماشروم، میکس پنیر پیتزا، زیتون", en:"Roasted beef, mushroom sauce, pizza cheese mix, olives"}},
+{name:{fa:"چیکن سیسیلی", en:"Chicken Sicilian"}, price:755, description:{fa:"فیله مرغ مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Marinated chicken fillet, pizza cheese mix, mushroom, bell pepper"}},
+{name:{fa:"یونانی", en:"Greek"}, price:825, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، ژامبون، میکس پنیر پیتزا، قارچ، فلفل دلمه، زیتون، روکِن خمیر مخصوص", en:"Seasoned ground beef, ham, pizza cheese mix, mushroom, bell pepper, olives, special rolled crust"}},
+{name:{fa:"تاکو", en:"Taco"}, price:795, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, pizza cheese mix, mushroom, bell pepper"}},
+{name:{fa:"سرآشپز", en:"Chef's Special"}, price:845, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، فیله مرغ مزه‌دار شده، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, marinated chicken fillet, pizza cheese mix, mushroom, bell pepper"}},
+{name:{fa:"مخصوص", en:"Special"}, price:785, description:{fa:"گوشت چرخ‌کرده مزه‌دار شده، ژامبون، میکس پنیر پیتزا، قارچ، فلفل دلمه", en:"Seasoned ground beef, ham, pizza cheese mix, mushroom, bell pepper"}},
+{name:{fa:"چهار فصل", en:"Four Seasons"}, price:825, description:{fa:"فیله مرغ مزه‌دار شده، ژامبون، پیاز، گوشت چرخ‌کرده، میکس پنیر پیتزا، گارنیش مخصوص", en:"Marinated chicken fillet, ham, onion, ground beef, pizza cheese mix, special garnish"}},
+{name:{fa:"سوپر ویژه گذرصدرا", en:"Gozar Sadra Super Special"}, price:1450, description:{fa:"ژامبون، گوشت چرخ‌کرده، پیاز، فیله مرغ، میکس پنیر پیتزا، قارچ", en:"Ham, ground beef, onion, chicken fillet, pizza cheese mix, mushroom"}},
+{name:{fa:"نیم متری مخصوص", en:"Special Half-Meter"}, price:2350, description:{fa:"ژامبون، گوشت چرخ‌کرده، فیله مرغ مزه‌دار شده، میکس پنیر پیتزا، قارچ", en:"Ham, ground beef, marinated chicken fillet, pizza cheese mix, mushroom"}},
+{name:{fa:"کینگ برگر", en:"King Burger"}, price:925, description:{fa:"برگر ۲ عدد، ژامبون ۴ عدد، میکس پنیر پیتزا، سس ماشروم", en:"2 burger patties, 4 pieces of ham, pizza cheese mix, mushroom sauce"}},
+]},
+]
+},
+{
+id:"burger-pasta",
+icon:"beef",
+accent:"var(--b6)",
+accentSoft:"var(--b6-soft)",
+name:{ fa:"برگر، پاستا و سیب‌وسالاد", en:"Burger, Pasta & Fries" },
+description:{ fa:"برگرهای دست‌ساز، پاستاهای کرمی و سیب‌وسالاد تازه، از یک بوفه", en:"Handcrafted burgers, creamy pastas, and fresh fries & salad, from one buffet" },
+categories:[
+{ id:"burgers", name:{fa:"برگر", en:"Burgers"}, items:[
+{name:{fa:"کلاسیک برگر", en:"Classic Burger"}, price:425},
+{name:{fa:"چیز برگر", en:"Cheese Burger"}, price:445},
+{name:{fa:"بیکن برگر", en:"Bacon Burger"}, price:460},
+{name:{fa:"ماشروم برگر", en:"Mushroom Burger"}, price:485},
+{name:{fa:"جوسی برگر", en:"Juicy Burger"}, price:495, description:{fa:"۱ عدد برگر + پیاز کاراملی", en:"1 burger patty + caramelized onion"}},
+{name:{fa:"کینگ برگر", en:"King Burger"}, price:715, description:{fa:"۲ عدد برگر + ۲ عدد ژامبون + میکس پنیر پیتزا", en:"2 burger patties + 2 pieces of ham + pizza cheese mix"}},
+{name:{fa:"چیکن برگر", en:"Chicken Burger"}, price:385, description:{fa:"۱ عدد برگر + ۱ عدد فیله سوخاری", en:"1 burger patty + 1 fried chicken fillet"}},
+{name:{fa:"بیگ مک", en:"Big Mac"}, price:475, description:{fa:"۱ عدد برگر + ژامبون + قارچ و پنیر", en:"1 burger patty + ham + mushroom and cheese"}},
+]},
+{ id:"pastas", name:{fa:"پاستا", en:"Pasta"}, items:[
+{name:{fa:"چیکن آلفردو", en:"Chicken Alfredo"}, price:445},
+{name:{fa:"بیف آلفردو", en:"Beef Alfredo"}, price:455},
+]},
+{ id:"fries-salad-items", name:{fa:"سیب و سالاد", en:"Fries &amp; Salad"}, items:[
+{name:{fa:"سیب مخصوص", en:"Special Fries"}, price:395},
+{name:{fa:"سیب با سس خارجی", en:"Fries with Imported Sauce"}, price:375},
+{name:{fa:"سیب با دیپ چدار", en:"Fries with Cheddar Dip"}, price:390},
+{name:{fa:"سالاد سزار سوخاری", en:"Crispy Chicken Caesar Salad"}, price:385},
+{name:{fa:"سالاد سزار گریل", en:"Grilled Chicken Caesar Salad"}, price:375},
+]},
+]
+},
+{
+id:"tea-house",
+icon:"coffee",
+accent:"var(--b9)",
+accentSoft:"var(--b9-soft)",
+name:{ fa:"چای خانه", en:"Tea House" },
+description:{ fa:"چای، دمنوش و قلیان در فضایی آرام", en:"Tea, herbal infusions and hookah in a relaxed setting" },
+categories:[
+{ id:"chapkhaneh", name:{fa:"چاپخانه", en:"Chapkhaneh"}, items:[
+{name:{fa:"چای کلاسیک", en:"Classic Tea"}, price:65},
+{name:{fa:"چای کلاسیک دونفره", en:"Classic Tea (For Two)"}, price:129},
+{name:{fa:"چای کلاسیک خانواده", en:"Classic Tea (Family)"}, price:155},
+{name:{fa:"چای سبز", en:"Green Tea"}, price:87},
+{name:{fa:"چای میوه‌ای دو نفره", en:"Fruit Tea (For Two)"}, price:245},
+{name:{fa:"چای میوه‌ای چهار نفره", en:"Fruit Tea (For Four)"}, price:299},
+{name:{fa:"چای زعفرانی دو نفره", en:"Saffron Tea (For Two)"}, price:245},
+{name:{fa:"چای زعفرانی چهار نفره", en:"Saffron Tea (For Four)"}, price:285},
+{name:{fa:"تیرامیسو", en:"Tiramisu"}, price:220},
+{name:{fa:"کیک شکلاتی", en:"Chocolate Cake"}, price:150},
+{name:{fa:"کوک", en:"Coke"}, price:60},
+]},
+{ id:"herbal", name:{fa:"دمنوش", en:"Herbal Tea"}, items:[
+{name:{fa:"گل گاوزبان", en:"Borage"}, price:210},
+{name:{fa:"سلامت", en:"Salamat"}, price:240},
+{name:{fa:"میوه اپی", en:"Api Fruit"}, price:210},
+{name:{fa:"به لیمو", en:"Lemon Verbena"}, price:110},
+{name:{fa:"لیمو عسل", en:"Honey Lemon"}, price:245},
+{name:{fa:"فصلی", en:"Seasonal"}, price:180},
+{name:{fa:"سیب و دارچین", en:"Apple Cinnamon"}, price:220},
+{name:{fa:"مصری", en:"Egyptian"}, price:235},
+]},
+{ id:"hookah", name:{fa:"قلیان", en:"Hookah"}, items:[
+{name:{fa:"دوسیب", en:"Two Apples"}, price:null},
+{name:{fa:"دوسیب نعنا", en:"Two Apples Mint"}, price:null},
+{name:{fa:"دوسیب هلو", en:"Two Apples Peach"}, price:null},
+{name:{fa:"دوسیب آلبالو", en:"Two Apples Sour Cherry"}, price:null},
+{name:{fa:"دوسیب شلیل", en:"Two Apples Nectarine"}, price:null},
+{name:{fa:"پرتقال نعنا", en:"Orange Mint"}, price:null},
+{name:{fa:"پرتقال خامه", en:"Orange Cream"}, price:null},
+{name:{fa:"بلوبری", en:"Blueberry"}, price:null},
+{name:{fa:"بلومیس", en:"Blue Mist"}, price:null},
+{name:{fa:"هلو", en:"Peach"}, price:null},
+{name:{fa:"آلبالو", en:"Sour Cherry"}, price:null},
+{name:{fa:"شیرطالبی", en:"Melon Cream"}, price:null},
+{name:{fa:"انبه", en:"Mango"}, price:null},
+{name:{fa:"انگور", en:"Grape"}, price:null},
+{name:{fa:"هندوانه", en:"Watermelon"}, price:null},
+{name:{fa:"هندوانه نعنا", en:"Watermelon Mint"}, price:null},
+{name:{fa:"هندوانه یخ", en:"Watermelon Ice"}, price:null},
+{name:{fa:"لیمو نعنا", en:"Lemon Mint"}, price:null},
+{name:{fa:"شیرموز یخ", en:"Banana Milk Ice"}, price:null},
+{name:{fa:"آدامس", en:"Gum"}, price:null},
+{name:{fa:"آدامس دارچینی", en:"Cinnamon Gum"}, price:null},
+{name:{fa:"آدامس نعنا", en:"Mint Gum"}, price:null},
+{name:{fa:"آدامس طالبی", en:"Melon Gum"}, price:null},
+{name:{fa:"لاو", en:"Love"}, price:null},
+{name:{fa:"شبهای مسکو", en:"Moscow Nights"}, price:null},
+{name:{fa:"شبهای شیراز", en:"Shiraz Nights"}, price:null},
+{name:{fa:"بیسکویت", en:"Biscuit"}, price:null},
+{name:{fa:"شیخ مانی", en:"Sheikh Mani"}, price:null},
+{name:{fa:"مومنتو", en:"Momento"}, price:null},
+{name:{fa:"ذائو", en:"Zao"}, price:null},
+{name:{fa:"لیدی اودری", en:"Lady Audrey"}, price:null},
+{name:{fa:"برومنتیوس", en:"Bromentios"}, price:null},
+{name:{fa:"فضا", en:"Space"}, price:null},
+{name:{fa:"میکس ویژه صدرا", en:"Sadra Special Mix"}, price:null},
+]},
+]
+}
+]
 };
-
-/* ======================= state ======================= */
-const DEFAULT_THEME = 'light'; // پیش‌فرض سایت؛ برای تغییر پیش‌فرض فقط همین مقدار را عوض کنید
-const state = {
-  lang: localStorage.getItem('gs_lang') || 'fa',
-  theme: localStorage.getItem('gs_theme') || DEFAULT_THEME,
-  view: 'home',       // 'home' | 'buffet'
-  buffetId: null,
-  activeCategoryId: null,
+const _dth = 'light';
+const _st = {
+lang: localStorage.getItem('gs_lang') || 'fa',
+theme: localStorage.getItem('gs_theme') || _dth,
+view: 'home',
+buffetId: null,
+activeCategoryId: null,
 };
-
-/* ======================= icon helper ======================= */
-function iconSVG(name, cls){
-  // returns an <i data-lucide> placeholder swapped by lucide.createIcons()
-  return `<i data-lucide="${name}" class="${cls||''}"></i>`;
+function _ic(name, cls){
+return `<i data-lucide="${name}" class="${cls||''}"></i>`;
 }
-
-/* ======================= render ======================= */
-const app = document.getElementById('app');
-
-function applyChrome(){
-  document.documentElement.setAttribute('lang', state.lang);
-  document.documentElement.setAttribute('dir', state.lang === 'fa' ? 'rtl' : 'ltr');
-  document.documentElement.setAttribute('data-theme', state.theme);
-  document.title = state.lang === 'fa' ? 'گذر صدرا | منوی بوفه‌ها' : 'GOZAR SADRA | Buffet Menus';
-  const metaDesc = document.querySelector('meta[name="description"]');
-  if(metaDesc){
-    metaDesc.setAttribute('content', state.lang === 'fa'
-      ? 'منوی همه بوفه‌های گذر صدرا در یک‌جا'
-      : 'All GOZAR SADRA buffet menus in one place');
-  }
-
-  document.querySelectorAll('[data-lang]').forEach(btn=>{
-    btn.classList.toggle('active', btn.dataset.lang === state.lang);
-  });
-
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const key = el.getAttribute('data-i18n');
-    if(typeof I18N[state.lang][key] === 'string') el.textContent = I18N[state.lang][key];
-  });
-
-  const themeBtn = document.getElementById('theme-toggle');
-  themeBtn.setAttribute('aria-label', state.theme === 'dark' ? I18N[state.lang].themeToLight : I18N[state.lang].themeToDark);
-  themeBtn.title = themeBtn.getAttribute('aria-label');
+const _ap = document.getElementById('app');
+function _ac(){
+document.documentElement.setAttribute('lang', _st.lang);
+document.documentElement.setAttribute('dir', _st.lang === 'fa' ? 'rtl' : 'ltr');
+document.documentElement.setAttribute('data-theme', _st.theme);
+document.title = _st.lang === 'fa' ? 'گذر صدرا | منوی بوفه‌ها' : 'GOZAR SADRA | Buffet Menus';
+const metaDesc = document.querySelector('meta[name="description"]');
+if(metaDesc){
+metaDesc.setAttribute('content', _st.lang === 'fa'
+? 'منوی همه بوفه‌های گذر صدرا در یک‌جا'
+: 'All GOZAR SADRA buffet menus in one place');
 }
-
-function renderIcons(){
-  if(window.lucide) window.lucide.createIcons();
+document.querySelectorAll('[data-lang]').forEach(btn=>{
+btn.classList.toggle('active', btn.dataset.lang === _st.lang);
+});
+document.querySelectorAll('[data-i18n]').forEach(el=>{
+const key = el.getAttribute('data-i18n');
+if(typeof _i18[_st.lang][key] === 'string') el.textContent = _i18[_st.lang][key];
+});
+const themeBtn = document.getElementById('theme-toggle');
+themeBtn.setAttribute('aria-label', _st.theme === 'dark' ? _i18[_st.lang].themeToLight : _i18[_st.lang].themeToDark);
+themeBtn.title = themeBtn.getAttribute('aria-label');
 }
-
-function renderHome(){
-  const t = I18N[state.lang];
-  const cards = DATA.buffets.map(b=>{
-    const count = b.categories.reduce((sum,c)=>sum+c.items.length,0);
-    return `
-      <button type="button" class="buffet-card" data-buffet="${b.id}" style="--card-accent:${b.accent}; --card-accent-soft:${b.accentSoft};">
-        <div class="buffet-icon">${iconSVG(b.icon)}</div>
-        <div>
-          <h3>${esc(b.name[state.lang])}</h3>
-          <p class="desc">${esc(b.description[state.lang])}</p>
-        </div>
-        <div class="buffet-card-foot">
-          <span class="item-count num">${t.itemsCount(count)}</span>
-          <span class="go-arrow">${iconSVG(state.lang==='fa' ? 'arrow-left' : 'arrow-right')}</span>
-        </div>
-      </button>`;
-  }).join('');
-
-  app.innerHTML = `
-    <section class="hero">
-      <div class="container">
-        <span class="hero-eyebrow">${iconSVG('sparkles')}<span>${t.heroEyebrow}</span></span>
-        <h1>${t.heroTitle}</h1>
-        <p>${t.heroSubtitle}</p>
-        ${archesSVG()}
-      </div>
-    </section>
-    <section class="section-pad">
-      <div class="container">
-        <div class="buffet-grid view">${cards}</div>
-      </div>
-    </section>
-  `;
-  renderIcons();
-
-  app.querySelectorAll('.buffet-card').forEach(card=>{
-    card.addEventListener('click', ()=> goToBuffet(card.dataset.buffet));
-  });
+function _ri(){
+if(window.lucide) window.lucide.createIcons();
 }
-
-function renderBuffet(){
-  const buffet = DATA.buffets.find(b=>b.id===state.buffetId);
-  const t = I18N[state.lang];
-  if(!buffet){ renderHome(); return; }
-
-  if(!state.activeCategoryId || !buffet.categories.some(c=>c.id===state.activeCategoryId)){
-    state.activeCategoryId = buffet.categories[0] ? buffet.categories[0].id : null;
-  }
-
-  const hasCategories = buffet.categories.length > 0;
-  const showTabs = buffet.categories.length > 1;
-
-  let bodyHTML;
-  if(!hasCategories || buffet.categories.every(c=>c.items.length===0)){
-    bodyHTML = `
-      <div class="empty-state view">
-        <div class="ic">${iconSVG('clipboard-list')}</div>
-        <h3>${t.emptyBuffetTitle}</h3>
-        <p>${t.emptyBuffetDesc}</p>
-      </div>`;
-  } else {
-    const tabsHTML = showTabs ? `
-      <div class="tab-row">
-        ${buffet.categories.map(c=>`
-          <button type="button" class="tab-pill ${c.id===state.activeCategoryId?'active':''}" data-cat="${c.id}" style="--tab-accent:${buffet.accent};">
-            ${esc(c.name[state.lang])}
-          </button>`).join('')}
-      </div>` : '';
-
-    const activeCat = buffet.categories.find(c=>c.id===state.activeCategoryId) || buffet.categories[0];
-    const itemsHTML = activeCat.items.map(item=>{
-      const priceKnown = item.price !== null && item.price !== undefined;
-      return `
-        <div class="food-row" style="--row-accent:${buffet.accent};">
-          <div class="food-main">
-            <h4>${esc(item.name[state.lang])}</h4>
-            ${item.description ? `<p>${esc(item.description[state.lang])}</p>` : ''}
-          </div>
-          <div class="food-price num ${priceKnown ? '' : 'unknown'}">
-            ${priceKnown ? formatPrice(item.price, state.lang) : t.priceUnknown}
-            ${priceKnown ? `<span class="unit">${t.currency}</span>` : ''}
-          </div>
-        </div>`;
-    }).join('');
-
-    bodyHTML = `
-      ${tabsHTML}
-      <div class="menu-list view">
-        ${!showTabs && hasCategories ? `<div class="group-heading"><h5>${esc(activeCat.name[state.lang])}</h5></div>` : ''}
-        ${itemsHTML}
-      </div>`;
-  }
-
-  app.innerHTML = `
-    <section class="detail-header">
-      <div class="container">
-        <button type="button" class="back-btn" id="back-btn">
-          ${iconSVG(state.lang==='fa' ? 'arrow-right' : 'arrow-left')}
-          <span>${t.back}</span>
-        </button>
-        <div class="detail-title-row">
-          <div class="detail-icon" style="--dt-accent:${buffet.accent}; --dt-accent-soft:${buffet.accentSoft};">${iconSVG(buffet.icon)}</div>
-          <div>
-            <h2>${esc(buffet.name[state.lang])}</h2>
-            <p class="desc">${esc(buffet.description[state.lang])}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="container">
-      ${bodyHTML}
-    </section>
-  `;
-  renderIcons();
-
-  document.getElementById('back-btn').addEventListener('click', goHome);
-  app.querySelectorAll('.tab-pill').forEach(tab=>{
-    tab.addEventListener('click', ()=>{
-      state.activeCategoryId = tab.dataset.cat;
-      renderBuffet();
-    });
-  });
+function _rh(){
+const t = _i18[_st.lang];
+const cards = _dt.buffets.map(b=>{
+const count = b.categories.reduce((sum,c)=>sum+c.items.length,0);
+return `
+<button type="button" class="buffet-card" data-buffet="${b.id}" style="--card-accent:${b.accent}; --card-accent-soft:${b.accentSoft};">
+<div class="buffet-icon">${_ic(b.icon)}</div>
+<div>
+<h3>${_es(b.name[_st.lang])}</h3>
+<p class="desc">${_es(b.description[_st.lang])}</p>
+</div>
+<div class="buffet-card-foot">
+<span class="item-count num">${t.itemsCount(count)}</span>
+<span class="go-arrow">${_ic(_st.lang==='fa' ? 'arrow-left' : 'arrow-right')}</span>
+</div>
+</button>`;
+}).join('');
+_ap.innerHTML = `
+<section class="hero">
+<div class="container">
+<span class="hero-eyebrow">${_ic('sparkles')}<span>${t.heroEyebrow}</span></span>
+<h1>${t.heroTitle}</h1>
+<p>${t.heroSubtitle}</p>
+${_as()}
+</div>
+</section>
+<section class="section-pad">
+<div class="container">
+<div class="buffet-grid view">${cards}</div>
+</div>
+</section>
+`;
+_ri();
+_ap.querySelectorAll('.buffet-card').forEach(card=>{
+card.addEventListener('click', ()=> _gb(card.dataset.buffet));
+});
 }
-
-function archesSVG(){
-  // signature motif: a quiet line of bazaar-passage arches
-  const n = 14;
-  let arches = '';
-  const w = 60;
-  for(let i=0;i<n;i++){
-    const x = i*w + w/2;
-    arches += `<path d="M ${x-22} 46 L ${x-22} 22 A 22 22 0 0 1 ${x+22} 22 L ${x+22} 46" fill="none" stroke="currentColor" stroke-width="1.4"/>`;
-  }
-  return `<svg class="arches" viewBox="0 0 ${n*w} 50" preserveAspectRatio="none" aria-hidden="true">${arches}</svg>`;
+function _rb(){
+const buffet = _dt.buffets.find(b=>b.id===_st.buffetId);
+const t = _i18[_st.lang];
+if(!buffet){ _rh(); return; }
+if(!_st.activeCategoryId || !buffet.categories.some(c=>c.id===_st.activeCategoryId)){
+_st.activeCategoryId = buffet.categories[0] ? buffet.categories[0].id : null;
 }
-
-function esc(str){
-  // name/description strings are authored constants (may include a few safe tags like &amp;)
-  return str;
+const hasCategories = buffet.categories.length > 0;
+const showTabs = buffet.categories.length > 1;
+let bodyHTML;
+if(!hasCategories || buffet.categories.every(c=>c.items.length===0)){
+bodyHTML = `
+<div class="empty-state view">
+<div class="ic">${_ic('clipboard-list')}</div>
+<h3>${t.emptyBuffetTitle}</h3>
+<p>${t.emptyBuffetDesc}</p>
+</div>`;
+} else {
+const tabsHTML = showTabs ? `
+<div class="tab-row">
+${buffet.categories.map(c=>`
+<button type="button" class="tab-pill ${c.id===_st.activeCategoryId?'active':''}" data-cat="${c.id}" style="--tab-accent:${buffet.accent};">
+${_es(c.name[_st.lang])}
+</button>`).join('')}
+</div>` : '';
+const activeCat = buffet.categories.find(c=>c.id===_st.activeCategoryId) || buffet.categories[0];
+const itemsHTML = activeCat.items.map(item=>{
+const priceKnown = item.price !== null && item.price !== undefined;
+return `
+<div class="food-row" style="--row-accent:${buffet.accent};">
+<div class="food-main">
+<h4>${_es(item.name[_st.lang])}</h4>
+${item.description ? `<p>${_es(item.description[_st.lang])}</p>` : ''}
+</div>
+<div class="food-price num ${priceKnown ? '' : 'unknown'}">
+${priceKnown ? _fp(item.price, _st.lang) : t.priceUnknown}
+${priceKnown ? `<span class="unit">${t.currency}</span>` : ''}
+</div>
+</div>`;
+}).join('');
+bodyHTML = `
+${tabsHTML}
+<div class="menu-list view">
+${!showTabs && hasCategories ? `<div class="group-heading"><h5>${_es(activeCat.name[_st.lang])}</h5></div>` : ''}
+${itemsHTML}
+</div>`;
 }
-
-/* ======================= navigation ======================= */
-function goToBuffet(id){
-  state.view = 'buffet';
-  state.buffetId = id;
-  state.activeCategoryId = null;
-  history.pushState({view:'buffet', id}, '', '#'+id);
-  renderBuffet();
-  window.scrollTo({top:0, behavior:'instant'});
+_ap.innerHTML = `
+<section class="detail-header">
+<div class="container">
+<button type="button" class="back-btn" id="back-btn">
+${_ic(_st.lang==='fa' ? 'arrow-right' : 'arrow-left')}
+<span>${t.back}</span>
+</button>
+<div class="detail-title-row">
+<div class="detail-icon" style="--dt-accent:${buffet.accent}; --dt-accent-soft:${buffet.accentSoft};">${_ic(buffet.icon)}</div>
+<div>
+<h2>${_es(buffet.name[_st.lang])}</h2>
+<p class="desc">${_es(buffet.description[_st.lang])}</p>
+</div>
+</div>
+</div>
+</section>
+<section class="container">
+${bodyHTML}
+</section>
+`;
+_ri();
+document.getElementById('back-btn').addEventListener('click', _gh);
+_ap.querySelectorAll('.tab-pill').forEach(tab=>{
+tab.addEventListener('click', ()=>{
+_st.activeCategoryId = tab.dataset.cat;
+_rb();
+});
+});
 }
-function goHome(){
-  state.view = 'home';
-  state.buffetId = null;
-  history.pushState({view:'home'}, '', '#');
-  renderHome();
-  window.scrollTo({top:0, behavior:'instant'});
+function _as(){
+const n = 14;
+let arches = '';
+const w = 60;
+for(let i=0;i<n;i++){
+const x = i*w + w/2;
+arches += `<path d="M ${x-22} 46 L ${x-22} 22 A 22 22 0 0 1 ${x+22} 22 L ${x+22} 46" fill="none" stroke="currentColor" stroke-width="1.4"/>`;
+}
+return `<svg class="arches" viewBox="0 0 ${n*w} 50" preserveAspectRatio="none" aria-hidden="true">${arches}</svg>`;
+}
+function _es(str){
+return str;
+}
+function _gb(id){
+_st.view = 'buffet';
+_st.buffetId = id;
+_st.activeCategoryId = null;
+history.pushState({view:'buffet', id}, '', '#'+id);
+_rb();
+window.scrollTo({top:0, behavior:'instant'});
+}
+function _gh(){
+_st.view = 'home';
+_st.buffetId = null;
+history.pushState({view:'home'}, '', '#');
+_rh();
+window.scrollTo({top:0, behavior:'instant'});
 }
 window.addEventListener('popstate', (e)=>{
-  const s = e.state;
-  if(s && s.view === 'buffet'){
-    state.view = 'buffet'; state.buffetId = s.id; state.activeCategoryId = null;
-    renderBuffet();
-  } else {
-    state.view = 'home'; state.buffetId = null;
-    renderHome();
-  }
-});
-
-function render(){
-  applyChrome();
-  if(state.view === 'buffet') renderBuffet();
-  else renderHome();
+const s = e._st;
+if(s && s.view === 'buffet'){
+_st.view = 'buffet'; _st.buffetId = s.id; _st.activeCategoryId = null;
+_rb();
+} else {
+_st.view = 'home'; _st.buffetId = null;
+_rh();
 }
-
-/* ======================= controls ======================= */
+});
+function _rn(){
+_ac();
+if(_st.view === 'buffet') _rb();
+else _rh();
+}
 document.querySelectorAll('[data-lang]').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    if(state.lang === btn.dataset.lang) return;
-    state.lang = btn.dataset.lang;
-    localStorage.setItem('gs_lang', state.lang);
-    render();
-  });
+btn.addEventListener('click', ()=>{
+if(_st.lang === btn.dataset.lang) return;
+_st.lang = btn.dataset.lang;
+localStorage.setItem('gs_lang', _st.lang);
+_rn();
 });
-
+});
 document.getElementById('theme-toggle').addEventListener('click', ()=>{
-  state.theme = state.theme === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('gs_theme', state.theme);
-  applyChrome();
-  renderThemeIcon();
+_st.theme = _st.theme === 'dark' ? 'light' : 'dark';
+localStorage.setItem('gs_theme', _st.theme);
+_ac();
+_rt();
 });
-
-function renderThemeIcon(){
-  const holder = document.getElementById('icon-theme');
-  holder.setAttribute('data-lucide', state.theme === 'dark' ? 'sun' : 'moon');
-  renderIcons();
+function _rt(){
+const holder = document.getElementById('icon-theme');
+holder.setAttribute('data-lucide', _st.theme === 'dark' ? 'sun' : 'moon');
+_ri();
 }
-
-/* ======================= init ======================= */
-(function init(){
-  document.getElementById('icon-brand').setAttribute('data-lucide','utensils');
-  renderThemeIcon();
-
-  const startOnBuffet = location.hash && location.hash.length > 1 && DATA.buffets.some(b=>b.id===location.hash.slice(1));
-  if(startOnBuffet){
-    state.view = 'buffet';
-    state.buffetId = location.hash.slice(1);
-    history.replaceState({view:'buffet', id:state.buffetId}, '', location.hash);
-  } else {
-    history.replaceState({view:'home'}, '', '#');
-  }
-
-  applyChrome();
-  render();
-
-  if(document.readyState !== 'loading'){
-    renderIcons();
-  } else {
-    document.addEventListener('DOMContentLoaded', renderIcons);
-  }
-  window.addEventListener('load', renderIcons);
+(function _in(){
+document.getElementById('icon-brand').setAttribute('data-lucide','utensils');
+_rt();
+const startOnBuffet = location.hash && location.hash.length > 1 && _dt.buffets.some(b=>b.id===location.hash.slice(1));
+if(startOnBuffet){
+_st.view = 'buffet';
+_st.buffetId = location.hash.slice(1);
+history.replaceState({view:'buffet', id:_st.buffetId}, '', location.hash);
+} else {
+history.replaceState({view:'home'}, '', '#');
+}
+_ac();
+_rn();
+if(document.readyState !== 'loading'){
+_ri();
+} else {
+document.addEventListener('DOMContentLoaded', _ri);
+}
+window.addEventListener('load', _ri);
 })();
-</script>
-</body>
-</html>
+</script></body></html>
