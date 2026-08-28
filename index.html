@@ -113,21 +113,21 @@ html[data-theme="dark"]{
 .icon-btn svg{width:18px;height:18px;stroke-width:2.2}
 
 /* ========== Hero ========== */
-.hero{position:relative;padding-block:var(--space-12) var(--space-10);overflow:hidden;isolation:isolate}
+.hero{position:relative;padding-block:var(--space-6) var(--space-4);overflow:hidden;isolation:isolate}
 .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 20% 30%,var(--overlay) 0%,transparent 40%),radial-gradient(circle at 80% 70%,var(--overlay) 0%,transparent 40%);z-index:-2}
 .hero::after{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent 0,transparent 12px,var(--pattern) 12px,var(--pattern) 13px);z-index:-1;opacity:.6;pointer-events:none}
 .hero .container{position:relative;z-index:1;text-align:center}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent-strong);border-radius:var(--radius-pill);font-size:12.5px;font-weight:800;letter-spacing:.04em;margin-bottom:var(--space-5);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
-.hero-eyebrow svg{width:14px;height:14px;stroke-width:2.4}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent-strong);border-radius:var(--radius-pill);font-size:11.5px;font-weight:800;letter-spacing:.04em;margin-bottom:var(--space-3);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
+.hero-eyebrow svg{width:13px;height:13px;stroke-width:2.4}
 html[data-theme="dark"] .hero-eyebrow{color:var(--accent-strong)}
-.hero h1{font-size:clamp(34px,6vw,52px);line-height:1.1;letter-spacing:-.025em;font-weight:900;color:var(--text);margin-bottom:var(--space-4)}
-.hero p{font-size:clamp(15px,2.2vw,17px);color:var(--text-muted);max-width:62ch;margin-inline:auto;font-weight:500}
-.arches{display:block;margin:var(--space-8) auto 0;height:auto;color:var(--accent);opacity:.55;max-width:100%}
-@media (min-width:768px){.hero{padding-block:var(--space-16) var(--space-12)}}
+.hero h1{font-size:clamp(22px,4vw,32px);line-height:1.15;letter-spacing:-.02em;font-weight:900;color:var(--text);margin-bottom:var(--space-2)}
+.hero p{font-size:clamp(12.5px,1.6vw,14.5px);color:var(--text-muted);max-width:58ch;margin-inline:auto;font-weight:500}
+.arches{display:none}
+@media (min-width:768px){.hero{padding-block:var(--space-8) var(--space-5)}.arches{display:block;margin:var(--space-5) auto 0;height:auto;color:var(--accent);opacity:.55;max-width:100%}}
 
 /* ========== Grid of buffets ========== */
-.section-pad{padding-block:var(--space-6) var(--space-16)}
-.buffet-grid{display:grid;grid-template-columns:1fr;gap:var(--space-4)}
+.section-pad{padding-block:var(--space-3) var(--space-16)}
+.buffet-grid{display:grid;grid-template-columns:1fr;gap:var(--space-4);contain:layout style}
 @media (min-width:640px){.buffet-grid{grid-template-columns:repeat(2,1fr);gap:var(--space-5)}}
 @media (min-width:1020px){.buffet-grid{grid-template-columns:repeat(3,1fr)}}
 .buffet-card{text-align:start;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-6);cursor:pointer;display:flex;flex-direction:column;gap:var(--space-4);box-shadow:var(--shadow-1);transition:transform var(--dur-med) var(--ease-out),box-shadow var(--dur-med) var(--ease),border-color var(--dur-med) var(--ease);position:relative;overflow:hidden;-webkit-user-select:none;user-select:none;font-family:inherit;color:inherit;min-height:180px}
@@ -181,7 +181,7 @@ html[lang="fa"] .search-input{padding:11px 40px 11px 16px}
 .search-icon svg{width:16px;height:16px;stroke-width:2.4}
 
 /* ========== Menu items ========== */
-.menu-list{padding-block:var(--space-3) var(--space-16);display:flex;flex-direction:column;gap:var(--space-3)}
+.menu-list{padding-block:var(--space-3) var(--space-16);display:flex;flex-direction:column;gap:var(--space-3);contain:layout style}
 .group-heading{display:flex;align-items:center;gap:var(--space-3);margin-block:var(--space-3) var(--space-1)}
 .group-heading h5{font-size:13px;font-weight:800;color:var(--text);text-transform:none;letter-spacing:0}
 .group-heading::after{content:"";flex:1;height:1px;background:var(--border)}
@@ -251,7 +251,6 @@ html[lang="en"] .progress-bar{transform-origin:left}
 </head>
 <body>
 <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
-<a href="#app" class="sr-skip" style="position:absolute;right:auto;top:-40px;left:var(--space-5);background:var(--accent);color:#fff;padding:8px 14px;border-radius:8px;z-index:99;transition:top var(--dur-fast) var(--ease)" onfocus="this.style.top='8px'" onblur="this.style.top='-40px'">پرش به محتوا</a>
 <header class="site-header" role="banner">
 <div class="container header-inner">
 <a class="brand" href="#" aria-label="گذر صدرا - صفحه‌ی اصلی">
@@ -689,6 +688,13 @@ themeBtn.setAttribute('aria-label', _st.theme === 'dark' ? _i18[_st.lang].themeT
 themeBtn.title = themeBtn.getAttribute('aria-label');
 }
 function _ri(){ if(window.lucide) window.lucide.createIcons(); }
+function _debounce(fn, wait){
+let timer;
+return function(...args){
+clearTimeout(timer);
+timer = setTimeout(()=>fn.apply(this, args), wait);
+};
+}
 
 function _showProgress(){
 if(!_pb) return;
@@ -724,16 +730,7 @@ return `
 </button>`;
 }
 
-function _rh(){
-const t = _i18[_st.lang];
-const query = (_st.homeSearch || '').trim().toLowerCase();
-const searchHTML = `
-<div class="search-row">
-<span class="search-icon" aria-hidden="true">${_ic('search')}</span>
-<input type="search" class="search-input" id="home-search-input" autocomplete="off" spellcheck="false" placeholder="${_es(t.homeSearchPlaceholder)}" value="${_es(_st.homeSearch)}" aria-label="${_es(t.homeSearchPlaceholder)}">
-${_st.homeSearch ? `<button type="button" class="icon-btn" id="home-clear-search" aria-label="${_es(t.searchClear)}" style="width:36px;height:36px">${_ic('x')}</button>` : ''}
-</div>`;
-let resultsHTML;
+function _homeResultsHTML(t, query){
 if(query){
 const matchedBuffets = _dt.buffets.filter(b =>
 (b.name[_st.lang]||'').toLowerCase().includes(query) ||
@@ -750,13 +747,13 @@ if(nameMatch || descMatch) matchedItems.push({item:it, buffet:b});
 });
 });
 if(!matchedBuffets.length && !matchedItems.length){
-resultsHTML = `
+return `
 <div class="empty-state view">
 <div class="ic">${_ic('search-x')}</div>
 <h3>${t.homeSearchEmptyTitle}</h3>
 <p>${t.homeSearchEmptyDesc}</p>
 </div>`;
-} else {
+}
 const buffetsBlock = matchedBuffets.length ? `
 <div class="group-heading"><h5>${_es(t.matchingBuffets)}</h5></div>
 <div class="buffet-grid view view-stagger">${matchedBuffets.map(b=>_bCard(b,t)).join('')}</div>` : '';
@@ -779,11 +776,30 @@ ${priceKnown ? `<span class="unit">${t.currency}</span>` : ''}
 </button>`;
 }).join('')}
 </div>` : '';
-resultsHTML = `${buffetsBlock}${itemsBlock}`;
+return `${buffetsBlock}${itemsBlock}`;
 }
-} else {
-resultsHTML = `<div class="buffet-grid view view-stagger">${_dt.buffets.map(b=>_bCard(b,t)).join('')}</div>`;
+return `<div class="buffet-grid view view-stagger">${_dt.buffets.map(b=>_bCard(b,t)).join('')}</div>`;
 }
+
+function _rhResults(){
+const t = _i18[_st.lang];
+const query = (_st.homeSearch || '').trim().toLowerCase();
+const container = document.getElementById('home-results');
+if(!container) return;
+container.innerHTML = _homeResultsHTML(t, query);
+_ri();
+container.querySelectorAll('.buffet-card').forEach(card=>{
+card.addEventListener('click', ()=> _gb(card.dataset.buffet));
+});
+container.querySelectorAll('.result-row').forEach(row=>{
+row.addEventListener('click', ()=> _gb(row.dataset.buffet, _st.homeSearch));
+});
+const hcs = document.getElementById('home-clear-search');
+if(hcs) hcs.style.display = _st.homeSearch ? '' : 'none';
+}
+
+function _rh(){
+const t = _i18[_st.lang];
 _ap.innerHTML = `
 <section class="hero">
 <div class="container">
@@ -795,65 +811,38 @@ ${_as()}
 </section>
 <section class="section-pad">
 <div class="container">
-${searchHTML}
-${resultsHTML}
+<div class="search-row">
+<span class="search-icon" aria-hidden="true">${_ic('search')}</span>
+<input type="search" class="search-input" id="home-search-input" autocomplete="off" spellcheck="false" placeholder="${_es(t.homeSearchPlaceholder)}" value="${_es(_st.homeSearch)}" aria-label="${_es(t.homeSearchPlaceholder)}">
+<button type="button" class="icon-btn" id="home-clear-search" aria-label="${_es(t.searchClear)}" style="width:36px;height:36px;${_st.homeSearch ? '' : 'display:none'}">${_ic('x')}</button>
+</div>
+<div id="home-results"></div>
 </div>
 </section>
 `;
 _ri();
-_ap.querySelectorAll('.buffet-card').forEach(card=>{
-card.addEventListener('click', ()=> _gb(card.dataset.buffet));
-});
-_ap.querySelectorAll('.result-row').forEach(row=>{
-row.addEventListener('click', ()=> _gb(row.dataset.buffet, _st.homeSearch));
-});
 const hsi = document.getElementById('home-search-input');
-if(hsi){
-hsi.addEventListener('input', (e)=>{
+const onHomeInput = _debounce((e)=>{
 _st.homeSearch = e.target.value;
-_rh();
-const newHsi = document.getElementById('home-search-input');
-if(newHsi){
-newHsi.focus();
-newHsi.setSelectionRange(newHsi.value.length, newHsi.value.length);
-}
-});
+_rhResults();
+}, 120);
+if(hsi){
+hsi.addEventListener('input', onHomeInput);
 }
 const hcs = document.getElementById('home-clear-search');
 if(hcs){
 hcs.addEventListener('click', ()=>{
 _st.homeSearch = '';
-_rh();
+if(hsi) hsi.value = '';
+_rhResults();
+if(hsi) hsi.focus();
 });
 }
+_rhResults();
 }
 
-function _rb(){
-const buffet = _dt.buffets.find(b=>b.id===_st.buffetId);
-const t = _i18[_st.lang];
-if(!buffet){ _rh(); return; }
-if(!_st.activeCategoryId || !buffet.categories.some(c=>c.id===_st.activeCategoryId)){
-_st.activeCategoryId = buffet.categories[0] ? buffet.categories[0].id : null;
-}
-const hasCategories = buffet.categories.length > 0;
+function _menuItemsHTML(buffet, t, search){
 const showTabs = buffet.categories.length > 1;
-const search = (_st.search || '').trim().toLowerCase();
-let bodyHTML;
-if(!hasCategories || buffet.categories.every(c=>c.items.length===0)){
-bodyHTML = `
-<div class="empty-state view">
-<div class="ic">${_ic('clipboard-list')}</div>
-<h3>${t.emptyBuffetTitle}</h3>
-<p>${t.emptyBuffetDesc}</p>
-</div>`;
-} else {
-const tabsHTML = showTabs ? `
-<nav class="tab-row" aria-label="${_es(buffet.name[_st.lang])}">
-${buffet.categories.map(c=>`
-<button type="button" class="tab-pill ${c.id===_st.activeCategoryId?'active':''}" data-cat="${c.id}" style="--tab-accent:${buffet.accent};" aria-pressed="${c.id===_st.activeCategoryId}">
-${_es(c.name[_st.lang])}
-</button>`).join('')}
-</nav>` : '';
 const rowHTML = (item)=>{
 const priceKnown = item.price !== null && item.price !== undefined;
 return `
@@ -889,20 +878,60 @@ const activeCat = buffet.categories.find(c=>c.id===_st.activeCategoryId) || buff
 const items = activeCat.items;
 itemsHTML = items.length ? items.map(rowHTML).join('') : emptyHTML;
 }
+const activeCatForHeading = buffet.categories.find(c=>c.id===_st.activeCategoryId) || buffet.categories[0];
+return `${!showTabs && !search ? `<div class="group-heading"><h5>${_es(activeCatForHeading.name[_st.lang])}</h5></div>` : ''}${itemsHTML}`;
+}
+
+function _rbResults(){
+const buffet = _dt.buffets.find(b=>b.id===_st.buffetId);
+if(!buffet) return;
+const t = _i18[_st.lang];
+const search = (_st.search || '').trim().toLowerCase();
+const container = document.getElementById('menu-results');
+if(!container) return;
+container.innerHTML = _menuItemsHTML(buffet, t, search);
+_ri();
+const cs = document.getElementById('clear-search');
+if(cs) cs.style.display = search ? '' : 'none';
+}
+
+function _rb(){
+const buffet = _dt.buffets.find(b=>b.id===_st.buffetId);
+const t = _i18[_st.lang];
+if(!buffet){ _rh(); return; }
+if(!_st.activeCategoryId || !buffet.categories.some(c=>c.id===_st.activeCategoryId)){
+_st.activeCategoryId = buffet.categories[0] ? buffet.categories[0].id : null;
+}
+const hasCategories = buffet.categories.length > 0;
+const showTabs = buffet.categories.length > 1;
+const search = (_st.search || '').trim().toLowerCase();
+let bodyHTML;
+let isEmptyBuffet = !hasCategories || buffet.categories.every(c=>c.items.length===0);
+if(isEmptyBuffet){
+bodyHTML = `
+<div class="empty-state view">
+<div class="ic">${_ic('clipboard-list')}</div>
+<h3>${t.emptyBuffetTitle}</h3>
+<p>${t.emptyBuffetDesc}</p>
+</div>`;
+} else {
+const tabsHTML = showTabs ? `
+<nav class="tab-row" aria-label="${_es(buffet.name[_st.lang])}">
+${buffet.categories.map(c=>`
+<button type="button" class="tab-pill ${c.id===_st.activeCategoryId?'active':''}" data-cat="${c.id}" style="--tab-accent:${buffet.accent};" aria-pressed="${c.id===_st.activeCategoryId}">
+${_es(c.name[_st.lang])}
+</button>`).join('')}
+</nav>` : '';
 const searchHTML = `
 <div class="search-row">
 <span class="search-icon" aria-hidden="true">${_ic('search')}</span>
 <input type="search" class="search-input" id="search-input" autocomplete="off" spellcheck="false" placeholder="${_es(t.searchPlaceholder)}" value="${_es(search)}" aria-label="${_es(t.searchPlaceholder)}">
-${search ? `<button type="button" class="icon-btn" id="clear-search" aria-label="${_es(t.searchClear)}" style="width:36px;height:36px">${_ic('x')}</button>` : ''}
+<button type="button" class="icon-btn" id="clear-search" aria-label="${_es(t.searchClear)}" style="width:36px;height:36px;${search ? '' : 'display:none'}">${_ic('x')}</button>
 </div>`;
-const activeCatForHeading = buffet.categories.find(c=>c.id===_st.activeCategoryId) || buffet.categories[0];
 bodyHTML = `
 ${tabsHTML}
 ${searchHTML}
-<div class="menu-list view">
-${!showTabs && hasCategories && !search ? `<div class="group-heading"><h5>${_es(activeCatForHeading.name[_st.lang])}</h5></div>` : ''}
-${itemsHTML}
-</div>`;
+<div id="menu-results" class="menu-list view"></div>`;
 }
 _ap.innerHTML = `
 <section class="detail-header">
@@ -933,24 +962,25 @@ _st.search = '';
 _rb();
 });
 });
+if(!isEmptyBuffet){
 const si = document.getElementById('search-input');
-if(si){
-si.addEventListener('input', (e)=>{
+const onSearchInput = _debounce((e)=>{
 _st.search = e.target.value;
-_rb();
-const newSi = document.getElementById('search-input');
-if(newSi){
-newSi.focus();
-newSi.setSelectionRange(newSi.value.length, newSi.value.length);
-}
-});
+_rbResults();
+}, 120);
+if(si){
+si.addEventListener('input', onSearchInput);
 }
 const cs = document.getElementById('clear-search');
 if(cs){
 cs.addEventListener('click', ()=>{
 _st.search = '';
-_rb();
+if(si) si.value = '';
+_rbResults();
+if(si) si.focus();
 });
+}
+_rbResults();
 }
 }
 
