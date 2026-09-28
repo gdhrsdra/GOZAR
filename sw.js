@@ -9,7 +9,7 @@
 //
 // Bump CACHE_NAME whenever you deploy a new version of index.html so old caches
 // get cleared out automatically.
-const CACHE_NAME = 'gozar-sadra-v1';
+const CACHE_NAME = 'gozar-sadra-v3';
 const APP_SHELL = [
   './',
   './index.html'
