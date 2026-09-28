@@ -232,6 +232,16 @@ html[dir="rtl"] .food-row::before{background:linear-gradient(90deg,transparent,r
 .fav-toggle.active{color:#E0435B;border-color:#E0435B55;background:#E0435B14}
 .fav-toggle.active svg{fill:currentColor}
 .fav-toggle:active{transform:scale(.88)}
+.cart-add{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:var(--accent-ink);border:1px solid var(--accent);cursor:pointer;flex:none;transition:transform var(--dur-fast) var(--ease),background var(--dur-fast) var(--ease)}
+.cart-add:hover{background:var(--accent-strong)}
+.cart-add:active{transform:scale(.88)}
+.cart-add svg{width:16px;height:16px;stroke-width:2.6}
+.cart-stepper{display:inline-flex;align-items:center;gap:4px;background:var(--bg-subtle);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px;flex:none}
+.cart-step{width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--card);border:1px solid var(--border);color:var(--text);cursor:pointer;flex:none;transition:transform var(--dur-fast) var(--ease),background var(--dur-fast) var(--ease)}
+.cart-step:hover{border-color:var(--border-strong)}
+.cart-step:active{transform:scale(.86)}
+.cart-step svg{width:12px;height:12px;stroke-width:3}
+.cart-qty{min-width:18px;text-align:center;font-weight:800;font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--text)}
 .empty-state{display:flex;flex-direction:column;align-items:center;text-align:center;padding-block:var(--space-16);color:var(--text-muted)}
 .empty-state .ic{width:64px;height:64px;border-radius:18px;background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-4);color:var(--text-faint)}
 
@@ -301,10 +311,19 @@ footer{border-top:1px solid var(--border);padding-block:var(--space-8);backgroun
 .food-main p{font-size:12px}
 .food-price{font-size:14px}
 .food-price .unit{font-size:10px}
-.food-side{gap:8px}
+.food-side{gap:6px}
 .fav-toggle{width:29px;height:29px}
 .fav-toggle svg{width:15px;height:15px}
+.cart-add{width:29px;height:29px}
+.cart-step{width:22px;height:22px}
+.cart-qty{font-size:11.5px}
 .tab-pill{padding:8px 14px;font-size:12.5px}
+.icon-btn{width:38px;height:38px}
+.header-controls{gap:6px}
+.lang-switch button{padding:6px 9px;min-width:30px}
+}
+@media (max-width:400px){
+.brand-text span{display:none}
 }
 
 /* ========== Print ========== */
@@ -358,6 +377,64 @@ html[lang="en"] .progress-bar{transform-origin:left}
 .fav-item-remove svg{width:14px;height:14px}
 .fav-item-remove:hover{color:#E0435B;border-color:#E0435B55}
 @media (max-width:640px){.fav-panel{inset-inline:16px;width:auto;top:calc(72px + env(safe-area-inset-top,0px))}}
+.cart-badge{position:absolute;top:-3px;inset-inline-end:-3px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;line-height:1;box-shadow:0 0 0 2px var(--bg);pointer-events:none}
+.cart-badge[hidden]{display:none}
+.cart-panel{position:fixed;z-index:180;top:calc(72px + env(safe-area-inset-top,0px));inset-inline-end:calc(16px + env(safe-area-inset-right,0px));width:min(400px,calc(100vw - 32px));max-height:min(74vh,640px);display:flex;flex-direction:column;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-xl);box-shadow:var(--shadow-3);overflow:hidden;opacity:0;visibility:hidden;transform:translateY(-10px) scale(.98);transform-origin:top;transition:opacity var(--dur-med) var(--ease),transform var(--dur-med) var(--ease-out),visibility 0s linear var(--dur-med)}
+.cart-panel.open{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.cart-panel-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border);flex:none}
+.cart-panel-head-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+.cart-panel-head h3{font-size:15px;font-weight:800;color:var(--text)}
+.cart-panel-head span{font-size:11px;color:var(--text-muted);font-weight:600}
+.cart-panel-body{overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px;flex:1}
+.cart-item-row{display:flex;align-items:center;gap:10px;padding:10px;border-radius:var(--radius-md);background:var(--bg-subtle)}
+.cart-item-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.cart-item-main strong{font-size:13.5px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-main span{font-size:11.5px;color:var(--text-muted)}
+.cart-item-line{font-size:12.5px;font-weight:800;color:var(--accent-strong);flex:none;min-width:56px;text-align:end}
+.cart-item-remove{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);color:var(--text-faint);cursor:pointer;flex:none}
+.cart-item-remove:hover{color:var(--text);border-color:var(--border-strong)}
+.cart-item-remove svg{width:13px;height:13px;stroke-width:2.4}
+.cart-empty{padding:var(--space-8) var(--space-4);text-align:center;color:var(--text-muted);font-size:13px;line-height:1.9}
+.cart-panel-foot{flex:none;border-top:1px solid var(--border);padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:var(--card)}
+.cart-total-row{display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:800}
+.cart-total-row span:last-child{color:var(--accent-strong);font-size:16px}
+.cart-panel-foot-actions{display:flex;gap:8px}
+.cart-clear-btn{flex:1;padding:10px;border-radius:var(--radius-pill);background:transparent;border:1px solid var(--border);color:var(--text-muted);font-weight:700;font-size:12.5px;cursor:pointer}
+.cart-clear-btn:hover{color:var(--text);border-color:var(--border-strong)}
+@media (max-width:640px){.cart-panel{inset-inline:16px;width:auto;top:calc(72px + env(safe-area-inset-top,0px))}}
+/* ========== Onboarding (first-visit chat-style intro) ========== */
+.onb-panel{position:fixed;z-index:185;inset:0;margin:auto;width:min(440px,calc(100vw - 32px));height:fit-content;max-height:min(78vh,620px);max-height:min(78dvh,620px);display:flex;flex-direction:column;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-xl);box-shadow:var(--shadow-3);overflow:hidden;opacity:0;visibility:hidden;transform:scale(.97) translateY(6px);transition:opacity var(--dur-med) var(--ease),transform var(--dur-med) var(--ease-out),visibility 0s linear var(--dur-med)}
+.onb-panel.open{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.onb-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);flex:none}
+.onb-head-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(155deg,var(--accent),var(--accent-strong));display:flex;align-items:center;justify-content:center;color:var(--accent-ink);flex:none;box-shadow:var(--shadow-1)}
+.onb-head-avatar svg{width:19px;height:19px;stroke-width:2.2}
+.onb-head-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.onb-head-text strong{font-size:14.5px;font-weight:800;color:var(--text)}
+.onb-head-text span{font-size:11px;color:var(--text-muted);font-weight:600}
+.onb-body{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.onb-bubble{display:flex;gap:8px;align-items:flex-start;max-width:100%;opacity:0;transform:translateY(6px);animation:onbIn var(--dur-med) var(--ease-out) both}
+@keyframes onbIn{to{opacity:1;transform:none}}
+.onb-bubble .onb-ic{width:28px;height:28px;border-radius:50%;background:var(--bg-subtle);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex:none;color:var(--accent-strong);margin-top:2px}
+.onb-bubble .onb-ic svg{width:14px;height:14px;stroke-width:2.2}
+.onb-bubble p{background:var(--bg-subtle);border:1px solid var(--border);border-radius:16px;padding:10px 14px;font-size:13px;line-height:1.85;color:var(--text)}
+.onb-bubble:nth-child(1){animation-delay:.05s}
+.onb-bubble:nth-child(2){animation-delay:.16s}
+.onb-bubble:nth-child(3){animation-delay:.27s}
+.onb-bubble:nth-child(4){animation-delay:.38s}
+.onb-bubble:nth-child(5){animation-delay:.49s}
+.onb-bubble:nth-child(6){animation-delay:.60s}
+.onb-bubble:nth-child(7){animation-delay:.71s}
+.onb-bubble:nth-child(n+8){animation-delay:.80s}
+.onb-foot{flex:none;padding:14px 16px;border-top:1px solid var(--border)}
+.onb-got-btn{width:100%;padding:12px;border-radius:var(--radius-pill);background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:13.5px;border:1px solid var(--accent);cursor:pointer;transition:background var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease)}
+.onb-got-btn:hover{background:var(--accent-strong)}
+.onb-got-btn:active{transform:scale(.98)}
+.onb-reopen{background:transparent;border:0;padding:0;color:var(--text-faint);font-size:11.5px;font-weight:700;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.onb-reopen:hover{color:var(--text-muted)}
+@media (max-width:640px){
+.onb-panel{inset:auto 0 0 0;margin:0;width:100%;max-height:82dvh;border-radius:24px 24px 0 0;transform:translateY(100%);padding-bottom:env(safe-area-inset-bottom,0px)}
+}
+
 
 .tf-head{display:flex;align-items:center;gap:var(--space-3);padding-block:14px;padding-inline:20px 14px;border-bottom:1px solid var(--border);flex:none}
 .tf-head-ic{width:36px;height:36px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(155deg,var(--accent),var(--accent-strong));color:var(--accent-ink);flex:none}
@@ -432,6 +509,7 @@ footer{padding-bottom:calc(var(--space-8) + 64px)}
 <button type="button" data-lang="fa" aria-label="فارسی">FA</button>
 <button type="button" data-lang="en" aria-label="English">EN</button>
 </div>
+<button type="button" class="icon-btn" id="cart-open-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="cart-panel" aria-label="سبد سفارش"><svg id="icon-cart-header" data-lucide="shopping-cart" aria-hidden="true"></svg><span class="cart-badge" id="cart-badge" hidden>0</span></button>
 <button type="button" class="icon-btn" id="fav-open-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="fav-panel" aria-label="علاقه‌مندی‌ها"><svg id="icon-fav-header" data-lucide="heart" aria-hidden="true"></svg><span class="fav-badge" id="fav-badge" hidden>0</span></button>
 <button type="button" class="icon-btn" id="theme-toggle" aria-label="تغییر حالت روز و شب"><svg id="icon-theme" aria-hidden="true"></svg></button>
 </div>
@@ -439,6 +517,10 @@ footer{padding-bottom:calc(var(--space-8) + 64px)}
 </header>
 <div class="fav-backdrop" id="fav-backdrop" aria-hidden="true"></div>
 <div class="fav-panel" id="fav-panel" role="dialog" aria-modal="true" aria-label="علاقه‌مندی‌ها"></div>
+<div class="fav-backdrop" id="cart-backdrop" aria-hidden="true"></div>
+<div class="cart-panel" id="cart-panel" role="dialog" aria-modal="true" aria-label="سبد سفارش"></div>
+<div class="fav-backdrop" id="onb-backdrop" aria-hidden="true"></div>
+<div class="onb-panel" id="onb-panel" role="dialog" aria-modal="true" aria-label="راهنمای سریع سایت"></div>
 <main id="app" role="main">
 <section class="hero sk-hero" aria-hidden="true">
 <div class="container">
@@ -469,6 +551,7 @@ footer{padding-bottom:calc(var(--space-8) + 64px)}
 <span data-i18n="footerNote"></span>
 </div>
 <div class="container"><p class="footer-address" data-i18n="footerAddress"></p></div>
+<div class="container" style="margin-top:var(--space-2);text-align:center"><button type="button" class="onb-reopen" id="onb-reopen-btn" data-i18n="onbReopen"></button></div>
 <div class="container" style="margin-top:var(--space-3);text-align:center;color:var(--text-faint);font-size:11.5px;font-weight:600">© <span id="year"></span> <span class="fa-only">گذر صدرا</span><span class="en-only">GOZAR SADRA</span></div>
 </footer>
 <script>
@@ -487,7 +570,7 @@ currency:"تومان",
 emptyBuffetTitle:"این بوفه هنوز غذایی ندارد",
 emptyBuffetDesc:"به‌زودی منوی این بوفه تکمیل می‌شود. لطفاً بعداً دوباره سر بزنید.",
 footerTag:"منوی بوفه‌های گذر صدرا",
-footerNote:"صرفاً برای مشاهده‌ی منو — بدون ثبت سفارش",
+footerNote:"برای مشاهده‌ی منو و محاسبه‌ی تقریبی هزینه — سفارش را حضوری به غرفه بگو",
 footerAddress:"آدرس: پارک گذر صدرا، بین خیابان ملاصدرا و خیابان کارمند",
 themeToLight:"رفتن به حالت روز",
 themeToDark:"رفتن به حالت شب",
@@ -511,6 +594,20 @@ favAdd:"افزودن به علاقه‌مندی‌ها",
 favRemove:"حذف از علاقه‌مندی‌ها",
 close:"بستن",
 offlineNotice:"در حالت آفلاین هستی؛ نسخه‌ی ذخیره‌شده نمایش داده می‌شود.",
+cartAria:"سبد سفارش",
+cartTitle:"سبد سفارش من",
+cartSubtitle:"فقط برای محاسبه‌ی هزینه — سفارش را حضوری به غرفه بگو",
+cartEmpty:"هنوز چیزی انتخاب نکرده‌ای. کنار هر غذا روی + بزن.",
+cartAdd:"افزودن به سبد",
+cartIncrease:"یکی بیشتر",
+cartDecrease:"یکی کمتر",
+cartItemRemove:"حذف از سبد",
+cartClear:"پاک‌کردن همه",
+cartTotal:"جمع کل",
+onbTitle:"به گذر صدرا خوش اومدی!",
+onbSubtitle:"چند ویژگی کاربردی سایت",
+onbGotIt:"متوجه شدم، بریم!",
+onbReopen:"راهنمای سریع سایت",
 },
 en:{
 brandTag:"GOZAR SADRA Buffet Collection",
@@ -525,7 +622,7 @@ currency:"Toman",
 emptyBuffetTitle:"No items yet",
 emptyBuffetDesc:"This buffet's menu isn't published yet. Please check back soon.",
 footerTag:"GOZAR SADRA buffet menus",
-footerNote:"For browsing only — no ordering",
+footerNote:"Browse the menu and estimate your total — orders are placed in person at the stall",
 footerAddress:"Address: Gozar Sadra Park, between Mollasadra St. and Karmand St.",
 themeToLight:"Switch to light mode",
 themeToDark:"Switch to dark mode",
@@ -549,6 +646,20 @@ favAdd:"Add to favorites",
 favRemove:"Remove from favorites",
 close:"Close",
 offlineNotice:"You're offline; showing the saved version.",
+cartAria:"Order calculator",
+cartTitle:"My order",
+cartSubtitle:"For estimating cost only — place your order in person at the stall",
+cartEmpty:"You haven't picked anything yet. Tap + next to any item.",
+cartAdd:"Add to order",
+cartIncrease:"One more",
+cartDecrease:"One less",
+cartItemRemove:"Remove from order",
+cartClear:"Clear all",
+cartTotal:"Total",
+onbTitle:"Welcome to GOZAR SADRA!",
+onbSubtitle:"A quick look at what you can do",
+onbGotIt:"Got it, let's go!",
+onbReopen:"Quick site guide",
 }
 };
 function _fd(input){
@@ -971,6 +1082,7 @@ btn.addEventListener('click', (e)=>{ e.stopPropagation(); _toggleFav(btn.dataset
 });
 }
 function _openFav(){
+_closeCart();
 _renderFavPanel();
 const backdrop = document.getElementById('fav-backdrop');
 const panel = document.getElementById('fav-panel');
@@ -986,6 +1098,216 @@ if(backdrop) backdrop.classList.remove('open');
 if(panel) panel.classList.remove('open');
 const openBtn = document.getElementById('fav-open-btn');
 if(openBtn) openBtn.setAttribute('aria-expanded', 'false');
+}
+
+/* ========== Order calculator (client-side only — no order is ever sent anywhere) ========== */
+const _CART_KEY = 'gs_cart_v1';
+function _loadCart(){
+try{
+const raw = JSON.parse(localStorage.getItem(_CART_KEY) || '[]');
+return new Map(Array.isArray(raw) ? raw : []);
+}catch(e){ return new Map(); }
+}
+function _saveCart(){
+try{ localStorage.setItem(_CART_KEY, JSON.stringify(Array.from(_cart.entries()))); }catch(e){}
+}
+const _cart = _loadCart();
+function _cartQty(key){ return _cart.get(key) || 0; }
+function _setCartQty(key, qty){
+const q = Math.max(0, Math.min(99, qty));
+if(q <= 0) _cart.delete(key); else _cart.set(key, q);
+_saveCart();
+_syncCartUI(key);
+const panel = document.getElementById('cart-panel');
+if(panel && panel.classList.contains('open')) _renderCartPanel();
+}
+function _cartCount(){ let n = 0; _cart.forEach(q=>n+=q); return n; }
+function _cartEntries(){
+const out = [];
+_cart.forEach((qty, key)=>{
+const parts = key.split('::');
+const bId = parts[0], cId = parts[1], nameFa = parts.slice(2).join('::');
+const buffet = _dt.buffets.find(b=>b.id===bId);
+if(!buffet) return;
+const cat = buffet.categories.find(c=>c.id===cId);
+if(!cat) return;
+const item = cat.items.find(it=>it.name.fa===nameFa);
+if(!item) return;
+out.push({buffet, cat, item, key, qty});
+});
+return out;
+}
+function _cartTotal(){
+let sum = 0;
+_cartEntries().forEach(({item, qty})=>{ if(item.price !== null && item.price !== undefined) sum += item.price * qty; });
+return sum;
+}
+function _cartControlHTML(key, priceKnown){
+if(!priceKnown) return '';
+const t = _i18[_st.lang];
+const qty = _cartQty(key);
+if(qty <= 0){
+return `<button type="button" class="cart-add" data-cart-key="${_es(key)}" aria-label="${_es(t.cartAdd)}">${_ic('plus')}</button>`;
+}
+return `<div class="cart-stepper" role="group" aria-label="${_es(t.cartAria)}">
+<button type="button" class="cart-step cart-dec" data-cart-key="${_es(key)}" aria-label="${_es(t.cartDecrease)}">${_ic('minus')}</button>
+<span class="cart-qty">${_st.lang==='fa' ? _fd(qty) : qty}</span>
+<button type="button" class="cart-step cart-inc" data-cart-key="${_es(key)}" aria-label="${_es(t.cartIncrease)}">${_ic('plus')}</button>
+</div>`;
+}
+function _updateCartBadge(){
+const badge = document.getElementById('cart-badge');
+if(!badge) return;
+const n = _cartCount();
+badge.textContent = n > 99 ? '99+' : (_st.lang==='fa' ? _fd(n) : String(n));
+badge.hidden = n === 0;
+}
+function _bindCartControls(container){
+if(!container) return;
+container.querySelectorAll('[data-cart-key]').forEach(btn=>{
+btn.addEventListener('click', (e)=>{
+e.stopPropagation(); e.preventDefault();
+const key = btn.dataset.cartKey;
+const cur = _cartQty(key);
+if(btn.classList.contains('cart-dec')) _setCartQty(key, cur - 1);
+else _setCartQty(key, cur + 1);
+});
+});
+}
+function _syncCartUI(onlyKey){
+_updateCartBadge();
+document.querySelectorAll('.cart-ctl[data-cart-ctl-key]').forEach(el=>{
+const key = el.dataset.cartCtlKey;
+if(onlyKey && key !== onlyKey) return;
+el.innerHTML = _cartControlHTML(key, true);
+_ri();
+_bindCartControls(el);
+});
+}
+function _renderCartPanel(){
+const t = _i18[_st.lang];
+const panel = document.getElementById('cart-panel');
+if(!panel) return;
+const entries = _cartEntries();
+const bodyHTML = entries.length ? entries.map(({buffet, cat, item, key, qty})=>{
+const lineKnown = item.price !== null && item.price !== undefined;
+return `
+<div class="cart-item-row">
+<div class="cart-item-main">
+<strong>${_es(item.name[_st.lang])}</strong>
+<span>${_es(buffet.name[_st.lang])}</span>
+</div>
+${_cartControlHTML(key, true)}
+<div class="cart-item-line">${lineKnown ? _fp(item.price * qty, _st.lang) : t.priceUnknown}</div>
+<button type="button" class="cart-item-remove" data-cart-remove-key="${_es(key)}" aria-label="${_es(t.cartItemRemove)}">${_ic('x')}</button>
+</div>`;
+}).join('') : `<div class="cart-empty">${t.cartEmpty}</div>`;
+panel.innerHTML = `
+<div class="cart-panel-head">
+<div class="cart-panel-head-text"><h3>${t.cartTitle}</h3><span>${t.cartSubtitle}</span></div>
+<button type="button" class="icon-btn" id="cart-close-btn" style="width:34px;height:34px" aria-label="${_es(t.close)}">${_ic('x')}</button>
+</div>
+<div class="cart-panel-body">${bodyHTML}</div>
+${entries.length ? `
+<div class="cart-panel-foot">
+<div class="cart-total-row"><span>${t.cartTotal}</span><span>${_fp(_cartTotal(), _st.lang)} ${t.currency}</span></div>
+<div class="cart-panel-foot-actions"><button type="button" class="cart-clear-btn" id="cart-clear-btn">${t.cartClear}</button></div>
+</div>` : ''}
+`;
+_ri();
+const closeBtn = document.getElementById('cart-close-btn');
+if(closeBtn) closeBtn.addEventListener('click', _closeCart);
+_bindCartControls(panel);
+panel.querySelectorAll('[data-cart-remove-key]').forEach(btn=>{
+btn.addEventListener('click', (e)=>{ e.stopPropagation(); _setCartQty(btn.dataset.cartRemoveKey, 0); });
+});
+const clearBtn = document.getElementById('cart-clear-btn');
+if(clearBtn) clearBtn.addEventListener('click', ()=>{
+_cart.clear();
+_saveCart();
+_syncCartUI();
+_renderCartPanel();
+});
+}
+function _openCart(){
+_closeFav();
+_renderCartPanel();
+const backdrop = document.getElementById('cart-backdrop');
+const panel = document.getElementById('cart-panel');
+if(backdrop) backdrop.classList.add('open');
+if(panel) panel.classList.add('open');
+const openBtn = document.getElementById('cart-open-btn');
+if(openBtn) openBtn.setAttribute('aria-expanded', 'true');
+}
+function _closeCart(){
+const backdrop = document.getElementById('cart-backdrop');
+const panel = document.getElementById('cart-panel');
+if(backdrop) backdrop.classList.remove('open');
+if(panel) panel.classList.remove('open');
+const openBtn = document.getElementById('cart-open-btn');
+if(openBtn) openBtn.setAttribute('aria-expanded', 'false');
+}
+
+/* ========== Onboarding (first-visit, chat-bubble style feature intro) ========== */
+const _ONB_KEY = 'gs_onboarding_seen_v1';
+const _onbMsgs = {
+fa:[
+{icon:'sparkles', text:'سلام! 👋 اینجا می‌تونی منوی همه‌ی بوفه‌های گذر صدرا رو یک‌جا ببینی.'},
+{icon:'languages', text:'بالای صفحه می‌تونی زبان سایت رو بین فارسی و انگلیسی عوض کنی.'},
+{icon:'search', text:'با جست‌وجو، هم توی همه‌ی بوفه‌ها و هم داخل هر بوفه می‌تونی سریع غذات رو پیدا کنی.'},
+{icon:'sparkles', text:'دکمه‌ی «سلیقه‌یاب» پایین صفحه با چند سؤال ساده، غذای مناسب سلیقه‌ات رو پیشنهاد می‌دهد.'},
+{icon:'heart', text:'روی آیکون قلب کنار هر غذا بزن تا به «علاقه‌مندی‌ها» اضافه شود؛ از بالای صفحه بهشان دسترسی داری.'},
+{icon:'shopping-cart', text:'با دکمه‌ی + کنار هر غذا، انتخاب‌هایت را به «سبد سفارش» اضافه کن و جمع قیمتش را ببین — فقط برای محاسبه؛ سفارش را حضوری به غرفه بگو.'},
+{icon:'moon', text:'دکمه‌ی ماه/خورشید بالای صفحه، حالت شب و روز را عوض می‌کند.'},
+{icon:'wifi-off', text:'حتی با اینترنت ضعیف یا قطع هم، اگر یک‌بار سایت را باز کرده باشی، منو برایت باز می‌ماند.'}
+],
+en:[
+{icon:'sparkles', text:"Hi! 👋 Here you can browse every GOZAR SADRA buffet's menu in one place."},
+{icon:'languages', text:'Switch the site between Persian and English from the top of the page.'},
+{icon:'search', text:'Use search — across every buffet, or inside one — to find a dish fast.'},
+{icon:'sparkles', text:'The \u201cTaste finder\u201d button suggests a dish for you after a few quick questions.'},
+{icon:'heart', text:'Tap the heart next to any dish to save it to Favorites, reachable from the top of the page.'},
+{icon:'shopping-cart', text:'Tap + next to any dish to add it to your Order and see the running total \u2014 just for estimating; place your actual order in person at the stall.'},
+{icon:'moon', text:'The moon/sun button at the top switches between light and dark mode.'},
+{icon:'wifi-off', text:'Once you\u2019ve opened the site, the menu keeps working even with a weak or no connection.'}
+]
+};
+function _renderOnbPanel(){
+const t = _i18[_st.lang];
+const panel = document.getElementById('onb-panel');
+if(!panel) return;
+const msgs = _onbMsgs[_st.lang] || _onbMsgs.fa;
+const bubbles = msgs.map(m=>`
+<div class="onb-bubble"><span class="onb-ic">${_ic(m.icon)}</span><p>${_es(m.text)}</p></div>`).join('');
+panel.innerHTML = `
+<div class="onb-head">
+<span class="onb-head-avatar">${_ic('utensils')}</span>
+<div class="onb-head-text"><strong>${t.onbTitle}</strong><span>${t.onbSubtitle}</span></div>
+<button type="button" class="icon-btn" id="onb-close-btn" style="width:34px;height:34px" aria-label="${_es(t.close)}">${_ic('x')}</button>
+</div>
+<div class="onb-body">${bubbles}</div>
+<div class="onb-foot"><button type="button" class="onb-got-btn" id="onb-got-btn">${t.onbGotIt}</button></div>`;
+_ri();
+const closeBtn = document.getElementById('onb-close-btn');
+if(closeBtn) closeBtn.addEventListener('click', _closeOnb);
+const gotBtn = document.getElementById('onb-got-btn');
+if(gotBtn) gotBtn.addEventListener('click', _closeOnb);
+}
+function _openOnb(){
+_closeFav(); _closeCart();
+_renderOnbPanel();
+const backdrop = document.getElementById('onb-backdrop');
+const panel = document.getElementById('onb-panel');
+if(backdrop) backdrop.classList.add('open');
+if(panel) panel.classList.add('open');
+try{ localStorage.setItem(_ONB_KEY, '1'); }catch(e){}
+}
+function _closeOnb(){
+const backdrop = document.getElementById('onb-backdrop');
+const panel = document.getElementById('onb-panel');
+if(backdrop) backdrop.classList.remove('open');
+if(panel) panel.classList.remove('open');
+try{ localStorage.setItem(_ONB_KEY, '1'); }catch(e){}
 }
 
 const _ap = document.getElementById('app');
@@ -1024,6 +1346,13 @@ const favBtn = document.getElementById('fav-open-btn');
 if(favBtn){ favBtn.setAttribute('aria-label', _i18[_st.lang].favAria); favBtn.title = favBtn.getAttribute('aria-label'); }
 const favPanelEl = document.getElementById('fav-panel');
 if(favPanelEl) favPanelEl.setAttribute('aria-label', _i18[_st.lang].favAria);
+const cartBtn = document.getElementById('cart-open-btn');
+if(cartBtn){ cartBtn.setAttribute('aria-label', _i18[_st.lang].cartAria); cartBtn.title = cartBtn.getAttribute('aria-label'); }
+const cartPanelEl = document.getElementById('cart-panel');
+if(cartPanelEl) cartPanelEl.setAttribute('aria-label', _i18[_st.lang].cartAria);
+if(typeof _updateCartBadge === 'function') _updateCartBadge();
+const onbPanelEl = document.getElementById('onb-panel');
+if(onbPanelEl) onbPanelEl.setAttribute('aria-label', _i18[_st.lang].onbTitle);
 }
 function _ri(){ if(window.lucide) window.lucide.createIcons(); }
 function _debounce(fn, wait){
@@ -1113,6 +1442,7 @@ ${item.description ? `<p>${_es(item.description[_st.lang])}</p>` : ''}
 ${priceKnown ? _fp(item.price, _st.lang) : t.priceUnknown}
 ${priceKnown ? `<span class="unit">${t.currency}</span>` : ''}
 </div>
+<span class="cart-ctl" data-cart-ctl-key="${_es(favKey)}">${_cartControlHTML(favKey, priceKnown)}</span>
 ${_favToggleHTML(favKey)}
 </div>
 </div>`;
@@ -1131,6 +1461,7 @@ if(!container) return;
 container.innerHTML = _homeResultsHTML(t, query);
 _ri();
 _bindFavToggles(container);
+_bindCartControls(container);
 container.querySelectorAll('.buffet-card').forEach(card=>{
 card.addEventListener('click', ()=> _gb(card.dataset.buffet));
 });
@@ -1202,6 +1533,7 @@ ${item.description ? `<p>${_es(item.description[_st.lang])}</p>` : ''}
 ${priceKnown ? _fp(item.price, _st.lang) : t.priceUnknown}
 ${priceKnown ? `<span class="unit">${t.currency}</span>` : ''}
 </div>
+<span class="cart-ctl" data-cart-ctl-key="${_es(favKey)}">${_cartControlHTML(favKey, priceKnown)}</span>
 ${_favToggleHTML(favKey)}
 </div>
 </article>`;
@@ -1241,6 +1573,7 @@ if(!container) return;
 container.innerHTML = _menuItemsHTML(buffet, t, search);
 _ri();
 _bindFavToggles(container);
+_bindCartControls(container);
 const cs = document.getElementById('clear-search');
 if(cs) cs.style.display = search ? '' : 'none';
 }
@@ -1382,6 +1715,10 @@ if(_st.view === 'buffet') _rb();
 else _rh();
 const _favPanelOpen = document.getElementById('fav-panel');
 if(_favPanelOpen && _favPanelOpen.classList.contains('open')) _renderFavPanel();
+const _cartPanelOpen = document.getElementById('cart-panel');
+if(_cartPanelOpen && _cartPanelOpen.classList.contains('open')) _renderCartPanel();
+const _onbPanelOpen = document.getElementById('onb-panel');
+if(_onbPanelOpen && _onbPanelOpen.classList.contains('open')) _renderOnbPanel();
 }
 document.querySelectorAll('[data-lang]').forEach(btn=>{
 btn.addEventListener('click', ()=>{
@@ -1411,8 +1748,22 @@ if(panel && panel.classList.contains('open')) _closeFav(); else _openFav();
 }
 const _favBackdrop = document.getElementById('fav-backdrop');
 if(_favBackdrop) _favBackdrop.addEventListener('click', _closeFav);
-document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') _closeFav(); });
+const _cartOpenBtn = document.getElementById('cart-open-btn');
+if(_cartOpenBtn){
+_cartOpenBtn.addEventListener('click', ()=>{
+const panel = document.getElementById('cart-panel');
+if(panel && panel.classList.contains('open')) _closeCart(); else _openCart();
+});
+}
+const _cartBackdrop = document.getElementById('cart-backdrop');
+if(_cartBackdrop) _cartBackdrop.addEventListener('click', _closeCart);
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ _closeFav(); _closeCart(); _closeOnb(); } });
 _updateFavCount();
+_updateCartBadge();
+const _onbBackdrop = document.getElementById('onb-backdrop');
+if(_onbBackdrop) _onbBackdrop.addEventListener('click', _closeOnb);
+const _onbReopenBtn = document.getElementById('onb-reopen-btn');
+if(_onbReopenBtn) _onbReopenBtn.addEventListener('click', _openOnb);
 
 /* ========== Taste finder (floating widget, home page only) ========== */
 const _L = (fa,en)=>({fa,en});
@@ -1948,6 +2299,11 @@ window.addEventListener('load', ()=>{
 navigator.serviceWorker.register('./sw.js').catch(()=>{});
 });
 }
+try{
+if(!localStorage.getItem(_ONB_KEY)){
+setTimeout(_openOnb, 650);
+}
+}catch(e){}
 })();
 </script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v3d52b47920f24c319d37e2661827c42b1787588026925" integrity="sha512-d9sL6GJLXn6fInD1+TVXhTcQOsmxeHfmHAvwGDIxp5TO+uo1fiWW7mHomMj4MLRlCsJDTqXzWLHJFFlPCEIj/A==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79"}' crossorigin="anonymous"></script>
