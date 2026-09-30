@@ -390,7 +390,7 @@ html[lang="en"] .progress-bar{transform-origin:left}
 .cart-item-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .cart-item-main strong{font-size:13.5px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cart-item-main span{font-size:11.5px;color:var(--text-muted)}
-.cart-item-line{font-size:12.5px;font-weight:800;color:var(--accent-strong);flex:none;min-width:56px;text-align:end}
+.cart-item-line{font-size:11.5px;font-weight:800;color:var(--accent-strong);flex:none;min-width:86px;text-align:end;white-space:nowrap}
 .cart-item-remove{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);color:var(--text-faint);cursor:pointer;flex:none}
 .cart-item-remove:hover{color:var(--text);border-color:var(--border-strong)}
 .cart-item-remove svg{width:13px;height:13px;stroke-width:2.4}
@@ -567,6 +567,7 @@ viewMenu:"مشاهده منو",
 back:"بازگشت به بوفه‌ها",
 priceUnknown:"قیمت نامشخص",
 currency:"تومان",
+currencyRial:"ریال",
 emptyBuffetTitle:"این بوفه هنوز غذایی ندارد",
 emptyBuffetDesc:"به‌زودی منوی این بوفه تکمیل می‌شود. لطفاً بعداً دوباره سر بزنید.",
 footerTag:"منوی بوفه‌های گذر صدرا",
@@ -619,6 +620,7 @@ viewMenu:"View menu",
 back:"Back to Buffets",
 priceUnknown:"Price unavailable",
 currency:"Toman",
+currencyRial:"Rial",
 emptyBuffetTitle:"No items yet",
 emptyBuffetDesc:"This buffet's menu isn't published yet. Please check back soon.",
 footerTag:"GOZAR SADRA buffet menus",
@@ -671,6 +673,14 @@ if(price === null || price === undefined) return _i18[lang].priceUnknown;
 const grouped = Number(price).toLocaleString('en-US');
 return lang === 'fa' ? _fd(grouped) : grouped;
 }
+// Menu prices are stored in thousand-Toman units (e.g. 375 = 375,000 Toman).
+// 1 Toman = 10 Rial, so Rial = storedValue * 1000 * 10 = storedValue * 10000.
+function _toRial(price){ return Math.round(price * 10000); }
+function _fpRial(price, lang){
+if(price === null || price === undefined) return _i18[lang].priceUnknown;
+const grouped = _toRial(price).toLocaleString('en-US');
+return lang === 'fa' ? _fd(grouped) : grouped;
+}
 function _es(str){return String(str);}
 function _ic(name, cls){return `<i data-lucide="${name}" class="${cls||''}" aria-hidden="true"></i>`;}
 const _dt = {
@@ -686,17 +696,18 @@ name:{ fa:"چای‌خانه", en:"Tea House" },
 description:{ fa:"چای، دمنوش و قلیان در فضایی آرام", en:"Tea, herbal infusions and hookah in a relaxed setting" },
 categories:[
 { id:"chapkhaneh", name:{fa:"چاپ‌خانه", en:"Chapkhaneh"}, items:[
-{name:{fa:"چای کلاسیک", en:"Classic Tea"}, price:70},
-{name:{fa:"چای کلاسیک دونفره", en:"Classic Tea (For Two)"}, price:175},
-{name:{fa:"چای کلاسیک خانواده", en:"Classic Tea (Family)"}, price:250},
-{name:{fa:"چای سبز", en:"Green Tea"}, price:100},
-{name:{fa:"چای میوه‌ای دو نفره", en:"Fruit Tea (For Two)"}, price:255},
-{name:{fa:"چای میوه‌ای چهار نفره", en:"Fruit Tea (For Four)"}, price:325},
+{name:{fa:"چای کلاسیک", en:"Classic Tea"}, price:65},
+{name:{fa:"چای کلاسیک دونفره", en:"Classic Tea (For Two)"}, price:129},
+{name:{fa:"چای کلاسیک خانواده", en:"Classic Tea (Family)"}, price:155},
+{name:{fa:"چای سبز", en:"Green Tea"}, price:87},
+{name:{fa:"چای میوه‌ای دو نفره", en:"Fruit Tea (For Two)"}, price:245},
+{name:{fa:"چای میوه‌ای چهار نفره", en:"Fruit Tea (For Four)"}, price:299},
 {name:{fa:"چای زعفرانی دو نفره", en:"Saffron Tea (For Two)"}, price:245},
-{name:{fa:"چای زعفرانی چهار نفره", en:"Saffron Tea (For Four)"}, price:295},
+{name:{fa:"چای زعفرانی چهار نفره", en:"Saffron Tea (For Four)"}, price:285},
 {name:{fa:"تیرامیسو", en:"Tiramisu"}, price:230},
-{name:{fa:"کیک شکلاتی", en:"Chocolate Cake"}, price:280},
+{name:{fa:"کیک شکلاتی", en:"Chocolate Cake"}, price:150},
 {name:{fa:"کوک", en:"Coke"}, price:60},
+{name:{fa:"آب معدنی", en:"Mineral Water"}, price:25},
 ]},
 { id:"herbal", name:{fa:"دمنوش", en:"Herbal Tea"}, items:[
 {name:{fa:"گل گاوزبان", en:"Borage"}, price:210},
@@ -763,6 +774,7 @@ categories:[
 {name:{fa:"قیمه بادمجان با ته‌دیگ", en:"Gheimeh with Eggplant &amp; Tahdig"}, price:315},
 {name:{fa:"قرمه سبزی با ته‌دیگ", en:"Ghormeh Sabzi with Tahdig"}, price:295},
 {name:{fa:"فسنجون با ته‌دیگ", en:"Fesenjan with Tahdig"}, price:390},
+{name:{fa:"آب معدنی", en:"Mineral Water"}, price:25},
 ]}
 ]
 },
@@ -783,6 +795,7 @@ categories:[
 {name:{fa:"هندوانه توت‌فرنگی", en:"Watermelon Strawberry Juice"}, price:200},
 {name:{fa:"هویج", en:"Carrot Juice"}, price:150},
 {name:{fa:"هویج بستنی", en:"Carrot Juice with Ice Cream"}, price:180},
+{name:{fa:"آب معدنی", en:"Mineral Water"}, price:25},
 ]},
 { id:"mixjuice", name:{fa:"آبمیوه ترکیبی", en:"Mixed Juice"}, items:[
 {name:{fa:"سیب انبه", en:"Apple Mango"}, price:330},
@@ -834,6 +847,7 @@ categories:[
 {name:{fa:"فیله مرغ (دانه‌ای)", en:"Chicken Fillet (Per Piece)"}, price:140},
 {name:{fa:"پک سیب‌زمینی", en:"Fries Pack"}, price:250},
 {name:{fa:"پک قارچ سوخاری", en:"Fried Mushroom Pack"}, price:290},
+{name:{fa:"آب معدنی", en:"Mineral Water"}, price:25},
 ]}
 ]
 },
@@ -854,6 +868,7 @@ categories:[
 {name:{fa:"کینگ برگر", en:"King Burger"}, price:775, description:{fa:"۲ عدد برگر + ۲ عدد ژامبون + میکس پنیر پیتزا", en:"2 burger patties + 2 pieces of ham + pizza cheese mix"}},
 {name:{fa:"چیکن برگر", en:"Chicken Burger"}, price:535, description:{fa:"۱ عدد برگر + ۱ عدد فیله سوخاری", en:"1 burger patty + 1 fried chicken fillet"}},
 {name:{fa:"بیگ مک", en:"Big Mac"}, price:525, description:{fa:"۱ عدد برگر + ژامبون + قارچ و پنیر", en:"1 burger patty + ham + mushroom and cheese"}},
+{name:{fa:"آب معدنی", en:"Mineral Water"}, price:25},
 ]},
 { id:"pastas", name:{fa:"پاستا", en:"Pasta"}, items:[
 {name:{fa:"چیکن آلفردو", en:"Chicken Alfredo"}, price:575},
@@ -888,6 +903,7 @@ categories:[
 {name:{fa:"چهار فصل", en:"Four Seasons"}, price:715, description:{fa:"فیله مرغ مزه‌دار شده، ژامبون، پیاز، گوشت چرخ‌کرده، میکس پنیر پیتزا، گارنیش مخصوص", en:"Marinated chicken fillet, ham, onion, ground beef, pizza cheese mix, special garnish"}},
 {name:{fa:"سیب تنوری", en:"Oven-Baked Potato"}, price:495, description:{fa:"سیب‌زمینی سرخ شده، قارچ، ژامبون، پنیر پیتزا", en:"Fried potato, mushroom, ham, pizza cheese"}},
 {name:{fa:"نان سیر", en:"Garlic Bread"}, price:325, description:{fa:"نان سیر، پنیر، سس مخصوص", en:"Garlic bread, cheese, special sauce"}},
+{name:{fa:"آب معدنی", en:"Mineral Water"}, price:25},
 ]},
 { id:"double", name:{fa:"پیتزا دونفره", en:"Double Portion"}, items:[
 {name:{fa:"نوستالژی", en:"Nostalgia"}, price:745, description:{fa:"کالباس، سوسیس، قارچ، میکس پنیر پیتزا، فلفل دلمه", en:"Cold cuts, sausage, mushroom, pizza cheese mix, bell pepper"}},
@@ -932,6 +948,7 @@ categories:[
 {name:{fa:"همبرگر شصد درصد", en:"Special Burger"}, price:325},
 {name:{fa:"هات‌داگ پنیری", en:"Cheesy Hot Dog"}, price:285},
 {name:{fa:"کباب لقمه", en:"Kabab Loghme"}, price:185},
+{name:{fa:"آب معدنی", en:"Mineral Water"}, price:25},
 ]},
 { id:"snack", name:{fa:"اسنک", en:"Snacks"}, items:[
 {name:{fa:"اسنک مخصوص", en:"Special Snack"}, price:245},
@@ -964,6 +981,7 @@ categories:[
 {name:{fa:"شاورما گوشت", en:"Beef Shawarma"}, price:395},
 {name:{fa:"شاورما میکس", en:"Mix Shawarma"}, price:380},
 {name:{fa:"شاورما مرغ", en:"Chicken Shawarma"}, price:375},
+{name:{fa:"آب معدنی", en:"Mineral Water"}, price:25},
 ]},
 { id:"falafel", name:{fa:"فلافل و سمبوسه", en:"Falafel &amp; Samosa"}, items:[
 {name:{fa:"فلافل مخصوص", en:"Special Falafel"}, price:175},
@@ -1198,7 +1216,7 @@ return `
 <span>${_es(buffet.name[_st.lang])}</span>
 </div>
 ${_cartControlHTML(key, true)}
-<div class="cart-item-line">${lineKnown ? _fp(item.price * qty, _st.lang) : t.priceUnknown}</div>
+<div class="cart-item-line">${lineKnown ? `${_fpRial(item.price * qty, _st.lang)} ${t.currencyRial}` : t.priceUnknown}</div>
 <button type="button" class="cart-item-remove" data-cart-remove-key="${_es(key)}" aria-label="${_es(t.cartItemRemove)}">${_ic('x')}</button>
 </div>`;
 }).join('') : `<div class="cart-empty">${t.cartEmpty}</div>`;
@@ -1210,7 +1228,7 @@ panel.innerHTML = `
 <div class="cart-panel-body">${bodyHTML}</div>
 ${entries.length ? `
 <div class="cart-panel-foot">
-<div class="cart-total-row"><span>${t.cartTotal}</span><span>${_fp(_cartTotal(), _st.lang)} ${t.currency}</span></div>
+<div class="cart-total-row"><span>${t.cartTotal}</span><span>${_fpRial(_cartTotal(), _st.lang)} ${t.currencyRial}</span></div>
 <div class="cart-panel-foot-actions"><button type="button" class="cart-clear-btn" id="cart-clear-btn">${t.cartClear}</button></div>
 </div>` : ''}
 `;
@@ -1248,8 +1266,7 @@ const openBtn = document.getElementById('cart-open-btn');
 if(openBtn) openBtn.setAttribute('aria-expanded', 'false');
 }
 
-/* ========== Onboarding (first-visit, chat-bubble style feature intro) ========== */
-const _ONB_KEY = 'gs_onboarding_seen_v1';
+/* ========== Onboarding (shown on every visit, chat-bubble style feature intro) ========== */
 const _onbMsgs = {
 fa:[
 {icon:'sparkles', text:'سلام! 👋 اینجا می‌تونی منوی همه‌ی بوفه‌های گذر صدرا رو یک‌جا ببینی.'},
@@ -1300,14 +1317,12 @@ const backdrop = document.getElementById('onb-backdrop');
 const panel = document.getElementById('onb-panel');
 if(backdrop) backdrop.classList.add('open');
 if(panel) panel.classList.add('open');
-try{ localStorage.setItem(_ONB_KEY, '1'); }catch(e){}
 }
 function _closeOnb(){
 const backdrop = document.getElementById('onb-backdrop');
 const panel = document.getElementById('onb-panel');
 if(backdrop) backdrop.classList.remove('open');
 if(panel) panel.classList.remove('open');
-try{ localStorage.setItem(_ONB_KEY, '1'); }catch(e){}
 }
 
 const _ap = document.getElementById('app');
@@ -2299,11 +2314,7 @@ window.addEventListener('load', ()=>{
 navigator.serviceWorker.register('./sw.js').catch(()=>{});
 });
 }
-try{
-if(!localStorage.getItem(_ONB_KEY)){
 setTimeout(_openOnb, 650);
-}
-}catch(e){}
 })();
 </script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v3d52b47920f24c319d37e2661827c42b1787588026925" integrity="sha512-d9sL6GJLXn6fInD1+TVXhTcQOsmxeHfmHAvwGDIxp5TO+uo1fiWW7mHomMj4MLRlCsJDTqXzWLHJFFlPCEIj/A==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79"}' crossorigin="anonymous"></script>
