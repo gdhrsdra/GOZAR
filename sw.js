@@ -9,7 +9,7 @@
 //
 // Bump CACHE_NAME whenever you deploy a new version of index.html so old caches
 // get cleared out automatically.
-const CACHE_NAME = 'gozar-sadra-v4';
+const CACHE_NAME = 'gozar-sadra-v8';
 const APP_SHELL = [
   './',
   './index.html'
@@ -39,12 +39,14 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(req)
         .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+          if (res && res.ok) {
+            const copy = res.clone();
+            event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)));
+          }
           return res;
         })
         .catch(() =>
-          caches.match(req).then((cached) => cached || caches.match('./index.html'))
+          caches.match(req, { ignoreSearch: true }).then((cached) => cached || caches.match('./index.html'))
         )
     );
     return;
@@ -57,11 +59,11 @@ self.addEventListener('fetch', (event) => {
         .then((res) => {
           if (res && res.status === 200) {
             const copy = res.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+            event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)));
           }
           return res;
         })
-        .catch(() => cached);
+        .catch(() => cached || Response.error());
       return cached || fetchPromise;
     })
   );
