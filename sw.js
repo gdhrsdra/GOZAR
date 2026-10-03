@@ -1,24 +1,30 @@
 // Service worker for گذر صدرا | منوی بوفه‌ها
 // Strategy:
-//  - Page navigations: try the network first (so visitors always get the latest
-//    menu when online); if the network fails, fall back to whatever copy of the
-//    page was last cached, so the site still opens with no internet.
-//  - Everything else (fonts, icons, scripts): serve the cached copy instantly if
-//    we have one, while quietly re-fetching in the background to keep the cache
-//    fresh for next time ("stale-while-revalidate").
+//  - Page navigations: network first, but if the network is slow (> NAV_TIMEOUT_MS)
+//    or fails, fall back to the last cached copy so the site opens fast even on
+//    weak connections and fully offline.
+//  - Everything else (fonts, icons, scripts): stale-while-revalidate.
 //
 // Bump CACHE_NAME whenever you deploy a new version of index.html so old caches
 // get cleared out automatically.
-const CACHE_NAME = 'gozar-sadra-v8';
-const APP_SHELL = [
-  './',
-  './index.html'
+const CACHE_NAME = 'gozar-sadra-v13';
+const NAV_TIMEOUT_MS = 4000;
+const APP_SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+// Third-party files the page needs to look right offline (fetched in CORS mode).
+const EXTERNAL = [
+  'https://unpkg.com/lucide@0.525.0/dist/umd/lucide.min.js',
+  'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap'
 ];
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL).catch(() => {}))
+    caches.open(CACHE_NAME).then((cache) =>
+      Promise.all([
+        ...APP_SHELL.map((u) => cache.add(u).catch(() => {})),
+        ...EXTERNAL.map((u) => cache.add(new Request(u, { mode: 'cors' })).catch(() => {}))
+      ])
+    )
   );
 });
 
@@ -33,33 +39,41 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
 
-  // Page loads / navigations: network-first, cache fallback (works offline).
+  // Page loads / navigations: network-first with a timeout, cache fallback.
   if (req.mode === 'navigate') {
-    event.respondWith(
-      fetch(req)
-        .then((res) => {
-          if (res && res.ok) {
-            const copy = res.clone();
-            event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)));
-          }
-          return res;
-        })
-        .catch(() =>
-          caches.match(req, { ignoreSearch: true }).then((cached) => cached || caches.match('./index.html'))
-        )
-    );
+    event.respondWith((async () => {
+      const fromCache = () =>
+        caches.match(req, { ignoreSearch: true }).then((c) => c || caches.match('./index.html')).then((c) => c || caches.match('./'));
+      try {
+        const res = await Promise.race([
+          fetch(req),
+          new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), NAV_TIMEOUT_MS))
+        ]);
+        if (res && res.ok) {
+          const copy = res.clone();
+          event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)).catch(() => {}));
+        }
+        return res;
+      } catch (e) {
+        const cached = await fromCache();
+        if (cached) return cached;
+        return fetch(req); // nothing cached yet: let the browser show its own result
+      }
+    })());
     return;
   }
 
-  // Everything else: stale-while-revalidate.
+  // Everything else: stale-while-revalidate (only successful, readable responses are cached).
   event.respondWith(
     caches.match(req).then((cached) => {
       const fetchPromise = fetch(req)
         .then((res) => {
-          if (res && res.status === 200) {
+          if (res && res.status === 200 && (res.type === 'basic' || res.type === 'cors')) {
             const copy = res.clone();
-            event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)));
+            event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)).catch(() => {}));
           }
           return res;
         })
