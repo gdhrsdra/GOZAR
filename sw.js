@@ -7,9 +7,13 @@
 //
 // Bump CACHE_NAME whenever you deploy a new version of index.html so old caches
 // get cleared out automatically.
-const CACHE_NAME = 'gozar-sadra-v13';
+const CACHE_NAME = 'gozar-sadra-v15';
 const NAV_TIMEOUT_MS = 4000;
-const APP_SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+const APP_SHELL = [
+  './', './index.html', './manifest.webmanifest',
+  './icon-192.png', './icon-512.png', './icon-maskable-192.png', './icon-maskable-512.png',
+  './apple-touch-icon.png', './favicon-32.png', './favicon-48.png'
+];
 // Third-party files the page needs to look right offline (fetched in CORS mode).
 const EXTERNAL = [
   'https://unpkg.com/lucide@0.525.0/dist/umd/lucide.min.js',
@@ -41,6 +45,8 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
+  // Analytics / tag-manager traffic must never be served from (or stored in) the cache.
+  if (url.pathname.startsWith('/gk7x') || url.hostname.endsWith('cloudflareinsights.com') || url.hostname.endsWith('googletagmanager.com')) return;
 
   // Page loads / navigations: network-first with a timeout, cache fallback.
   if (req.mode === 'navigate') {
@@ -78,6 +84,7 @@ self.addEventListener('fetch', (event) => {
           return res;
         })
         .catch(() => cached || Response.error());
+      if (cached) event.waitUntil(fetchPromise.catch(() => {}));
       return cached || fetchPromise;
     })
   );
