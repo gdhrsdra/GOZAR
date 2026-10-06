@@ -7,6 +7,8 @@
 		f.parentNode.insertBefore(j,f);
 		})(window,document,'script','dataLayer');</script>
 <meta charset="UTF-8">
+<script>/* apply saved language/theme before first paint (no flash) */
+try{var _d=document.documentElement,_l=localStorage.getItem('gs_lang')==='en'?'en':'fa';_d.lang=_l;_d.dir=_l==='fa'?'rtl':'ltr';_d.setAttribute('data-theme',localStorage.getItem('gs_theme')==='dark'?'dark':'light')}catch(e){}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#EEEBE2" media="(prefers-color-scheme: light)">
@@ -32,20 +34,23 @@
 <script>/* Latin font only when needed (English UI) */
 window._loadEnFont=function(){if(window._enFontLoaded)return;window._enFontLoaded=1;var l=document.createElement('link');l.rel='stylesheet';l.crossOrigin='';l.href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap';document.head.appendChild(l)};
 try{if(localStorage.getItem('gs_lang')==='en')window._loadEnFont()}catch(e){}</script>
-<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23B6862F'><path d='M7 2v8a3 3 0 0 0 3 3v9h2v-9a3 3 0 0 0 3-3V2h-2v6h-2V2h-2v6H7V2H5v8a5 5 0 0 0 4 4.9V22h2v-7.1A5 5 0 0 0 15 10V2h-2z'/></svg>">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="msapplication-TileColor" content="#01060c">
+<meta name="msapplication-TileImage" content="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="گذر صدرا">
-<script src="https://unpkg.com/lucide@0.525.0/dist/umd/lucide.min.js" crossorigin="anonymous" defer></script>
+<script src="https://unpkg.com/lucide@0.525.0/dist/umd/lucide.min.js" crossorigin="anonymous" defer onload="window._ri&&window._ri()"></script>
 <style>
 /* ========== Reset & Foundations ========== */
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;text-size-adjust:100%;text-rendering:optimizeLegibility}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;text-size-adjust:100%}
 html,body{height:100%}
 body{margin:0;color:var(--text);background:var(--bg);font-family:var(--font-fa);font-feature-settings:"ss01","ss02";line-height:1.6;transition:background var(--dur-med) var(--ease),color var(--dur-med) var(--ease);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 html[lang="en"] body{font-family:var(--font-en)}
@@ -74,7 +79,9 @@ img,svg{display:block;max-width:100%}
 --b6:#1F3A5F;--b6-soft:#1F3A5F1a;
 --b8:#C9A227;--b8-soft:#C9A2271a;
 --b9:#3E8E52;--b9-soft:#3E8E521a;
---b10:#38A8E0;--b10-soft:#38A8E01a;}
+--b10:#38A8E0;--b10-soft:#38A8E01a;
+--b11:#9A6A44;--b11-soft:#9A6A441a;
+--b12:#7A8B2E;--b12-soft:#7A8B2E1a;}
 html[data-theme="light"]{
 --bg:#EEEBE2;--bg-subtle:#E6E2D6;
 --card:#FFFFFF;--card-hover:#FDFBF4;
@@ -101,7 +108,9 @@ html[data-theme="dark"]{
 --overlay:rgba(0,0,0,.16);
 --pattern:rgba(255,255,255,.04);
 --grain:rgba(255,255,255,.018);
---b6:#5C93BA;--b6-soft:#5C93BA1a}
+--b6:#5C93BA;--b6-soft:#5C93BA1a;
+--b11:#C79568;--b11-soft:#C795681a;
+--b12:#A9BC57;--b12-soft:#A9BC571a}
 
 /* ========== Layout ========== */
 .container{width:100%;max-width:1180px;margin-inline:auto;padding-inline:var(--space-5)}
@@ -218,7 +227,7 @@ html[lang="fa"] .search-input{padding:11px 40px 11px 16px}
 .group-heading{display:flex;align-items:center;gap:var(--space-3);margin-block:var(--space-3) var(--space-1)}
 .group-heading h5{font-size:13px;font-weight:800;color:var(--text);text-transform:none;letter-spacing:0}
 .group-heading::after{content:"";flex:1;height:1px;background:var(--border)}
-.food-row{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);border-inline-start:3px solid var(--row-accent,var(--accent));transition:border-color var(--dur-fast) var(--ease),background var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease);position:relative;overflow:hidden;width:100%;text-align:start;font-family:inherit}
+.food-row{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);border-inline-start:3px solid var(--row-accent,var(--accent));transition:border-color var(--dur-fast) var(--ease),background var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease);position:relative;overflow:hidden;width:100%;text-align:start;font-family:inherit;content-visibility:auto;contain-intrinsic-size:auto 76px}
 button.food-row,.result-row{cursor:pointer}
 .result-row:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .result-tag{font-size:11px;font-weight:800;letter-spacing:.02em;color:var(--row-accent,var(--accent));margin-bottom:3px}
@@ -281,6 +290,8 @@ html[dir="rtl"] .food-row::before{background:linear-gradient(90deg,transparent,r
 .empty-state h3{font-size:17px;font-weight:800;color:var(--text);margin-bottom:6px;letter-spacing:-.01em}
 .empty-state p{font-size:13.5px;max-width:34ch;line-height:1.7}
 .view{animation:viewIn var(--dur-med) var(--ease-out)}
+.searching,.searching .view,.searching.view-stagger>*,.searching .view-stagger>*{animation:none !important}
+.search-more{margin-top:var(--space-3);text-align:center;font-size:12.5px;font-weight:600;color:var(--text-faint)}
 @keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .view-stagger > *{animation:viewIn var(--dur-med) var(--ease-out) both}
 .view-stagger > *:nth-child(1){animation-delay:0ms}
@@ -560,7 +571,7 @@ footer{padding-bottom:calc(var(--space-8) + 64px)}
 @media print{.tf-root{display:none}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FoodEstablishment","name":"گذر صدرا","alternateName":"GOZAR SADRA","description":"منوی همه بوفه‌های گذر صدرا در یک‌جا","address":{"@type":"PostalAddress","streetAddress":"پارک گذر صدرا، بین خیابان ملاصدرا و خیابان کارمند","addressCountry":"IR"},"servesCuisine":["Persian","Traditional Iranian","Kebab","Cafe","Fast Food"],"priceRange":"تومان"}
+{"@context":"https://schema.org","@type":"FoodEstablishment","name":"گذر صدرا","alternateName":"GOZAR SADRA","description":"منوی همه بوفه‌های گذر صدرا در یک‌جا","address":{"@type":"PostalAddress","streetAddress":"پارک گذر صدرا، بین خیابان ملاصدرا و خیابان کارمند","addressCountry":"IR"},"servesCuisine":["Persian","Traditional Iranian","Kebab","Cafe","Coffee","Ash","Fast Food"],"priceRange":"تومان"}
 </script>
 </head>
 <body>
@@ -652,6 +663,7 @@ searchPlaceholder:"جست‌وجو در این بوفه…",
 searchEmptyTitle:"موردی پیدا نشد",
 searchEmptyDesc:"کلمه‌ی دیگری را امتحان کن یا دسته را عوض کن.",
 searchClear:"پاک کردن جست‌وجو",
+searchMore:"نتایج زیادی پیدا شد؛ برای دیدن بقیه عبارت دقیق‌تری بنویس.",
 homeSearchPlaceholder:"جست‌وجو در تمام بوفه‌ها…",
 homeSearchEmptyTitle:"موردی پیدا نشد",
 homeSearchEmptyDesc:"کلمه‌ی دیگری را امتحان کن.",
@@ -709,6 +721,7 @@ searchPlaceholder:"Search this buffet…",
 searchEmptyTitle:"Nothing matched",
 searchEmptyDesc:"Try a different word or switch the category.",
 searchClear:"Clear search",
+searchMore:"Lots of matches — type something more specific to narrow it down.",
 homeSearchPlaceholder:"Search all buffets…",
 homeSearchEmptyTitle:"Nothing matched",
 homeSearchEmptyDesc:"Try a different word.",
@@ -772,14 +785,50 @@ if(hi === null || hi === undefined) return '';
 if(lang === 'fa') return (hi >= 1000 && hi % 1000 === 0) ? 'تومان' : 'هزار تومان';
 return hi >= 1000 ? 'Toman' : 'thousand Toman';
 }
-function _fpItem(it, lang){ return _hasRange(it) ? `${_fpNum(it.price, lang)}${lang==='fa' ? ' تا ' : ' – '}${_fpNum(it.priceMax, lang)}` : _fpNum(it.price, lang); }
+function _fpItem(it, lang){
+if(!_hasRange(it)) return _fpNum(it.price, lang);
+// e.g. 400 .. 1000  ->  "400 هزار تا 1 میلیون" (so the low end is not misread as plain Toman)
+const lo = (it.priceMax >= 1000 && it.price < 1000) ? _fpNum(it.price, lang) + (lang==='fa' ? ' هزار' : ' thousand') : _fpNum(it.price, lang);
+return `${lo}${lang==='fa' ? ' تا ' : ' – '}${_fpNum(it.priceMax, lang)}`;
+}
+function _noPrice(it, lang){ return it && it.soon ? (lang==='fa' ? 'به‌زودی' : 'Coming soon') : _i18[lang].priceUnknown; }
+// Normalise text for searching: unify Arabic/Persian letters & digits, drop spaces / ZWNJ / diacritics
+function _nq(v){
+return String(v==null ? '' : v).replace(/&amp;/g,'&').replace(/[‌‏\sً-ٟ]/g,'').replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[۰-۹]/g,d=>String(d.charCodeAt(0)-1776)).replace(/[٠-٩]/g,d=>String(d.charCodeAt(0)-1632)).toLowerCase();
+}
 function _fpRial(price, lang){
 if(price === null || price === undefined) return _i18[lang].priceUnknown;
 const grouped = _toRial(price).toLocaleString('en-US');
 return lang === 'fa' ? _fd(grouped) : grouped;
 }
 function _es(str){return String(str);}
-function _ic(name, cls){return `<i data-lucide="${name}" class="${cls||''}" aria-hidden="true"></i>`;}
+const _SVGI={
+'heart':'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+'plus':'<path d="M5 12h14"/><path d="M12 5v14"/>',
+'minus':'<path d="M5 12h14"/>',
+'x':'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+'search':'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+'arrow-left':'<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>',
+'arrow-right':'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>'
+};
+// frequently re-rendered icons are inline (no lucide pass needed); the rest go through lucide
+function _ic(name, cls){
+const p = _SVGI[name];
+if(p) return `<svg class="${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+return `<i data-lucide="${name}" class="${cls||''}" aria-hidden="true"></i>`;
+}
+// search index: normalised haystack per item/buffet, built once per language
+function _nIdx(it){
+let c = it._ni; if(!c) c = it._ni = {};
+const L = _st.lang;
+return c[L] || (c[L] = _nq(it.name[L]) + '|' + _nq(it.description && it.description[L]));
+}
+function _nIdxB(b){
+let c = b._ni; if(!c) c = b._ni = {};
+const L = _st.lang;
+return c[L] || (c[L] = _nq(b.name[L]) + '|' + _nq(b.description[L]));
+}
+const _MAXR = 80;
 const _dt = {
 brand:{ fa:"گذر صدرا", en:"GOZAR SADRA" },
 buffets:[
@@ -797,10 +846,10 @@ categories:[
 {name:{fa:"زیر برنجی ۳ نفره", en:"Zirbiranji (For Three)"}, price:2500},
 {name:{fa:"دنده کباب", en:"Rib Kebab"}, price:1100},
 {name:{fa:"شیشلیک", en:"Shishlik"}, price:800},
-{name:{fa:"جیگروز", en:"Jigar Souz"}, price:250},
+{name:{fa:"جگر سوز", en:"Jigar Souz"}, price:250},
 {name:{fa:"برنج ایرانی", en:"Persian Rice"}, price:180},
-{name:{fa:"جغول بغول تک نفره", en:"Jujeh Baghal (Single)"}, price:800},
-{name:{fa:"جغول بغول دو نفره", en:"Jujeh Baghal (For Two)"}, price:1100},
+{name:{fa:"جوجه بغل تک نفره", en:"Jujeh Baghal (Single)"}, price:800},
+{name:{fa:"جوجه بغل دو نفره", en:"Jujeh Baghal (For Two)"}, price:1100},
 {name:{fa:"کتف و بال", en:"Shoulder &amp; Wings"}, price:300},
 {name:{fa:"گوشواره", en:"Goshvareh Kebab"}, price:370},
 {name:{fa:"شاه عباسی", en:"Shah Abbasi Kebab"}, price:400},
@@ -1131,6 +1180,108 @@ categories:[
 {name:{fa:"سمبوسه مخصوص", en:"Special Samosa"}, price:95},
 ]}
 ]
+},
+{
+id:"cafe",
+icon:"cup-soda",
+accent:"var(--b11)",
+accentSoft:"var(--b11-soft)",
+name:{ fa:"کافه", en:"Cafe" },
+description:{ fa:"قهوه، ماکتیل، شیک، کیک و نوشیدنی‌های گرم و سرد", en:"Coffee, mocktails, shakes, cakes and hot & cold drinks" },
+categories:[
+{ id:"mocktail", name:{fa:"ماکتیل", en:"Mocktails"}, items:[
+{name:{fa:"لیموناد", en:"Lemonade"}, price:250},
+{name:{fa:"لیمو پشن فروت", en:"Lemon Passion Fruit"}, price:218},
+{name:{fa:"موهیتو", en:"Mojito"}, price:260},
+{name:{fa:"رد موهیتو", en:"Red Mojito"}, price:280},
+{name:{fa:"رد هوس", en:"Red Hoos"}, price:240},
+{name:{fa:"سانتا مارگاریتا", en:"Santa Margarita"}, price:238},
+{name:{fa:"بلو شارک", en:"Blue Shark"}, price:240},
+{name:{fa:"گرین اسکای", en:"Green Sky"}, price:248},
+{name:{fa:"سان رایس", en:"Sunrise"}, price:255},
+{name:{fa:"باب مارلی", en:"Bob Marley"}, price:240},
+{name:{fa:"بلوموهیتو", en:"Blue Mojito"}, price:280},
+]},
+{ id:"cakes", name:{fa:"کیک و باقلوا", en:"Cakes & Baklava"}, items:[
+{name:{fa:"کیک شکلاتی", en:"Chocolate Cake"}, price:150},
+{name:{fa:"تیرامیسو", en:"Tiramisu"}, price:230},
+{name:{fa:"کوکی", en:"Cookie"}, price:65},
+{name:{fa:"باقلوا", en:"Baklava"}, price:45},
+]},
+{ id:"hot-drink", name:{fa:"نوشیدنی گرم", en:"Hot Drinks"}, items:[
+{name:{fa:"هات چاکلت", en:"Hot Chocolate"}, price:230},
+{name:{fa:"وایت چاکلت", en:"White Chocolate"}, price:250},
+{name:{fa:"پینک چاکلت", en:"Pink Chocolate"}, price:250},
+{name:{fa:"شیر پسته زعفرانی", en:"Saffron Pistachio Milk"}, price:250},
+{name:{fa:"چای کرک", en:"Karak Tea"}, price:200},
+{name:{fa:"چای ماسالا", en:"Masala Tea"}, price:200},
+]},
+{ id:"brew", name:{fa:"قهوه دمی", en:"Brewed Coffee"}, items:[
+{name:{fa:"V60", en:"V60"}, price:250},
+{name:{fa:"سایفون", en:"Syphon"}, price:280},
+{name:{fa:"ایروپرس", en:"AeroPress"}, price:280},
+]},
+{ id:"cold-espresso", name:{fa:"نوشیدنی سرد بر پایه اسپرسو", en:"Iced Espresso Drinks"}, items:[
+{name:{fa:"آیس آمریکانو", en:"Iced Americano"}, price:180},
+{name:{fa:"آیس موکا", en:"Iced Mocha"}, price:350},
+{name:{fa:"آیس لاته", en:"Iced Latte"}, price:270},
+{name:{fa:"آیس کارامل ماکیاتو", en:"Iced Caramel Macchiato"}, price:280},
+{name:{fa:"آفوگاتو", en:"Affogato"}, price:300},
+{name:{fa:"آیس ماچا", en:"Iced Matcha"}, price:270},
+{name:{fa:"ماچا توت‌فرنگی", en:"Strawberry Matcha"}, price:250},
+{name:{fa:"آیس اسپیرولینا", en:"Iced Spirulina"}, price:190},
+{name:{fa:"آیس تارو", en:"Iced Taro"}, price:190},
+]},
+{ id:"shake", name:{fa:"شیک", en:"Shakes"}, items:[
+{name:{fa:"شیک اسنیکرز", en:"Snickers Shake"}, price:400},
+{name:{fa:"شیک لوتوس", en:"Lotus Shake"}, price:450},
+{name:{fa:"شیک نوتلا", en:"Nutella Shake"}, price:450},
+{name:{fa:"شیک کوکی", en:"Cookie Shake"}, price:380},
+{name:{fa:"شیک بادام زمینی", en:"Peanut Shake"}, price:450},
+{name:{fa:"شیک موز", en:"Banana Shake"}, price:250},
+{name:{fa:"شیک شکلات", en:"Chocolate Shake"}, price:300},
+{name:{fa:"شیک قهوه", en:"Coffee Shake"}, price:300},
+{name:{fa:"شیک توت‌فرنگی", en:"Strawberry Shake"}, price:380},
+{name:{fa:"شیک کارامل", en:"Caramel Shake"}, price:330},
+]},
+{ id:"espresso-7030", name:{fa:"قهوه گرم: روبوستا ۷۰/۳۰", en:"Hot Coffee: Robusta 70/30"}, items:[
+{name:{fa:"سینگل", en:"Single"}, price:100, description:{fa:"اسپرسو روبوستا ۷۰/۳۰", en:"Robusta 70/30 espresso"}},
+{name:{fa:"دبل", en:"Double"}, price:130, description:{fa:"اسپرسو روبوستا ۷۰/۳۰", en:"Robusta 70/30 espresso"}},
+{name:{fa:"اسپرسو دبل (۱۰۰٪ عربیکا)", en:"Double Espresso (100% Arabica)"}, price:170, description:{fa:"اسپرسو روبوستا ۷۰/۳۰", en:"Robusta 70/30 espresso"}},
+]},
+{ id:"espresso-5050", name:{fa:"قهوه گرم: اسپرسو ۵۰/۵۰", en:"Hot Coffee: Espresso 50/50"}, items:[
+{name:{fa:"سینگل", en:"Single"}, price:130, description:{fa:"اسپرسو ۵۰/۵۰", en:"50/50 espresso"}},
+{name:{fa:"دبل", en:"Double"}, price:150, description:{fa:"اسپرسو ۵۰/۵۰", en:"50/50 espresso"}},
+{name:{fa:"آمریکانو", en:"Americano"}, price:150},
+{name:{fa:"لاته", en:"Latte"}, price:250},
+{name:{fa:"موکا", en:"Mocha"}, price:300},
+{name:{fa:"کاپوچینو", en:"Cappuccino"}, price:250},
+{name:{fa:"کورتادو", en:"Cortado"}, price:185},
+{name:{fa:"تارو", en:"Taro"}, price:180},
+{name:{fa:"کارامل ماکیاتو", en:"Caramel Macchiato"}, price:260},
+{name:{fa:"ماچا لاته", en:"Matcha Latte"}, price:250},
+{name:{fa:"اسپیرولینا", en:"Spirulina"}, price:180},
+{name:{fa:"سیروپ +۱۵", en:"Syrup +15"}, price:40},
+{name:{fa:"دوبل", en:"Double"}, price:210},
+]}
+]
+},
+{
+id:"ash",
+icon:"cooking-pot",
+accent:"var(--b12)",
+accentSoft:"var(--b12-soft)",
+name:{ fa:"منوی آش", en:"Ash Menu" },
+description:{ fa:"آش، کشک بادمجان و دلمه‌ی خانگی", en:"Homemade ash, kashk-o-bademjan and dolmeh" },
+categories:[
+{ id:"ash-main", name:{fa:"آش و کشک بادمجان", en:"Ash & Kashk-o-Bademjan"}, items:[
+{name:{fa:"آش رشته", en:"Ash Reshteh"}, price:200, priceMax:500, description:{fa:"قیمت بسته به اندازه‌ی کاسه", en:"Price depends on bowl size"}},
+{name:{fa:"آش شیرازی (گوشت)", en:"Ash Shirazi (with Meat)"}, price:200, priceMax:500, description:{fa:"قیمت بسته به اندازه‌ی کاسه", en:"Price depends on bowl size"}},
+{name:{fa:"کشک بادمجان", en:"Kashk-o-Bademjan"}, price:400, priceMax:1000, description:{fa:"قیمت بسته به اندازه‌ی کاسه", en:"Price depends on bowl size"}},
+{name:{fa:"دلمه", en:"Dolmeh"}, price:45, description:{fa:"قیمت هر دانه", en:"Price per piece"}},
+{name:{fa:"حلیم", en:"Halim"}, price:null, description:{fa:"به‌زودی", en:"Coming soon"}, soon:true}
+]}
+]
 }
 ]
 };
@@ -1368,14 +1519,16 @@ else _setCartQty(key, cur + 1);
 });
 }
 function _syncCartUI(onlyKey){
+let touched = false;
 _updateCartBadge();
 document.querySelectorAll('.cart-ctl[data-cart-ctl-key]').forEach(el=>{
 const key = el.dataset.cartCtlKey;
 if(onlyKey && key !== onlyKey) return;
 el.innerHTML = _cartControlHTML(key, true);
-_ri();
 _bindCartControls(el);
+touched = true;
 });
+if(touched) _ri();
 }
 function _renderCartPanel(){
 const t = _i18[_st.lang];
@@ -1664,6 +1817,7 @@ function _ac(){
 document.documentElement.setAttribute('lang', _st.lang);
 document.documentElement.setAttribute('dir', _st.lang === 'fa' ? 'rtl' : 'ltr');
 document.documentElement.setAttribute('data-theme', _st.theme);
+document.querySelectorAll('meta[name="theme-color"]').forEach(m=>{ m.removeAttribute('media'); m.setAttribute('content', _st.theme === 'dark' ? '#0F1826' : '#EEEBE2'); });
 document.title = _st.lang === 'fa' ? 'گذر صدرا | منوی بوفه‌ها' : 'GOZAR SADRA | Buffet Menus';
 if(typeof _updateOfflineBanner === 'function') _updateOfflineBanner();
 const metaDesc = document.querySelector('meta[name="description"]');
@@ -1746,20 +1900,17 @@ return `
 
 function _homeResultsHTML(t, query){
 if(query){
-const matchedBuffets = _dt.buffets.filter(b =>
-(b.name[_st.lang]||'').toLowerCase().includes(query) ||
-(b.description[_st.lang]||'').toLowerCase().includes(query)
-);
+const matchedBuffets = _dt.buffets.filter(b => _nIdxB(b).includes(query));
 const matchedItems = [];
 _dt.buffets.forEach(b=>{
 b.categories.forEach(c=>{
 c.items.forEach(it=>{
-const nameMatch = (it.name[_st.lang]||'').toLowerCase().includes(query);
-const descMatch = it.description && it.description[_st.lang] && it.description[_st.lang].toLowerCase().includes(query);
-if(nameMatch || descMatch) matchedItems.push({item:it, buffet:b, catId:c.id});
+if(_nIdx(it).includes(query)) matchedItems.push({item:it, buffet:b, catId:c.id});
 });
 });
 });
+const _truncated = matchedItems.length > _MAXR;
+if(_truncated) matchedItems.length = _MAXR;
 if(!matchedBuffets.length && !matchedItems.length){
 return `
 <div class="empty-state view">
@@ -1786,7 +1937,7 @@ ${item.description ? `<p>${_es(item.description[_st.lang])}</p>` : ''}
 </div>
 <div class="food-side">
 <div class="food-price num ${priceKnown ? '' : 'unknown'}">
-${priceKnown ? _fpItem(item, _st.lang) : t.priceUnknown}
+${priceKnown ? _fpItem(item, _st.lang) : _noPrice(item, _st.lang)}
 ${priceKnown ? `<span class="unit">${_fpUnit(item, _st.lang)}</span>` : ''}
 </div>
 <span class="cart-ctl" data-cart-ctl-key="${_es(favKey)}">${_cartControlHTML(favKey, priceKnown)}</span>
@@ -1795,16 +1946,17 @@ ${_favToggleHTML(favKey)}
 </div>`;
 }).join('')}
 </div>` : '';
-return `${buffetsBlock}${itemsBlock}`;
+return `${buffetsBlock}${itemsBlock}${_truncated ? `<p class="search-more">${t.searchMore}</p>` : ''}`;
 }
 return `<div class="buffet-grid view view-stagger">${_dt.buffets.map(b=>_bCard(b,t)).join('')}</div>`;
 }
 
 function _rhResults(){
 const t = _i18[_st.lang];
-const query = (_st.homeSearch || '').trim().toLowerCase();
+const query = _nq(_st.homeSearch);
 const container = document.getElementById('home-results');
 if(!container) return;
+container.classList.toggle('searching', !!query);
 container.innerHTML = _homeResultsHTML(t, query);
 _ri();
 _bindFavToggles(container);
@@ -1845,9 +1997,12 @@ ${_as()}
 _ri();
 const hsi = document.getElementById('home-search-input');
 const onHomeInput = _debounce((e)=>{
+if(e.isComposing) return;
+const changed = _nq(e.target.value) !== _nq(_st.homeSearch);
 _st.homeSearch = e.target.value;
-_rhResults();
-}, 120);
+const c = document.getElementById('home-clear-search'); if(c) c.style.display = _st.homeSearch ? '' : 'none';
+if(changed) _rhResults();
+}, 160);
 if(hsi){
 hsi.addEventListener('input', onHomeInput);
 }
@@ -1877,7 +2032,7 @@ ${item.description ? `<p>${_es(item.description[_st.lang])}</p>` : ''}
 </div>
 <div class="food-side">
 <div class="food-price num ${priceKnown ? '' : 'unknown'}">
-${priceKnown ? _fpItem(item, _st.lang) : t.priceUnknown}
+${priceKnown ? _fpItem(item, _st.lang) : _noPrice(item, _st.lang)}
 ${priceKnown ? `<span class="unit">${_fpUnit(item, _st.lang)}</span>` : ''}
 </div>
 <span class="cart-ctl" data-cart-ctl-key="${_es(favKey)}">${_cartControlHTML(favKey, priceKnown)}</span>
@@ -1895,7 +2050,7 @@ let itemsHTML;
 if(search){
 const groups = buffet.categories.map(c=>({
 cat:c,
-items: c.items.filter(it => (it.name[_st.lang]||'').toLowerCase().includes(search) || (it.description && it.description[_st.lang] && it.description[_st.lang].toLowerCase().includes(search)))
+items: c.items.filter(it => _nIdx(it).includes(search))
 })).filter(g=>g.items.length>0);
 itemsHTML = groups.length ? groups.map(g=>`
 ${buffet.categories.length>1 ? `<div class="group-heading"><h5>${_es(g.cat.name[_st.lang])}</h5></div>` : ''}
@@ -1914,9 +2069,10 @@ function _rbResults(){
 const buffet = _dt.buffets.find(b=>b.id===_st.buffetId);
 if(!buffet) return;
 const t = _i18[_st.lang];
-const search = (_st.search || '').trim().toLowerCase();
+const search = _nq(_st.search);
 const container = document.getElementById('menu-results');
 if(!container) return;
+container.classList.toggle('searching', !!search);
 container.innerHTML = _menuItemsHTML(buffet, t, search);
 _ri();
 _bindFavToggles(container);
@@ -1935,7 +2091,7 @@ _st.activeCategoryId = buffet.categories[0] ? buffet.categories[0].id : null;
 _syncHistoryCat();
 const hasCategories = buffet.categories.length > 0;
 const showTabs = buffet.categories.length > 1;
-const search = (_st.search || '').trim().toLowerCase();
+const search = _nq(_st.search);
 let bodyHTML;
 let isEmptyBuffet = !hasCategories || buffet.categories.every(c=>c.items.length===0);
 if(isEmptyBuffet){
@@ -2000,9 +2156,12 @@ _rb();
 if(!isEmptyBuffet){
 const si = document.getElementById('search-input');
 const onSearchInput = _debounce((e)=>{
+if(e.isComposing) return;
+const changed = _nq(e.target.value) !== _nq(_st.search);
 _st.search = e.target.value;
-_rbResults();
-}, 120);
+const c = document.getElementById('clear-search'); if(c) c.style.display = _st.search ? '' : 'none';
+if(changed) _rbResults();
+}, 160);
 if(si){
 si.addEventListener('input', onSearchInput);
 }
@@ -2117,7 +2276,7 @@ if(_onbReopenBtn) _onbReopenBtn.addEventListener('click', _openOnb);
 
 /* ========== Taste finder (floating widget, home page only) ========== */
 const _L = (fa,en)=>({fa,en});
-const _TF_LIM = {meal:[350,550], bite:[250,450], drink:[200,350], sweet:[200,350], hot:[110,220]};
+const _TF_LIM = {meal:[350,550], bite:[250,450], drink:[200,350], sweet:[200,350], hot:[130,250]};
 const _TF_ORDER = ['kind','sub','people','budget','diet','weight','pref','spice'];
 const _TF_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>';
 const _TF_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
@@ -2163,7 +2322,7 @@ kind:{q:_L('الان بیشتر چه چیزی به دلت می‌نشیند؟','
 {id:'bite', l:_L('ساندویچ و تنقلات','Sandwiches & quick bites'), h:_L('دهه ۶۰، شاورما، تاکو، فلافل','60s sandwiches, shawarma, tacos, falafel')},
 {id:'drink', l:_L('نوشیدنی خنک','Something cold to drink'), h:_L('آبمیوه، شیک، شیرموز، معجون','Juice, shakes, banana milk, smoothies')},
 {id:'sweet', l:_L('یک چیز شیرین','Something sweet'), h:_L('بستنی، کیک، تیرامیسو، شیک','Ice cream, cake, tiramisu, shakes')},
-{id:'hot', l:_L('چای، دمنوش یا قلیان','Tea, herbal tea or hookah'), h:_L('یک نشستن آرام و دلچسب','A slow, relaxed sit-down')}
+{id:'hot', l:_L('قهوه، چای، دمنوش یا قلیان','Coffee, tea, herbal tea or hookah'), h:_L('یک نشستن آرام و دلچسب','A slow, relaxed sit-down')}
 ]},
 sub:{
 meal:{q:_L('چه سبکی می‌چسبد؟','Which style sounds good?'), o:[
@@ -2184,11 +2343,13 @@ drink:{q:_L('چه نوشیدنی‌ای؟','Which drink?'), o:[
 {id:'juice', l:_L('آبمیوه','Fresh juice'), h:_L('طالبی، هندوانه، توت‌فرنگی و ترکیبی','Cantaloupe, watermelon, strawberry and mixed'), m:{sub:'juice'}},
 {id:'shake', l:_L('شیک و معجون','Shakes & smoothies'), h:_L('نوتلا، لوتوس، آیس‌پک، معجون','Nutella, lotus, ice pack, smoothies'), m:{sub:'shake'}},
 {id:'milk', l:_L('شیرموز و شیر پسته','Banana milk & pistachio milk'), h:_L('خرما، نارگیل، انبه، ۴ مغز','Date, coconut, mango, mixed nuts'), m:{sub:'milk'}},
+{id:'mocktail', l:_L('ماکتیل','Mocktails'), h:_L('لیموناد، موهیتو، بلو شارک، سان رایس','Lemonade, mojito, blue shark, sunrise'), m:{sub:'mocktail'}},
+{id:'coldcoffee', l:_L('قهوه و ماچای سرد','Iced coffee & matcha'), h:_L('آیس لاته، آیس موکا، آفوگاتو، آیس ماچا','Iced latte, iced mocha, affogato, iced matcha'), m:{sub:'coldcoffee'}},
 {id:'any', l:_L('فرقی نمی‌کند','No preference')}
 ]},
 sweet:{q:_L('چه شیرینی‌ای؟','Which sweet?'), o:[
 {id:'icecream', l:_L('بستنی','Ice cream'), h:_L('کاسه‌ای، قیفی، موز و توت‌فرنگی','Bowl, cone, banana & strawberry'), m:{sub:'icecream'}},
-{id:'cake', l:_L('کیک و تیرامیسو','Cake & tiramisu'), h:_L('کیک شکلاتی، تیرامیسو، کیک بستنی','Chocolate cake, tiramisu, ice cream cake'), m:{sub:'cake'}},
+{id:'cake', l:_L('کیک و تیرامیسو','Cake & tiramisu'), h:_L('کیک شکلاتی، تیرامیسو، باقلوا، کوکی','Chocolate cake, tiramisu, baklava, cookie'), m:{sub:'cake'}},
 {id:'sweetdrink', l:_L('شیک و شیرموز','Shakes & banana milk'), h:_L('شیرین و خنک','Sweet and cold'), m:{sub:['shake','milk']}},
 {id:'any', l:_L('فرقی نمی‌کند','No preference')}
 ]},
@@ -2196,6 +2357,7 @@ hot:{q:_L('کدام‌شان؟','Which one?'), o:[
 {id:'tea', l:_L('چای','Tea'), h:_L('کلاسیک، سبز، میوه‌ای، زعفرانی','Classic, green, fruit, saffron'), m:{sub:'tea'}},
 {id:'herbal', l:_L('دمنوش','Herbal tea'), h:_L('گل گاوزبان، به لیمو، سیب و دارچین','Borage, lemon verbena, apple cinnamon'), m:{sub:'herbal'}},
 {id:'hookah', l:_L('قلیان','Hookah'), h:_L('دوسیب، هلو، شیرطالبی و بیشتر','Two apples, peach, melon cream and more'), m:{sub:'hookah'}},
+{id:'coffee', l:_L('قهوه و نوشیدنی گرم','Coffee & hot drinks'), h:_L('اسپرسو، لاته، هات چاکلت، قهوه دمی','Espresso, latte, hot chocolate, brewed coffee'), m:{sub:'coffee'}},
 {id:'any', l:_L('فرقی نمی‌کند','No preference')}
 ]}
 },
@@ -2283,6 +2445,15 @@ function _tfFeat(b,c,it){
       else { _tfAdd(f.kinds,'sweet'); f.sub='cake'; }
       break;
     case 'gheimeh-ghormeh': _tfAdd(f.kinds,'meal'); _tfAdd(f.style,'irani'); break;
+    case 'ash': _tfAdd(f.kinds,'meal'); _tfAdd(f.style,'irani'); break;
+    case 'cafe':
+      if(c.id==='mocktail'){ _tfAdd(f.kinds,'drink'); f.sub='mocktail'; }
+      else if(c.id==='cakes'){ _tfAdd(f.kinds,'sweet'); f.sub='cake'; }
+      else if(c.id==='shake'){ _tfAdd(f.kinds,'drink','sweet'); f.sub='shake'; }
+      else if(c.id==='cold-espresso'){ _tfAdd(f.kinds,'drink'); f.sub='coldcoffee'; }
+      else if(/چای/.test(n)){ _tfAdd(f.kinds,'hot'); f.sub='tea'; }
+      else { _tfAdd(f.kinds,'hot'); f.sub='coffee'; }
+      break;
     case 'bastani':
       if(c.id==='juice'||c.id==='mixjuice'){ _tfAdd(f.kinds,'drink'); f.sub='juice'; }
       else if(/کیک/.test(n)){ _tfAdd(f.kinds,'sweet'); f.sub='cake'; }
@@ -2337,7 +2508,7 @@ function _tfFeat(b,c,it){
     f.mild = !f.spicy;
     f.cheese = /پنیر|موزارلا|چدار|پارمزان|cheese|mozzarella|cheddar|parmesan/.test(s) || f.style.includes('pizza');
     f.veg = !f.protein.length && !/ماهی|تن\b|میگو|fish|tuna|shrimp|seafood/.test(s);
-    if(f.style.includes('irani') && !/^(نان|سالاد|ماست|ترشی|زیتون)/.test(n)) f.veg = false;
+    if((b.id==='gheimeh-ghormeh' && !/^(نان|سالاد|ماست|ترشی|زیتون)/.test(n)) || /دلمه|گوشت/.test(n)) f.veg = false;
   }
   if(f.kinds.includes('drink') || f.kinds.includes('sweet')){
     f.rich = ['shake','icecream','cake','milk'].includes(f.sub) || f.taste.includes('chocolate') || /شیک|معجون|آیسپک|خامه|کیک|shake|smoothie|ice ?pack|cream|cake/.test(s);
@@ -2349,7 +2520,7 @@ let _tfCache = null;
 function _tfAll(){
   if(_tfCache) return _tfCache;
   const out = [];
-  _dt.buffets.forEach(b=>b.categories.forEach(c=>c.items.forEach(it=>{ out.push({b, c, it, f:_tfFeat(b,c,it)}); })));
+  _dt.buffets.forEach(b=>b.categories.forEach(c=>c.items.forEach(it=>{ if(it.soon) return; out.push({b, c, it, f:_tfFeat(b,c,it)}); })));
   return (_tfCache = out);
 }
 
@@ -2580,7 +2751,7 @@ ${badge}
 ${it.description ? `<p>${_es(it.description[lang])}</p>` : ''}
 </div>
 <div class="food-price ${known ? '' : 'unknown'}">
-${known ? _fpItem(it, lang) : i18.priceUnknown}
+${known ? _fpItem(it, lang) : _noPrice(it, lang)}
 ${known ? `<span class="unit">${_fpUnit(it, lang)}</span>` : ''}
 </div>
 </div>
